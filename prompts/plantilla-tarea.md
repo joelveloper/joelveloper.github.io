@@ -30,6 +30,14 @@ No asumir continuidad de otras sesiones ni trabajos no comprometidos. El reposit
 7. **No ejecutar commit, push, PR ni despliegue sin autorización explícita.**
 8. Detenerse tras Txx; no anticipar Txx+1.
 
+### Informe de implementación
+
+Crear o actualizar durante la ejecución, y completar antes de entregar los resultados:
+
+`docs/implementations/Txx-IMPLEMENTACION.md`
+
+El informe sigue la política definida en `AGENTS.md`. La existencia y consistencia del informe es un criterio de aceptación obligatorio. No se autoriza automáticamente commit, push ni Pull Request.
+
 ## Criterios de éxito
 
 - (Copiar literalmente los criterios Txx del backlog y añadir verificaciones concretas.)
