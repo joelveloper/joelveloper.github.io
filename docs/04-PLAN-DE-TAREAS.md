@@ -168,6 +168,12 @@ Cada tarea se considera cerrada solamente cuando:
 4. Los criterios de aceptación se prueban o quedan explícitamente pendientes.
 5. El diff y los riesgos son reportados.
 6. La aprobación para commit/push/PR se solicita antes de realizar esas acciones.
+7. El informe `docs/implementations/Txx-IMPLEMENTACION.md` existe y refleja los resultados de implementación.
+8. El informe contiene evidencia verificable y declara las limitaciones.
+9. El informe está preparado para versionarse junto con la tarea.
+10. El cierre definitivo requiere que el informe forme parte de los cambios integrados, salvo excepción aprobada.
+
+La regla del informe (puntos 7 a 10) se aplica a T03–T10 y a cualquier tarea nueva, conforme a la «Política obligatoria de informes de implementación» de `AGENTS.md`. No modifica el alcance funcional de las tareas existentes.
 
 ## 6. Convención de prompts
 

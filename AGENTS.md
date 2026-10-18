@@ -47,3 +47,25 @@ No asumir trabajo de otros agentes ni contextos no materializados en el reposito
 4. Revisión de SEO, accesibilidad, seguridad y privacidad según corresponda.
 5. Riesgos, decisiones y cuestiones pendientes.
 6. Propuesta de siguiente tarea **sin implementarla**.
+
+## Política obligatoria de informes de implementación
+
+Toda tarea identificada como `Txx` debe producir un informe Markdown en la ubicación obligatoria:
+
+`docs/implementations/Txx-IMPLEMENTACION.md`
+
+Reglas:
+
+1. El informe se crea o actualiza **durante** la implementación; no se sustituye por la salida de terminal ni por la respuesta conversacional.
+2. Contenido mínimo exigido: identificación de la tarea y fecha; rama y commit de partida; diagnóstico inicial; objetivo y alcance; decisiones de implementación; archivos creados, modificados y eliminados; dependencias añadidas o modificadas; comandos ejecutados y resultados reales; pruebas funcionales, técnicas y visuales aplicables; revisión de accesibilidad y seguridad; problemas encontrados y soluciones; riesgos, limitaciones y pendientes; cumplimiento de los criterios de aceptación; estado de Git y recomendaciones siguientes.
+3. El informe debe distinguir entre pruebas ejecutadas, pruebas fallidas y comprobaciones no realizadas.
+4. No inventar resultados, métricas, capturas ni evidencias.
+5. No guardar secretos, información confidencial, documentos de clientes ni rutas sensibles innecesarias.
+6. No modificar ni reescribir informes históricos de tareas anteriores sin autorización específica.
+7. Cuando se autorice versionar los cambios de la tarea, el informe debe incluirse en el mismo Pull Request.
+8. Si el commit o el push no están autorizados, dejar el informe guardado localmente sin seguimiento o sin preparar, según corresponda, e indicar expresamente su estado.
+9. No marcar una tarea como completamente cerrada si su informe permanece sin versionar, salvo excepción expresamente documentada y aprobada.
+10. La tarea debe actualizar su informe antes de solicitar autorización para commit.
+11. Esta política no autoriza por sí misma `git add`, commit, push ni Pull Request; esas acciones siguen necesitando autorización expresa.
+
+No duplicar estas reglas: la «Entrega estándar de cada tarea» describe el resumen para el usuario; esta política describe el artefacto versionable y su contenido mínimo.
