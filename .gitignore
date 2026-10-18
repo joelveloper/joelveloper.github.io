@@ -1,0 +1,23 @@
+# Dependencias
+node_modules/
+.pnpm-store/
+
+# Salida de build de Astro
+dist/
+.astro/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Artefactos de pruebas
+coverage/
+playwright-report/
+test-results/
+
+# Sistema, editores y registros
+.DS_Store
+Thumbs.db
+.idea/
+*.log
