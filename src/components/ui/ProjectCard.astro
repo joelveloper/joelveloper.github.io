@@ -1,0 +1,88 @@
+---
+import ButtonLink from '@/components/ui/ButtonLink.astro';
+import StatusBadge from '@/components/ui/StatusBadge.astro';
+import Surface from '@/components/ui/Surface.astro';
+import TechBadge from '@/components/ui/TechBadge.astro';
+import type { ProjectStatus } from '@/components/ui/StatusBadge.astro';
+
+interface ProjectCardImage {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  status: ProjectStatus;
+  technologies: string[];
+  href: string;
+  image?: ProjectCardImage;
+  maxTechnologies?: number;
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  category,
+  status,
+  technologies,
+  href,
+  image,
+  maxTechnologies = 4,
+  class: className,
+} = Astro.props;
+
+const visibleTechnologies = technologies.slice(0, maxTechnologies);
+const remainingTechnologies = Math.max(technologies.length - visibleTechnologies.length, 0);
+---
+
+<Surface as="article" variant="default" padding="md" class:list={['flex flex-col gap-5', className]}>
+  {
+    image && (
+      <img
+        src={image.src}
+        alt={image.alt}
+        loading="lazy"
+        decoding="async"
+        class="aspect-[16/9] w-full rounded-lg border border-border object-cover"
+      />
+    )
+  }
+
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">{category}</p>
+    <StatusBadge status={status} />
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <h3 class="text-title font-semibold text-foreground">
+      <a href={href} class="rounded-sm underline-offset-4 hover:underline">{title}</a>
+    </h3>
+    <p class="max-w-measure text-sm text-muted-foreground">{description}</p>
+  </div>
+
+  {
+    technologies.length > 0 && (
+      <ul class="flex flex-wrap gap-2" aria-label="Tecnologías">
+        {visibleTechnologies.map((technology) => (
+          <li>
+            <TechBadge label={technology} />
+          </li>
+        ))}
+        {remainingTechnologies > 0 && (
+          <li>
+            <TechBadge label={`+${remainingTechnologies}`} />
+          </li>
+        )}
+      </ul>
+    )
+  }
+
+  <div class="mt-auto pt-1">
+    <ButtonLink href={href} variant="secondary" ariaLabel={`Ver caso de estudio: ${title}`}>
+      Ver caso de estudio
+    </ButtonLink>
+  </div>
+</Surface>
