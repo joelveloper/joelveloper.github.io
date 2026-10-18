@@ -1,22 +1,175 @@
 ---
-import '@/styles/global.css';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/layout/Container.astro';
+import SectionHeading from '@/components/ui/SectionHeading.astro';
+import ButtonLink from '@/components/ui/ButtonLink.astro';
+import TechBadge from '@/components/ui/TechBadge.astro';
+import StatusBadge from '@/components/ui/StatusBadge.astro';
+import Surface from '@/components/ui/Surface.astro';
+
+const nav = [
+  { label: 'Inicio', href: '#inicio' },
+  { label: 'Tipografía', href: '#tipografia' },
+  { label: 'Superficies', href: '#superficies' },
+  { label: 'Componentes', href: '#componentes' },
+  { label: 'Contacto', href: '#contacto' },
+];
+
+const swatches = [
+  { name: 'background', value: '#0B1019', cls: 'bg-background' },
+  { name: 'surface', value: '#111A28', cls: 'bg-surface' },
+  { name: 'surface-raised', value: '#182337', cls: 'bg-surface-raised' },
+  { name: 'primary / accent', value: '#91B8FF', cls: 'bg-primary' },
+  { name: 'positive', value: '#70DDC0', cls: 'bg-positive' },
+  { name: 'border', value: '#344257', cls: 'bg-border' },
+];
+
+const technologies = ['.NET', 'C#', 'PostgreSQL', 'React', 'Astro'];
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Joel Cantero — Portafolio</title>
-  </head>
-  <body class="bg-slate-950 text-slate-100">
-    <main class="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-4 px-6">
-      <p class="font-mono text-sm text-sky-300">T01 · BASE TÉCNICA</p>
-      <h1 class="text-3xl font-semibold">Joel Cantero</h1>
-      <p class="text-slate-300">
-        Sitio en construcción. Astro, Tailwind CSS y React configurados.
+<BaseLayout
+  title="Sistema visual — Joel Cantero"
+  description="Vista de demostración del sistema de diseño del portafolio de Joel Cantero: tokens, tipografía, superficies y componentes estructurales."
+  nav={nav}
+>
+  <section id="inicio" class="border-b border-border">
+    <Container class="flex flex-col gap-6 py-20 sm:py-28">
+      <p class="font-mono text-label uppercase tracking-widest text-primary">
+        Software Developer · Paraguay
       </p>
-    </main>
-  </body>
-</html>
+      <h1 class="max-w-[18ch] text-balance text-hero font-semibold text-foreground">
+        Software para procesos complejos.
+      </h1>
+      <p class="max-w-measure text-lead text-muted-foreground">
+        Demostración del sistema visual que sostendrá el portafolio: paleta oscura, escala
+        tipográfica, superficies y componentes estructurales. Todavía no es la landing definitiva.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <ButtonLink href="#componentes" variant="primary" size="lg">Explorar componentes</ButtonLink>
+        <ButtonLink
+          href="https://github.com/joelveloper"
+          variant="secondary"
+          size="lg"
+          external
+        >
+          GitHub
+        </ButtonLink>
+      </div>
+      <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+        T02 · Sistema visual · vista de demostración
+      </p>
+    </Container>
+  </section>
+
+  <Container as="section" id="tipografia" class="flex flex-col gap-10 py-16 sm:py-20">
+    <SectionHeading
+      number="01"
+      label="Tipografía"
+      title="Escala tipográfica"
+      description="Geist Variable para texto e interfaz; pila monoespaciada del sistema para etiquetas técnicas y fragmentos de código."
+    />
+
+    <Surface variant="raised" padding="lg" class="flex flex-col gap-8">
+      <div class="flex flex-col gap-2">
+        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Hero</p>
+        <p class="text-hero font-semibold text-foreground">Aa — Titular principal</p>
+      </div>
+      <div class="flex flex-col gap-2 border-t border-border pt-6">
+        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Display (H2)</p>
+        <p class="text-display font-semibold text-foreground">Aa — Encabezado de sección</p>
+      </div>
+      <div class="flex flex-col gap-2 border-t border-border pt-6">
+        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Title (H3)</p>
+        <p class="text-title font-semibold text-foreground">Aa — Título de tarjeta</p>
+      </div>
+      <div class="flex flex-col gap-2 border-t border-border pt-6">
+        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Body / Lead</p>
+        <p class="max-w-measure text-lead text-foreground">
+          Texto de lectura continua con un ancho máximo cercano a 68 caracteres para mantener la
+          legibilidad en escritorio.
+        </p>
+      </div>
+      <div class="flex flex-col gap-2 border-t border-border pt-6">
+        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+          Caption / Label
+        </p>
+        <p class="text-caption text-muted-foreground">Texto auxiliar y metadatos breves.</p>
+        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+          Etiqueta técnica · .NET · C# · PostgreSQL
+        </p>
+      </div>
+    </Surface>
+  </Container>
+
+  <Container as="section" id="superficies" class="flex flex-col gap-10 py-16 sm:py-20">
+    <SectionHeading
+      number="02"
+      label="Superficies y color"
+      title="Paleta dark-first"
+      description="Tokens semánticos alineados con shadcn/ui. Un único tema oscuro que funciona desde la carga inicial, sin dependencia de JavaScript."
+    />
+
+    <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+      {
+        swatches.map((swatch) => (
+          <li class="flex flex-col gap-2">
+            <span class:list={['h-16 rounded-lg border border-border', swatch.cls]}></span>
+            <span class="font-mono text-caption text-muted-foreground">{swatch.name}</span>
+            <span class="font-mono text-caption text-muted-foreground">{swatch.value}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="grid gap-4 md:grid-cols-3">
+      <Surface variant="default" class="flex flex-col gap-2">
+        <p class="text-title font-semibold text-foreground">Surface default</p>
+        <p class="text-sm text-muted-foreground">Superficie base para tarjetas.</p>
+      </Surface>
+      <Surface variant="raised" class="flex flex-col gap-2">
+        <p class="text-title font-semibold text-foreground">Surface raised</p>
+        <p class="text-sm text-muted-foreground">Bloques técnicos y estados hover.</p>
+      </Surface>
+      <Surface variant="outline" class="flex flex-col gap-2">
+        <p class="text-title font-semibold text-foreground">Surface outline</p>
+        <p class="text-sm text-muted-foreground">Separación discreta con borde.</p>
+      </Surface>
+    </div>
+  </Container>
+
+  <Container as="section" id="componentes" class="flex flex-col gap-10 py-16 sm:py-20">
+    <SectionHeading
+      number="03"
+      label="Componentes"
+      title="Elementos estructurales"
+      description="Enlaces con apariencia de botón, etiquetas técnicas y estados de proyecto. Todo sin hidratación React."
+    />
+
+    <div class="grid gap-6 lg:grid-cols-2">
+      <Surface class="flex flex-col gap-6">
+        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Enlaces</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <ButtonLink href="#componentes" variant="primary">Primario</ButtonLink>
+          <ButtonLink href="#componentes" variant="secondary">Secundario</ButtonLink>
+          <ButtonLink href="#componentes" variant="ghost">Ghost</ButtonLink>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <ButtonLink href="#componentes" variant="primary" size="lg">Primario grande</ButtonLink>
+          <ButtonLink href="#componentes" variant="secondary" size="lg">Secundario grande</ButtonLink>
+        </div>
+      </Surface>
+
+      <Surface class="flex flex-col gap-6">
+        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Etiquetas</p>
+        <ul class="flex flex-wrap gap-2" aria-label="Tecnologías de ejemplo">
+          {technologies.map((technology) => <li><TechBadge label={technology} /></li>)}
+        </ul>
+        <div class="flex flex-wrap gap-2">
+          <StatusBadge status="production" />
+          <StatusBadge status="development" />
+          <StatusBadge status="prelaunch" />
+        </div>
+      </Surface>
+    </div>
+  </Container>
+</BaseLayout>

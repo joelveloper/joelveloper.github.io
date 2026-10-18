@@ -1,0 +1,54 @@
+---
+import Container from '@/components/layout/Container.astro';
+
+export interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  siteName?: string;
+  monogram?: string;
+  brandHref?: string;
+  nav?: NavItem[];
+}
+
+const {
+  siteName = 'Joel Cantero',
+  monogram = 'JC',
+  brandHref = '/',
+  nav = [],
+} = Astro.props;
+
+const linkClass =
+  'rounded-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline';
+---
+
+<header class="border-b border-border bg-background">
+  <Container class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4">
+    <a href={brandHref} class="group inline-flex items-center gap-3 rounded-sm">
+      <span
+        aria-hidden="true"
+        class="inline-flex size-9 items-center justify-center rounded-md border border-border bg-surface font-mono text-label font-medium tracking-normal text-primary"
+        >{monogram}</span
+      >
+      <span class="text-base font-semibold tracking-tight text-foreground">{siteName}</span>
+    </a>
+
+    {
+      nav.length > 0 && (
+        <nav aria-label="Navegación principal">
+          <ul class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+            {nav.map((item) => (
+              <li>
+                <a href={item.href} class={linkClass}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+  </Container>
+</header>

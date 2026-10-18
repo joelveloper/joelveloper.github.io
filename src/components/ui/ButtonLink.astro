@@ -1,0 +1,47 @@
+---
+type Variant = 'primary' | 'secondary' | 'ghost';
+type Size = 'md' | 'lg';
+
+interface Props {
+  href: string;
+  variant?: Variant;
+  size?: Size;
+  external?: boolean;
+  ariaLabel?: string;
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  external = false,
+  ariaLabel,
+  class: className,
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-lg font-medium whitespace-nowrap transition-colors';
+
+const variants: Record<Variant, string> = {
+  primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
+  secondary:
+    'border border-border bg-transparent text-foreground hover:border-primary/60 hover:bg-surface-raised',
+  ghost: 'text-foreground hover:bg-surface-raised',
+};
+
+const sizes: Record<Size, string> = {
+  md: 'px-4 py-2 text-sm',
+  lg: 'px-5 py-2.5 text-base',
+};
+---
+
+<a
+  href={href}
+  class:list={[base, variants[variant], sizes[size], className]}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+  aria-label={ariaLabel}
+>
+  <slot />
+</a>

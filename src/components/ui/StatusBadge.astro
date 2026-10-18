@@ -1,0 +1,33 @@
+---
+export type ProjectStatus = 'production' | 'development' | 'prelaunch';
+
+interface Props {
+  status: ProjectStatus;
+  label?: string;
+  class?: string;
+}
+
+const { status, label, class: className } = Astro.props;
+
+const labels: Record<ProjectStatus, string> = {
+  production: 'En producción',
+  development: 'En desarrollo',
+  prelaunch: 'Prelanzamiento',
+};
+
+const markers: Record<ProjectStatus, string> = {
+  production: 'bg-positive',
+  development: 'bg-primary',
+  prelaunch: 'border border-muted-foreground bg-transparent',
+};
+---
+
+<span
+  class:list={[
+    'inline-flex items-center gap-2 rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-muted-foreground',
+    className,
+  ]}
+>
+  <span aria-hidden="true" class:list={['size-2 shrink-0 rounded-full', markers[status]]}></span>
+  {label ?? labels[status]}
+</span>
