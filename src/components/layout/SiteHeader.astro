@@ -1,5 +1,6 @@
 ---
 import Container from '@/components/layout/Container.astro';
+import { profile } from '@/data/profile';
 
 export interface NavItem {
   label: string;
@@ -14,8 +15,8 @@ interface Props {
 }
 
 const {
-  siteName = 'Joel Cantero',
-  monogram = 'JC',
+  siteName = profile.name,
+  monogram = profile.monogram,
   brandHref = '/',
   nav = [],
 } = Astro.props;

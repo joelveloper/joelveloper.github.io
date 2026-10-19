@@ -6,14 +6,8 @@ import ButtonLink from '@/components/ui/ButtonLink.astro';
 import TechBadge from '@/components/ui/TechBadge.astro';
 import StatusBadge from '@/components/ui/StatusBadge.astro';
 import Surface from '@/components/ui/Surface.astro';
-
-const nav = [
-  { label: 'Inicio', href: '#inicio' },
-  { label: 'Tipografía', href: '#tipografia' },
-  { label: 'Superficies', href: '#superficies' },
-  { label: 'Componentes', href: '#componentes' },
-  { label: 'Contacto', href: '#contacto' },
-];
+import { mainNavigation } from '@/data/navigation';
+import { profile } from '@/data/profile';
 
 const swatches = [
   { name: 'background', value: '#0B1019', cls: 'bg-background' },
@@ -30,7 +24,7 @@ const technologies = ['.NET', 'C#', 'PostgreSQL', 'React', 'Astro'];
 <BaseLayout
   title="Sistema visual — Joel Cantero"
   description="Vista de demostración del sistema de diseño del portafolio de Joel Cantero: tokens, tipografía, superficies y componentes estructurales."
-  nav={nav}
+  nav={mainNavigation}
 >
   <section id="inicio" class="border-b border-border">
     <Container class="flex flex-col gap-6 py-20 sm:py-28">
@@ -47,7 +41,7 @@ const technologies = ['.NET', 'C#', 'PostgreSQL', 'React', 'Astro'];
       <div class="flex flex-wrap gap-3">
         <ButtonLink href="#componentes" variant="primary" size="lg">Explorar componentes</ButtonLink>
         <ButtonLink
-          href="https://github.com/joelveloper"
+          href={profile.github}
           variant="secondary"
           size="lg"
           external

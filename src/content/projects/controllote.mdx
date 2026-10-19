@@ -1,0 +1,91 @@
+---
+title: 'ControlLote: conciliación de comisiones inmobiliarias mediante reglas contractuales y procesamiento PDF'
+summary: 'Plataforma SaaS que importa informes PDF, aplica reglas contractuales y concilia comisiones inmobiliarias, facilitando detectar diferencias y elaborar reportes. Procesa históricos superiores a 18 meses de información por empresa.'
+category: saas
+status: development
+featuredOrder: 2
+technologies:
+  - '.NET 10'
+  - 'React 19'
+  - 'Vite 7'
+  - 'TypeScript'
+  - 'PostgreSQL 16'
+  - 'Tailwind CSS v4'
+  - 'Docker'
+repositoryVisibility: private
+caseStudyStage: documented
+publicApproved: false
+image:
+  src: /images/projects/controllote.svg
+  alt: 'Abstracción geométrica original en cuadrícula con una celda destacada, que representa conciliación y detección de diferencias.'
+  usageApproved: true
+lastReviewed: '2026-10-18'
+---
+
+# ControlLote: conciliación de comisiones inmobiliarias mediante reglas contractuales y procesamiento PDF
+
+Plataforma SaaS · Desarrollo privado · Caso documentado
+
+## Contexto
+
+ControlLote trabaja sobre los informes mensuales de cuotas cobradas, que deben auditarse
+contra las condiciones contractuales de cada operación. El riesgo declarado son las
+inconsistencias, los duplicados y las diferencias entre lo cobrado y lo estipulado.
+
+## Problema original
+
+Conciliar comisiones a partir de informes PDF implica riesgo de inconsistencias, duplicados
+y diferencias entre lo cobrado y lo estipulado. El proceso necesita conservar el documento
+original y dejar rastro de cada regla aplicada.
+
+## Objetivos funcionales
+
+- Importar informes PDF conservando el documento original.
+- Extraer los datos relevantes de cada informe.
+- Aplicar reglas porcentuales según la modalidad de cobro.
+- Conciliar los resultados y gestionar excepciones.
+- Generar reportes ejecutivos.
+
+## Mi participación
+
+Pendiente de precisar de forma verificable, junto con las contribuciones de colaboradores
+si las hubiera.
+
+## Solución implementada
+
+Importación de informes PDF, extracción de datos, aplicación de reglas contractuales,
+conciliación, manejo de excepciones y generación de reportes ejecutivos. El stack declarado
+para esta etapa es .NET 10, React 19, Vite 7, TypeScript, PostgreSQL 16, Tailwind CSS v4 y
+Docker.
+
+## Decisiones de arquitectura y por qué
+
+Pendiente de documentar las decisiones sobre el procesamiento documental, la conservación
+del original y el modelado de las reglas contractuales.
+
+## Flujo relevante
+
+Pendiente de un diagrama propio o de una captura con datos sintéticos o anonimizados de
+forma irreversible.
+
+## Validación y evidencias
+
+El histórico procesado es un dato aportado por el autor: se están procesando más de 18
+meses de información por empresa. No debe interpretarse como 18 meses de operación
+continua, disponibilidad del servicio, cantidad de clientes ni uso comercial.
+
+## Resultados verificados
+
+Pendiente de documentación. No se publican métricas sin fuente y método.
+
+## Lecciones y evolución
+
+El proyecto profundiza en la conciliación de reglas contractuales y en el tratamiento de
+documentos heterogéneos, un terreno donde la trazabilidad del dato es tan importante como
+el resultado.
+
+## Alcance y limitaciones
+
+Desarrollo privado. No se publican nombres de clientes, contratos, montos, facturas ni
+documentos con información identificable. El alcance temporal descrito corresponde al
+histórico procesado, no a la antigüedad del servicio.
