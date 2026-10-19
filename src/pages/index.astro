@@ -1,169 +1,447 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/layout/Container.astro';
+import ProjectCard from '@/components/ui/ProjectCard.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import ButtonLink from '@/components/ui/ButtonLink.astro';
-import TechBadge from '@/components/ui/TechBadge.astro';
-import StatusBadge from '@/components/ui/StatusBadge.astro';
 import Surface from '@/components/ui/Surface.astro';
+import TechBadge from '@/components/ui/TechBadge.astro';
 import { mainNavigation } from '@/data/navigation';
-import { profile } from '@/data/profile';
+import { emailHref, profile, socialLinks } from '@/data/profile';
+import { getApprovedProjectCards } from '@/lib/projects';
 
-const swatches = [
-  { name: 'background', value: '#0B1019', cls: 'bg-background' },
-  { name: 'surface', value: '#111A28', cls: 'bg-surface' },
-  { name: 'surface-raised', value: '#182337', cls: 'bg-surface-raised' },
-  { name: 'primary / accent', value: '#91B8FF', cls: 'bg-primary' },
-  { name: 'positive', value: '#70DDC0', cls: 'bg-positive' },
-  { name: 'border', value: '#344257', cls: 'bg-border' },
+const projectCards = await getApprovedProjectCards();
+
+const specialties = [
+  {
+    title: 'Aplicaciones empresariales',
+    description:
+      'Software para procesos de gestión, operación y control, con reglas de negocio claras y trazabilidad.',
+    technologies: '.NET · ASP.NET Core · Blazor',
+  },
+  {
+    title: 'Plataformas SaaS',
+    description:
+      'Productos con administración, identidad y operación por empresa, pensados para crecer sin perder orden.',
+    technologies: 'Multitenencia · Identity · APIs',
+  },
+  {
+    title: 'Arquitectura de software',
+    description:
+      'Diseño de soluciones modulares y límites explícitos, priorizando mantenibilidad, seguridad y evolución.',
+    technologies: 'CQRS · Vertical Slices · Monolito modular',
+  },
+  {
+    title: 'Automatización documental',
+    description:
+      'Importación de documentos, extracción de datos, reglas contractuales y conciliación de información.',
+    technologies: 'PDF · Reglas · Conciliación',
+  },
 ];
 
-const technologies = ['.NET', 'C#', 'PostgreSQL', 'React', 'Astro'];
+const processSteps = [
+  {
+    title: 'Comprender el problema',
+    description:
+      'Escuchar el contexto, las restricciones y el resultado esperado antes de elegir una solución.',
+  },
+  {
+    title: 'Modelar la solución',
+    description:
+      'Definir alcance, datos, reglas y límites; elegir una arquitectura que pueda evolucionar.',
+  },
+  {
+    title: 'Implementar',
+    description:
+      'Construir de extremo a extremo, cuidando seguridad, mantenibilidad y experiencia de uso.',
+  },
+  {
+    title: 'Validar y mejorar',
+    description:
+      'Probar con casos reales, revisar las decisiones y ajustar según lo aprendido.',
+  },
+];
+
+const technologyGroups = [
+  {
+    title: 'Aplicación y datos',
+    items: ['C#', '.NET', 'ASP.NET Core', 'EF Core', 'SQL Server', 'PostgreSQL'],
+  },
+  {
+    title: 'Arquitectura',
+    items: ['Minimal APIs', 'Web API', 'CQRS', 'Vertical Slices', 'Monolito modular'],
+  },
+  {
+    title: 'Frontend',
+    items: ['Blazor', 'MudBlazor', 'React', 'Vite', 'TypeScript'],
+  },
+  {
+    title: 'Infraestructura',
+    items: ['Linux / Ubuntu', 'Nginx', 'Docker'],
+  },
+];
+
+const contactChannels = socialLinks;
 ---
 
 <BaseLayout
-  title="Sistema visual — Joel Cantero"
-  description="Vista de demostración del sistema de diseño del portafolio de Joel Cantero: tokens, tipografía, superficies y componentes estructurales."
+  title="Joel Cantero — Full Stack .NET Developer"
+  description="Portafolio de Joel Cantero, Full Stack .NET Developer en Asunción, Paraguay. Aplicaciones empresariales, plataformas SaaS, arquitectura de software y automatización documental."
   nav={mainNavigation}
 >
-  <section id="inicio" class="border-b border-border">
-    <Container class="flex flex-col gap-6 py-20 sm:py-28">
-      <p class="font-mono text-label uppercase tracking-widest text-primary">
-        Software Developer · Paraguay
-      </p>
-      <h1 class="max-w-[18ch] text-balance text-hero font-semibold text-foreground">
-        Software para procesos complejos.
-      </h1>
-      <p class="max-w-measure text-lead text-muted-foreground">
-        Demostración del sistema visual que sostendrá el portafolio: paleta oscura, escala
-        tipográfica, superficies y componentes estructurales. Todavía no es la landing definitiva.
-      </p>
-      <div class="flex flex-wrap gap-3">
-        <ButtonLink href="#componentes" variant="primary" size="lg">Explorar componentes</ButtonLink>
-        <ButtonLink
-          href={profile.github}
-          variant="secondary"
-          size="lg"
-          external
+  <section
+    id="inicio"
+    class="overflow-hidden border-b border-border"
+    aria-labelledby="inicio-titulo"
+  >
+    <Container class="grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-16 lg:py-28">
+      <div class="flex flex-col gap-6">
+        <p class="font-mono text-label uppercase tracking-widest text-primary">
+          Full Stack .NET Developer · Paraguay
+        </p>
+        <h1
+          id="inicio-titulo"
+          class="max-w-[16ch] text-balance text-hero font-semibold text-foreground"
         >
-          GitHub
-        </ButtonLink>
+          {profile.headline}
+        </h1>
+        <p class="max-w-measure text-lead text-muted-foreground">
+          {profile.description}
+        </p>
+        <div class="flex flex-wrap items-center gap-3">
+          <ButtonLink href="#proyectos" variant="primary" size="lg">Explorar proyectos</ButtonLink>
+          <ButtonLink href="#contacto" variant="secondary" size="lg">Contactar</ButtonLink>
+          <ButtonLink href={profile.github} variant="ghost" size="lg" external>
+            GitHub <span aria-hidden="true">↗</span>
+          </ButtonLink>
+        </div>
+        <p class="font-mono text-caption text-muted-foreground">
+          {profile.location} · Trabajo de extremo a extremo
+        </p>
       </div>
-      <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-        T02 · Sistema visual · vista de demostración
-      </p>
+
+      <div class="relative mx-auto w-full max-w-md lg:max-w-none" aria-hidden="true">
+        <div class="absolute -inset-8 rounded-full bg-primary/5 blur-3xl"></div>
+        <div class="relative overflow-hidden rounded-2xl border border-border bg-surface">
+          <div class="flex items-center justify-between border-b border-border px-5 py-3">
+            <span class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+              sistema / portafolio
+            </span>
+            <span class="font-mono text-label font-medium tracking-normal text-primary">JC</span>
+          </div>
+
+          <div class="flex flex-col gap-3 p-5">
+            <div class="rounded-lg border border-primary/40 bg-primary/10 p-4">
+              <p class="font-mono text-label uppercase tracking-widest text-primary">Interfaz</p>
+              <p class="mt-1 text-sm text-foreground">Blazor · React · Astro</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="rounded-lg border border-border bg-surface-raised p-4">
+                <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+                  Aplicación
+                </p>
+                <p class="mt-1 text-sm text-foreground">.NET · ASP.NET Core</p>
+              </div>
+              <div class="rounded-lg border border-border bg-surface-raised p-4">
+                <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+                  Arquitectura
+                </p>
+                <p class="mt-1 text-sm text-foreground">CQRS · Vertical Slices</p>
+              </div>
+            </div>
+
+            <div class="rounded-lg border border-border bg-background/70 p-4">
+              <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+                Datos e infraestructura
+              </p>
+              <p class="mt-1 text-sm text-foreground">
+                SQL Server · PostgreSQL · Linux · Nginx · Docker
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2 pt-1">
+              <span class="size-1.5 rounded-full bg-positive"></span>
+              <span class="font-mono text-caption text-muted-foreground">
+                Del problema al despliegue
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </Container>
   </section>
 
-  <Container as="section" id="tipografia" class="flex flex-col gap-10 py-16 sm:py-20">
-    <SectionHeading
-      number="01"
-      label="Tipografía"
-      title="Escala tipográfica"
-      description="Geist Variable para texto e interfaz; pila monoespaciada del sistema para etiquetas técnicas y fragmentos de código."
-    />
+  <Container as="section" id="sobre-mi" class="scroll-mt-24 py-16 sm:py-20 lg:py-24">
+    <div class="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16">
+      <div class="flex flex-col gap-8">
+        <SectionHeading
+          number="01"
+          label="Sobre mí"
+          title="Del problema al software que evoluciona"
+        />
 
-    <Surface variant="raised" padding="lg" class="flex flex-col gap-8">
-      <div class="flex flex-col gap-2">
-        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Hero</p>
-        <p class="text-hero font-semibold text-foreground">Aa — Titular principal</p>
+        <div class="flex max-w-measure flex-col gap-5 text-muted-foreground">
+          <p>
+            Empecé desarrollando proyectos personales de aprendizaje. En 2020 desarrollé una
+            aplicación de escritorio que se comercializó para la gestión de archivos de auditoría;
+            ese trabajo fue el origen de SGAA.
+          </p>
+          <p>
+            Desde entonces, SGAA evolucionó hacia una plataforma web de gestión de auditoría y
+            aseguramiento, comercializada desde agosto de 2025. Trabajé de extremo a extremo:
+            investigación, arquitectura, modelado, backend, frontend, infraestructura y despliegue,
+            con colaboración puntual de profesionales de auditoría para comprender las necesidades
+            funcionales.
+          </p>
+          <p>
+            Me motiva crear software con identidad propia que resuelva problemas reales, cuidando
+            la arquitectura, la calidad, la seguridad y la evolución del producto. Actualmente
+            amplío esa base con formación continua en ingeniería de software.
+          </p>
+        </div>
       </div>
-      <div class="flex flex-col gap-2 border-t border-border pt-6">
-        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Display (H2)</p>
-        <p class="text-display font-semibold text-foreground">Aa — Encabezado de sección</p>
-      </div>
-      <div class="flex flex-col gap-2 border-t border-border pt-6">
-        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Title (H3)</p>
-        <p class="text-title font-semibold text-foreground">Aa — Título de tarjeta</p>
-      </div>
-      <div class="flex flex-col gap-2 border-t border-border pt-6">
-        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Body / Lead</p>
-        <p class="max-w-measure text-lead text-foreground">
-          Texto de lectura continua con un ancho máximo cercano a 68 caracteres para mantener la
-          legibilidad en escritorio.
-        </p>
-      </div>
-      <div class="flex flex-col gap-2 border-t border-border pt-6">
-        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-          Caption / Label
-        </p>
-        <p class="text-caption text-muted-foreground">Texto auxiliar y metadatos breves.</p>
-        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-          Etiqueta técnica · .NET · C# · PostgreSQL
-        </p>
-      </div>
-    </Surface>
-  </Container>
 
-  <Container as="section" id="superficies" class="flex flex-col gap-10 py-16 sm:py-20">
-    <SectionHeading
-      number="02"
-      label="Superficies y color"
-      title="Paleta dark-first"
-      description="Tokens semánticos alineados con shadcn/ui. Un único tema oscuro que funciona desde la carga inicial, sin dependencia de JavaScript."
-    />
+      <div class="flex flex-col gap-4">
+        <Surface variant="default" class="flex flex-col gap-5">
+          <h3 class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+            Trayectoria
+          </h3>
+          <ol class="flex flex-col gap-5">
+            <li class="grid gap-1 border-l border-border pl-4">
+              <span class="font-mono text-label text-primary">2020</span>
+              <span class="text-sm text-foreground">
+                Primera aplicación de escritorio comercializada para gestión de archivos de
+                auditoría.
+              </span>
+            </li>
+            <li class="grid gap-1 border-l border-border pl-4">
+              <span class="font-mono text-label text-primary">Agosto 2025</span>
+              <span class="text-sm text-foreground">
+                Comienza la comercialización de la plataforma web SGAA.
+              </span>
+            </li>
+            <li class="grid gap-1 border-l border-border pl-4">
+              <span class="font-mono text-label text-primary">Actualidad</span>
+              <span class="text-sm text-foreground">
+                SGAA en producción, AuditaPy en desarrollo y nuevos proyectos en curso.
+              </span>
+            </li>
+          </ol>
+        </Surface>
 
-    <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3">
-      {
-        swatches.map((swatch) => (
-          <li class="flex flex-col gap-2">
-            <span class:list={['h-16 rounded-lg border border-border', swatch.cls]}></span>
-            <span class="font-mono text-caption text-muted-foreground">{swatch.name}</span>
-            <span class="font-mono text-caption text-muted-foreground">{swatch.value}</span>
-          </li>
-        ))
-      }
-    </ul>
-
-    <div class="grid gap-4 md:grid-cols-3">
-      <Surface variant="default" class="flex flex-col gap-2">
-        <p class="text-title font-semibold text-foreground">Surface default</p>
-        <p class="text-sm text-muted-foreground">Superficie base para tarjetas.</p>
-      </Surface>
-      <Surface variant="raised" class="flex flex-col gap-2">
-        <p class="text-title font-semibold text-foreground">Surface raised</p>
-        <p class="text-sm text-muted-foreground">Bloques técnicos y estados hover.</p>
-      </Surface>
-      <Surface variant="outline" class="flex flex-col gap-2">
-        <p class="text-title font-semibold text-foreground">Surface outline</p>
-        <p class="text-sm text-muted-foreground">Separación discreta con borde.</p>
-      </Surface>
+        <Surface variant="raised" class="flex flex-col gap-2">
+          <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+            Formación continua
+          </p>
+          <p class="text-base font-medium text-foreground">{profile.continuingEducation.title}</p>
+          <p class="font-mono text-caption text-positive">{profile.continuingEducation.status}</p>
+        </Surface>
+      </div>
     </div>
   </Container>
 
-  <Container as="section" id="componentes" class="flex flex-col gap-10 py-16 sm:py-20">
-    <SectionHeading
-      number="03"
-      label="Componentes"
-      title="Elementos estructurales"
-      description="Enlaces con apariencia de botón, etiquetas técnicas y estados de proyecto. Todo sin hidratación React."
-    />
+  <section id="especialidades" class="scroll-mt-24 border-y border-border bg-surface/40">
+    <Container class="py-16 sm:py-20 lg:py-24">
+      <div class="flex flex-col gap-10">
+        <SectionHeading
+          number="02"
+          label="Especialidades"
+          title="Cuatro áreas, una mirada de extremo a extremo"
+          description="Trabajo en la intersección entre producto, arquitectura e implementación. La profundidad técnica se adapta a cada problema, no al revés."
+        />
 
-    <div class="grid gap-6 lg:grid-cols-2">
-      <Surface class="flex flex-col gap-6">
-        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Enlaces</p>
-        <div class="flex flex-wrap items-center gap-3">
-          <ButtonLink href="#componentes" variant="primary">Primario</ButtonLink>
-          <ButtonLink href="#componentes" variant="secondary">Secundario</ButtonLink>
-          <ButtonLink href="#componentes" variant="ghost">Ghost</ButtonLink>
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {
+            specialties.map((specialty, index) => (
+              <Surface as="article" variant="default" padding="md" class="flex h-full flex-col gap-4">
+                <span class="font-mono text-label text-primary">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <h3 class="text-title font-semibold text-foreground">{specialty.title}</h3>
+                <p class="text-sm text-muted-foreground">{specialty.description}</p>
+                <p class="mt-auto border-t border-border pt-4 font-mono text-caption text-muted-foreground">
+                  {specialty.technologies}
+                </p>
+              </Surface>
+            ))
+          }
         </div>
-        <div class="flex flex-wrap items-center gap-3">
-          <ButtonLink href="#componentes" variant="primary" size="lg">Primario grande</ButtonLink>
-          <ButtonLink href="#componentes" variant="secondary" size="lg">Secundario grande</ButtonLink>
-        </div>
-      </Surface>
 
-      <Surface class="flex flex-col gap-6">
-        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">Etiquetas</p>
-        <ul class="flex flex-wrap gap-2" aria-label="Tecnologías de ejemplo">
-          {technologies.map((technology) => <li><TechBadge label={technology} /></li>)}
-        </ul>
-        <div class="flex flex-wrap gap-2">
-          <StatusBadge status="production" />
-          <StatusBadge status="development" />
-          <StatusBadge status="prelaunch" />
+        <Surface variant="raised" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div class="flex flex-col gap-1">
+            <p class="font-mono text-label uppercase tracking-widest text-primary">Full Stack</p>
+            <p class="text-base font-medium text-foreground">Del análisis al despliegue</p>
+          </div>
+          <p class="max-w-measure text-sm text-muted-foreground">
+            También cubro la infraestructura y la puesta en marcha: servidores Linux/Ubuntu, proxy
+            inverso con Nginx y contenedores Docker.
+          </p>
+        </Surface>
+
+        <div class="grid gap-6 border-t border-border pt-8 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            technologyGroups.map((group) => (
+              <div class="flex flex-col gap-3">
+                <h3 class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+                  {group.title}
+                </h3>
+                <ul class="flex flex-wrap gap-2" aria-label={group.title}>
+                  {group.items.map((item) => (
+                    <li>
+                      <TechBadge label={item} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
         </div>
-      </Surface>
+        <p class="text-caption text-muted-foreground">
+          Tecnologías con las que he trabajado. El nivel de profundidad varía según el proyecto y
+          el contexto.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <Container as="section" id="proyectos" class="scroll-mt-24 py-16 sm:py-20 lg:py-24">
+    <div class="flex flex-col gap-10">
+      <SectionHeading
+        number="03"
+        label="Proyectos"
+        title="Productos construidos sobre problemas concretos"
+        description="Cuatro proyectos con información aprobada para su presentación pública. Los casos de estudio completos se publicarán cuando su revisión editorial esté cerrada."
+      />
+
+      <div class="grid gap-6 md:grid-cols-2">
+        {
+          projectCards.map((project) => (
+            <ProjectCard
+              title={project.title}
+              description={project.summary}
+              category={project.category}
+              status={project.status}
+              technologies={project.technologies}
+              image={project.image}
+            />
+          ))
+        }
+      </div>
+
+      <p class="text-caption text-muted-foreground">
+        Las tarjetas muestran únicamente nombres, categorías, estados y resúmenes aprobados. No se
+        enlazan casos de estudio que todavía no están disponibles.
+      </p>
     </div>
   </Container>
+
+  <section id="proceso" class="scroll-mt-24 border-y border-border bg-surface/40">
+    <Container class="py-16 sm:py-20 lg:py-24">
+      <div class="flex flex-col gap-10">
+        <SectionHeading
+          number="04"
+          label="Cómo trabajo"
+          title="Un proceso, no una plantilla"
+          description="Un enfoque personal para reducir incertidumbre y mantener el software comprensible a medida que crece."
+        />
+
+        <ol class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {
+            processSteps.map((step, index) => (
+              <Surface as="li" variant="default" padding="md" class="flex h-full flex-col gap-4">
+                <div class="flex items-center justify-between gap-3">
+                  <span class="font-mono text-label text-primary">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span aria-hidden="true" class="h-px flex-1 bg-border"></span>
+                </div>
+                <h3 class="text-title font-semibold text-foreground">{step.title}</h3>
+                <p class="text-sm text-muted-foreground">{step.description}</p>
+              </Surface>
+            ))
+          }
+        </ol>
+      </div>
+    </Container>
+  </section>
+
+  <Container class="py-14 sm:py-16">
+    <section
+      aria-labelledby="onondive-titulo"
+      class="flex flex-col gap-3 border-l-2 border-primary/40 pl-5 sm:pl-6"
+    >
+      <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+        Iniciativa
+      </p>
+      <h2 id="onondive-titulo" class="text-title font-semibold text-foreground">
+        {profile.initiative.name} — {profile.initiative.note}
+      </h2>
+      <p class="max-w-measure text-sm text-muted-foreground">
+        Un espacio personal en definición. No es una empresa constituida ni representa la
+        titularidad de los proyectos presentados, que mantienen su propio contexto.
+      </p>
+    </section>
+  </Container>
+
+  <section id="contacto" class="scroll-mt-24 border-t border-border bg-surface">
+    <Container class="py-16 sm:py-20 lg:py-24">
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-16">
+        <div class="flex flex-col gap-6">
+          <SectionHeading
+            number="05"
+            label="Contacto"
+            title="Contacto profesional"
+            description={profile.availability}
+          />
+          <p class="max-w-measure text-sm text-muted-foreground">
+            Para conversar sobre un proyecto, una colaboración o una oportunidad profesional, el
+            correo es el canal más directo. También puedes encontrarme en las redes profesionales.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <ButtonLink href={emailHref} variant="primary" size="lg">
+              Escribir por correo
+            </ButtonLink>
+            <ButtonLink href={profile.github} variant="secondary" size="lg" external>
+              Ver GitHub <span aria-hidden="true">↗</span>
+            </ButtonLink>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-6">
+          <Surface variant="raised" class="flex flex-col gap-2">
+            <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+              Correo profesional
+            </p>
+            <a
+              href={emailHref}
+              class="break-all rounded-sm text-base font-medium text-foreground underline-offset-4 hover:underline"
+            >
+              {profile.email}
+            </a>
+          </Surface>
+
+          <nav aria-label="Redes profesionales">
+            <ul class="flex flex-col divide-y divide-border border-y border-border">
+              {
+                contactChannels.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class="flex items-center justify-between gap-4 py-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span>{link.label}</span>
+                      <span aria-hidden="true" class="font-mono text-caption">↗</span>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </Container>
+  </section>
 </BaseLayout>

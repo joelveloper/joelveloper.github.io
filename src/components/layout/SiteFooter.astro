@@ -11,17 +11,17 @@ interface Props {
 const { siteName = profile.name, year = new Date().getFullYear() } = Astro.props;
 
 const linkClass =
-  'rounded-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline';
+  'inline-block rounded-sm py-1 text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline';
 ---
 
-<footer id="contacto" class="mt-20 border-t border-border bg-surface">
+<footer class="mt-20 border-t border-border bg-surface">
   <Container class="flex flex-col gap-8 py-12 lg:flex-row lg:items-start lg:justify-between">
     <div class="flex max-w-measure flex-col gap-3">
-      <p class="font-mono text-label uppercase tracking-widest text-primary">Contacto</p>
-      <p class="text-title font-semibold text-foreground">{siteName}</p>
+      <p class="font-mono text-label uppercase tracking-widest text-primary">Joel Cantero</p>
+      <p class="text-title font-semibold text-foreground">{siteName} · {profile.role}</p>
       <p class="text-sm text-muted-foreground">
-        Software para procesos complejos: plataformas SaaS y aplicaciones empresariales con .NET,
-        PostgreSQL y tecnologías web.
+        Software para problemas reales. Aplicaciones empresariales, plataformas SaaS y
+        automatización documental.
       </p>
     </div>
 

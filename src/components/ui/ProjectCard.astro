@@ -5,6 +5,8 @@ import Surface from '@/components/ui/Surface.astro';
 import TechBadge from '@/components/ui/TechBadge.astro';
 import type { ProjectStatus } from '@/components/ui/StatusBadge.astro';
 
+type ProjectCategory = 'saas' | 'client';
+
 interface ProjectCardImage {
   src: string;
   alt: string;
@@ -13,10 +15,10 @@ interface ProjectCardImage {
 interface Props {
   title: string;
   description: string;
-  category: string;
+  category: ProjectCategory;
   status: ProjectStatus;
   technologies: string[];
-  href: string;
+  href?: string;
   image?: ProjectCardImage;
   maxTechnologies?: number;
   class?: string;
@@ -34,11 +36,21 @@ const {
   class: className,
 } = Astro.props;
 
+const categoryLabels: Record<ProjectCategory, string> = {
+  saas: 'SaaS',
+  client: 'Desarrollo exclusivo',
+};
+
 const visibleTechnologies = technologies.slice(0, maxTechnologies);
 const remainingTechnologies = Math.max(technologies.length - visibleTechnologies.length, 0);
 ---
 
-<Surface as="article" variant="default" padding="md" class:list={['flex flex-col gap-5', className]}>
+<Surface
+  as="article"
+  variant="default"
+  padding="md"
+  class:list={['flex h-full flex-col gap-5', className]}
+>
   {
     image && (
       <img
@@ -52,20 +64,30 @@ const remainingTechnologies = Math.max(technologies.length - visibleTechnologies
   }
 
   <div class="flex flex-wrap items-center justify-between gap-3">
-    <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">{category}</p>
+    <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+      {categoryLabels[category]}
+    </p>
     <StatusBadge status={status} />
   </div>
 
   <div class="flex flex-col gap-2">
     <h3 class="text-title font-semibold text-foreground">
-      <a href={href} class="rounded-sm underline-offset-4 hover:underline">{title}</a>
+      {
+        href ? (
+          <a href={href} class="rounded-sm underline-offset-4 hover:underline">
+            {title}
+          </a>
+        ) : (
+          <span>{title}</span>
+        )
+      }
     </h3>
     <p class="max-w-measure text-sm text-muted-foreground">{description}</p>
   </div>
 
   {
     technologies.length > 0 && (
-      <ul class="flex flex-wrap gap-2" aria-label="Tecnologías">
+      <ul class="flex flex-wrap gap-2" aria-label={`Tecnologías de ${title}`}>
         {visibleTechnologies.map((technology) => (
           <li>
             <TechBadge label={technology} />
@@ -81,8 +103,17 @@ const remainingTechnologies = Math.max(technologies.length - visibleTechnologies
   }
 
   <div class="mt-auto pt-1">
-    <ButtonLink href={href} variant="secondary" ariaLabel={`Ver caso de estudio: ${title}`}>
-      Ver caso de estudio
-    </ButtonLink>
+    {
+      href ? (
+        <ButtonLink href={href} variant="secondary" ariaLabel={`Ver caso de estudio: ${title}`}>
+          Ver caso de estudio
+        </ButtonLink>
+      ) : (
+        <p class="inline-flex items-center gap-2 text-caption text-muted-foreground">
+          <span aria-hidden="true" class="size-1.5 rounded-full border border-muted-foreground" />
+          Caso de estudio en preparación
+        </p>
+      )
+    }
   </div>
 </Surface>
