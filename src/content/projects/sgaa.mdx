@@ -16,83 +16,126 @@ technologies:
 repositoryVisibility: private
 caseStudyStage: documented
 cardApproved: true
-publicApproved: false
+publicApproved: true
 image:
   src: /images/projects/sgaa.svg
   alt: 'Abstracción geométrica original con capas concéntricas que representa la organización por fases y el control de calidad.'
   usageApproved: true
 lastReviewed: '2026-10-19'
+facts:
+  - label: 'Empresas registradas como tenants'
+    value: '26'
+    evidenceNote: 'Dato agregado proporcionado y autorizado por el propietario. No se publican nombres de empresas.'
+  - label: 'Contribuyentes registrados entre los tenants'
+    value: '161'
+    evidenceNote: 'Dato agregado proporcionado y autorizado por el propietario. No se afirma que los contribuyentes sean únicos entre empresas.'
 ---
-
-# SGAA: de procedimientos de auditoría dispersos a una gestión integrada y trazable
-
-Plataforma SaaS · En producción · Caso documentado
 
 ## Contexto
 
-SGAA nació de la necesidad de automatizar procesos de auditoría y de reunir en un solo
-lugar el trabajo que solía repartirse entre planillas, documentos y correos. Integra la
-gestión de auditorías, aseguramientos y consultorías, y fue diseñado con la participación
-de profesionales de auditoría y de tecnología.
+SGAA es una plataforma SaaS de auditoría y aseguramiento que se encuentra en producción. Su
+origen es la primera solución comercial de escritorio, desarrollada en 2020; con el tiempo
+evolucionó hacia una plataforma web, comercializada desde agosto de 2025.
 
-## Problema original
+La solución integra la gestión de auditorías, aseguramientos y consultorías. Fue diseñada con
+la participación de profesionales de auditoría y de tecnología, combinando necesidades
+funcionales del sector con decisiones de implementación.
 
-Pendiente de documentar el proceso previo real: qué planillas, documentos y correos se
-usaban y cuáles eran los puntos de fricción concretos. La necesidad declarada es
-automatizar los procesos de auditoría; no se afirman detalles no confirmados.
+## Problema
 
-## Objetivos funcionales
+El trabajo de auditoría requiere coordinar clientes, encargos, equipos, fases, procedimientos,
+supervisión y control de calidad. SGAA aborda esa complejidad en una sola plataforma, con una
+arquitectura multiempresa y trazabilidad sobre el proceso.
 
-- Gestionar clientes, encargos, equipos y fases.
-- Definir y seguir procedimientos por encargo.
-- Soportar supervisión y control de calidad.
-- Operar sobre una arquitectura multiempresa.
+El caso no detalla el proceso previo de cada organización ni cuantifica sus puntos de fricción:
+esa información no forma parte de la documentación confirmada para publicación.
 
 ## Mi participación
 
-Pendiente de detallar de forma verificable: falta precisar qué funciones concretas del
-diseño funcional y de la implementación corresponden al autor. No se publican atribuciones
-de responsabilidad sin confirmarlas.
+La responsabilidad del autor comprende el proceso completo:
 
-## Solución implementada
+- Investigación.
+- Relevamiento y análisis.
+- Arquitectura.
+- Modelado.
+- Backend.
+- Frontend.
+- Base de datos.
+- Infraestructura.
+- Despliegue.
+- Mantenimiento.
 
-- Gestión de clientes, encargos, equipos y fases.
+Se realizaron consultas funcionales con profesionales de auditoría para comprender las
+necesidades del dominio.
+
+## Solución
+
+SGAA organiza el trabajo de auditoría a través de:
+
+- Clientes, encargos, equipos y fases.
 - Procedimientos y seguimiento por encargo.
 - Supervisión y control de calidad.
-- Arquitectura multiempresa.
+- Una arquitectura multiempresa.
 
-## Decisiones de arquitectura y por qué
+El flujo funcional permite recorrer el encargo desde su organización inicial hasta el
+seguimiento y la revisión, manteniendo separadas las responsabilidades de cada etapa.
 
-Pendiente de documentar. Quedan por redactar para publicación las decisiones sobre el
-modelado de fases y procedimientos, la multitenencia, los permisos y la auditabilidad.
+## Arquitectura y stack
 
-## Flujo relevante
+El backend está construido con .NET 8 y ASP.NET Core Web API. Incluye Finbuckle, MediatR,
+Ardalis, CQRS y ASP.NET Identity. El frontend utiliza Blazor y MudBlazor, y la base de datos es
+SQL Server.
 
-Pendiente de un diagrama propio o de una captura autorizada. No se usan pantallas
-ficticias que simulen capturas reales.
+El entorno de despliegue se apoya en Linux Ubuntu, con Nginx como proxy inverso y la
+configuración necesaria para publicar la aplicación. La plataforma opera con una arquitectura
+multiempresa.
 
-## Validación y evidencias
+## Decisiones técnicas confirmadas
 
-El acceso y las autorizaciones de material visual están por comprobar. No se publican
-capturas sin permiso verificado.
+- Separación entre API y frontend, con ASP.NET Core Web API y Blazor.
+- Uso de CQRS y MediatR para organizar casos de uso y operaciones.
+- Identidad basada en ASP.NET Identity.
+- Persistencia sobre SQL Server.
+- Despliegue en Linux Ubuntu con Nginx como proxy inverso.
 
-## Resultados verificados
+El detalle de la topología interna, las credenciales, las direcciones de servidor y los
+mecanismos específicos de seguridad no se publican.
 
-Pendiente de documentación. No se publican métricas sin fuente y método.
+## Estado actual
 
-## Lecciones y evolución
+SGAA está en producción. La versión web se comercializa desde agosto de 2025 y la aplicación de
+escritorio de 2020 fue el punto de partida de esta evolución.
 
-SGAA representa la base funcional sobre la que se plantea la nueva generación AuditaPy;
-su evolución busca reforzar arquitectura, automatización y experiencia de gestión.
+El producto continuará recibiendo soporte y mantenimiento. El desarrollo estratégico de nuevas
+capacidades se concentra en AuditaPy, sin que ello implique el fin de SGAA ni una reducción de
+su soporte.
 
-## Alcance y limitaciones
+## Resultados y evidencias
 
-Descripción basada en la información aportada por el autor. Faltan por verificar los
-derechos de uso del material, el detalle del rol y los resultados medibles. No se atribuye
-titularidad comercial alguna a Oñondive.
+Los indicadores aprobados se presentan en el bloque de datos agregados de este caso. Fueron
+proporcionados y autorizados por el propietario; no constituyen una auditoría externa. No existe
+una fecha de corte confirmada para estas cifras.
 
-## Enlaces autorizados
+Los indicadores operativos se limitan a las empresas registradas como tenants y a los
+contribuyentes registrados entre ellas. No se publican nombres de empresas ni se afirma que los
+contribuyentes sean únicos entre tenants.
 
-Sin enlaces públicos verificados por el momento. Existe un sitio de referencia asociado
-al proyecto (dominio `redfor-ti.com.py`), pero su accesibilidad actual y los derechos de
-uso del material están pendientes de comprobación; por eso no se enlaza todavía.
+## Limitaciones y evidencia
+
+No se publican métricas de ahorro, reducción de errores ni cantidad de clientes más allá de los
+indicadores agregados autorizados. Tampoco se incluyen capturas del producto ni documentos de
+clientes.
+
+El propietario autorizó asociar el dominio `redfor-ti.com.py` con SGAA, pero el enlace externo no
+se muestra hasta verificar su disponibilidad y las condiciones de uso del material.
+
+## Evolución
+
+SGAA continuará recibiendo soporte y mantenimiento. El desarrollo estratégico de nuevas
+capacidades se concentra en AuditaPy, un producto independiente que no es un despliegue de SGAA
+ni comparte automáticamente su infraestructura o base de datos. La continuidad de SGAA no está
+condicionada a esa evolución.
+
+AuditaPy se plantea como una evolución técnica inspirada por la experiencia de SGAA, no como una
+actualización ya desplegada. No existe una hoja de ruta pública confirmada para futuras versiones
+de SGAA.

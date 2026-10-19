@@ -11,6 +11,7 @@ export interface ApprovedProjectCard {
   category: ProjectCategory;
   status: ProjectStatus;
   technologies: string[];
+  href?: string;
   image?: {
     src: string;
     alt: string;
@@ -39,6 +40,7 @@ export async function getApprovedProjectCards(): Promise<ApprovedProjectCard[]> 
       category: project.data.category,
       status: project.data.status,
       technologies: project.data.technologies,
+      href: project.data.publicApproved ? `/proyectos/${project.id}/` : undefined,
       image:
         project.data.image?.usageApproved === true
           ? { src: project.data.image.src, alt: project.data.image.alt }
