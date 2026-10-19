@@ -1,0 +1,225 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/layout/Container.astro';
+import ButtonLink from '@/components/ui/ButtonLink.astro';
+import StatusBadge from '@/components/ui/StatusBadge.astro';
+import Surface from '@/components/ui/Surface.astro';
+import TechBadge from '@/components/ui/TechBadge.astro';
+import { detailNavigation } from '@/data/navigation';
+import { profile } from '@/data/profile';
+import type { ProjectEntry } from '@/lib/projects';
+
+interface Props {
+  project: ProjectEntry;
+}
+
+const { project } = Astro.props;
+const { data } = project;
+
+const categoryLabels = {
+  saas: 'SaaS',
+  client: 'Desarrollo exclusivo',
+} as const;
+
+const stageLabels = {
+  outline: 'Esquema editorial',
+  documented: 'Caso documentado',
+  verified: 'Caso verificado',
+} as const;
+
+const image = data.image?.usageApproved === true ? data.image : undefined;
+const reviewedAt = new Intl.DateTimeFormat('es-PY', {
+  dateStyle: 'long',
+  timeZone: 'UTC',
+}).format(new Date(`${data.lastReviewed}T00:00:00Z`));
+---
+
+<BaseLayout
+  title={`${data.cardTitle} — Caso de estudio · ${profile.name}`}
+  description={data.summary}
+  nav={detailNavigation}
+>
+  <article>
+    <header class="border-b border-border bg-surface/40">
+      <Container class="py-10 sm:py-14 lg:py-20">
+        <nav aria-label="Ruta de navegación" class="text-caption text-muted-foreground">
+          <ol class="flex flex-wrap items-center gap-2">
+            <li>
+              <a
+                href="/#proyectos"
+                class="rounded-sm underline-offset-4 hover:text-foreground hover:underline"
+              >
+                Proyectos
+              </a>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li aria-current="page" class="text-foreground">{data.cardTitle}</li>
+          </ol>
+        </nav>
+
+        <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.55fr)] lg:items-start">
+          <div class="flex flex-col gap-5">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="font-mono text-label uppercase tracking-widest text-primary">
+                {categoryLabels[data.category]}
+              </span>
+              <StatusBadge status={data.status} />
+            </div>
+
+            <h1
+              id="caso-titulo"
+              class="max-w-[24ch] text-balance text-[clamp(2rem,4.5vw,3.6rem)] font-semibold leading-[1.08] tracking-[-0.03em] text-foreground"
+            >
+              {data.title}
+            </h1>
+
+            <p class="max-w-measure text-lead text-muted-foreground">{data.summary}</p>
+
+            <p class="font-mono text-caption text-muted-foreground">
+              Última revisión: {reviewedAt} · {stageLabels[data.caseStudyStage]}
+            </p>
+          </div>
+
+          {
+            image ? (
+              <figure class="flex flex-col gap-3">
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  width="320"
+                  height="180"
+                  loading="eager"
+                  decoding="async"
+                  class="aspect-[16/9] w-full rounded-xl border border-border object-cover"
+                />
+                <figcaption class="text-caption text-muted-foreground">
+                  Abstracción original del proyecto. No es una captura del producto.
+                </figcaption>
+              </figure>
+            ) : (
+              <Surface variant="outline" class="text-sm text-muted-foreground">
+                Este caso no incluye una imagen pública autorizada.
+              </Surface>
+            )
+          }
+        </div>
+
+        {
+          data.technologies.length > 0 && (
+            <div class="mt-8 flex flex-col gap-3 border-t border-border pt-6">
+              <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+                Stack tecnológico
+              </p>
+              <ul class="flex flex-wrap gap-2" aria-label="Tecnologías del proyecto">
+                {data.technologies.map((technology) => (
+                  <li>
+                    <TechBadge label={technology} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </Container>
+    </header>
+
+    <Container class="grid gap-10 py-12 sm:py-16 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-16">
+      <div class="min-w-0">
+        {
+          data.facts && data.facts.length > 0 && (
+            <section aria-labelledby="indicadores-titulo" class="mb-12">
+              <div class="flex flex-col gap-2">
+                <p class="font-mono text-label uppercase tracking-widest text-primary">
+                  Indicadores
+                </p>
+                <h2 id="indicadores-titulo" class="text-title font-semibold text-foreground">
+                  Datos agregados autorizados
+                </h2>
+                <p class="max-w-measure text-sm text-muted-foreground">
+                  Cifras proporcionadas y autorizadas por el propietario del proyecto. No
+                  constituyen una auditoría externa. Cada indicador conserva su nota de
+                  procedencia, la fecha de referencia cuando existe y su alcance.
+                </p>
+              </div>
+
+              <dl class="mt-5 grid gap-3 sm:grid-cols-2">
+                {data.facts.map((fact) => (
+                  <Surface as="div" variant="outline" class="flex flex-col gap-1.5">
+                    <dt class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+                      {fact.label}
+                    </dt>
+                    <dd class="flex flex-col gap-1">
+                      <span class="text-2xl font-semibold text-foreground">{fact.value}</span>
+                      <span class="text-caption leading-relaxed text-muted-foreground">
+                        {fact.evidenceNote}
+                      </span>
+                    </dd>
+                  </Surface>
+                ))}
+              </dl>
+            </section>
+          )
+        }
+
+        <div class="case-study-prose">
+          <slot />
+        </div>
+
+        <div class="mt-12 border-t border-border pt-6">
+          <ButtonLink href="/#proyectos" variant="secondary">Volver a proyectos</ButtonLink>
+        </div>
+      </div>
+
+      <aside class="flex flex-col gap-4" aria-label="Resumen del caso">
+        <Surface variant="default" class="flex flex-col gap-4">
+          <h2 class="text-title font-semibold text-foreground">Ficha del caso</h2>
+          <dl class="flex flex-col gap-3 text-sm">
+            <div class="flex flex-col gap-1">
+              <dt class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+                Naturaleza
+              </dt>
+              <dd class="text-foreground">{categoryLabels[data.category]}</dd>
+            </div>
+            <div class="flex flex-col gap-1">
+              <dt class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+                Estado
+              </dt>
+              <dd class="text-foreground">
+                <StatusBadge status={data.status} />
+              </dd>
+            </div>
+            <div class="flex flex-col gap-1">
+              <dt class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+                Repositorio
+              </dt>
+              <dd class="text-foreground">Privado</dd>
+            </div>
+            <div class="flex flex-col gap-1">
+              <dt class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+                Nivel de documentación
+              </dt>
+              <dd class="text-foreground">{stageLabels[data.caseStudyStage]}</dd>
+            </div>
+          </dl>
+        </Surface>
+
+        <Surface variant="raised" class="flex flex-col gap-3 text-sm text-muted-foreground">
+          <h2 class="text-title font-semibold text-foreground">Evidencia</h2>
+          <p>
+            La imagen del encabezado es una abstracción original. No se publican capturas,
+            documentos, contratos ni datos de clientes.
+          </p>
+          <p>Las capacidades descritas corresponden a información confirmada por el autor.</p>
+        </Surface>
+
+        <Surface variant="outline" class="flex flex-col gap-3 text-sm text-muted-foreground">
+          <h2 class="text-title font-semibold text-foreground">Lectura del caso</h2>
+          <p>
+            El alcance, las decisiones y las limitaciones se detallan en el cuerpo. No se
+            presentan objetivos futuros como funcionalidades entregadas.
+          </p>
+        </Surface>
+      </aside>
+    </Container>
+  </article>
+</BaseLayout>

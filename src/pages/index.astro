@@ -311,7 +311,7 @@ const contactChannels = socialLinks;
         number="03"
         label="Proyectos"
         title="Productos construidos sobre problemas concretos"
-        description="Cuatro proyectos con información aprobada para su presentación pública. Los casos de estudio completos se publicarán cuando su revisión editorial esté cerrada."
+        description="Cuatro proyectos con información aprobada para su presentación pública. Los casos de estudio completos están disponibles para su lectura."
       />
 
       <div class="grid gap-6 md:grid-cols-2">
@@ -323,6 +323,7 @@ const contactChannels = socialLinks;
               category={project.category}
               status={project.status}
               technologies={project.technologies}
+              href={project.href}
               image={project.image}
             />
           ))
@@ -330,8 +331,8 @@ const contactChannels = socialLinks;
       </div>
 
       <p class="text-caption text-muted-foreground">
-        Las tarjetas muestran únicamente nombres, categorías, estados y resúmenes aprobados. No se
-        enlazan casos de estudio que todavía no están disponibles.
+        Las tarjetas muestran nombres, categorías, estados y resúmenes aprobados. Solo se enlazan
+        casos de estudio con publicación autorizada.
       </p>
     </div>
   </Container>

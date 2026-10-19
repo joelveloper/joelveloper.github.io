@@ -10,6 +10,11 @@ export const mainNavigation: NavItem[] = [
   { label: 'Contacto', href: '#contacto' },
 ];
 
+export const detailNavigation: NavItem[] = mainNavigation.map((item) => ({
+  ...item,
+  href: item.href.startsWith('#') ? `/${item.href}` : item.href,
+}));
+
 export const contactLinks: ProfileLink[] = [
   { label: 'Correo', href: emailHref, external: false },
   ...socialLinks,
