@@ -7,15 +7,23 @@ export interface ProfileLink {
 export const profile = {
   name: 'Joel Cantero',
   monogram: 'JC',
-  role: 'Software Developer',
+  role: 'Full Stack .NET Developer',
   location: 'Asunción, Paraguay',
+  headline: 'Software para problemas reales. Diseñado para evolucionar.',
+  description:
+    'Desarrollo soluciones empresariales de extremo a extremo, desde el análisis del problema y el diseño de arquitectura hasta la implementación, seguridad y despliegue. Especializado en C#, .NET y tecnologías web.',
+  availability: 'Abierto a oportunidades profesionales y colaboraciones',
   email: 'alfonzojoel@hotmail.com',
   github: 'https://github.com/joelveloper',
   youtube: 'https://www.youtube.com/@joeldeveloper',
   instagram: 'https://www.instagram.com/joel.developer',
+  continuingEducation: {
+    title: 'Diplomado en Ingeniería de Software Aplicada',
+    status: 'En curso',
+  },
   initiative: {
     name: 'Oñondive Software Solutions',
-    note: 'Iniciativa e identidad en construcción. No es una entidad legal anunciada.',
+    note: 'Iniciativa en construcción.',
   },
 } as const;
 

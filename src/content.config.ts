@@ -17,6 +17,7 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/projects' }),
   schema: z.object({
     title: z.string().min(3).max(120),
+    cardTitle: z.string().min(1).max(40),
     summary: z.string().min(80).max(280),
     category: z.enum(['saas', 'client']),
     status: z.enum(['production', 'development', 'prelaunch']),
@@ -24,6 +25,7 @@ const projects = defineCollection({
     technologies: z.array(z.string().min(1)).default([]),
     repositoryVisibility: z.literal('private'),
     caseStudyStage: z.enum(['outline', 'documented', 'verified']),
+    cardApproved: z.boolean(),
     publicApproved: z.boolean(),
     externalUrl: httpsUrl.optional(),
     image: z
