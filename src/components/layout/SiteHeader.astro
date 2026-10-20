@@ -1,5 +1,7 @@
 ---
 import Container from '@/components/layout/Container.astro';
+import MobileNavigation from '@/components/layout/MobileNavigation.astro';
+import ThemeSwitcher from '@/components/layout/ThemeSwitcher.astro';
 import { profile } from '@/data/profile';
 
 export interface NavItem {
@@ -25,8 +27,8 @@ const linkClass =
   'inline-block rounded-sm py-1 text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline';
 ---
 
-<header class="border-b border-border bg-background">
-  <Container class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4">
+<header class="fixed inset-x-0 top-0 z-40 border-b border-border bg-background">
+  <Container class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 py-4 lg:gap-x-6">
     <a href={brandHref} class="group inline-flex items-center gap-3 rounded-sm">
       <span
         aria-hidden="true"
@@ -38,8 +40,8 @@ const linkClass =
 
     {
       nav.length > 0 && (
-        <nav aria-label="Navegación principal">
-          <ul class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+        <nav aria-label="Navegación principal" class="hidden md:block">
+          <ul class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm lg:gap-x-5">
             {nav.map((item) => (
               <li>
                 <a href={item.href} class={linkClass}>
@@ -51,5 +53,10 @@ const linkClass =
         </nav>
       )
     }
+
+    <div class="flex items-center gap-2">
+      <ThemeSwitcher />
+      <MobileNavigation nav={nav} siteName={siteName} monogram={monogram} brandHref={brandHref} />
+    </div>
   </Container>
 </header>

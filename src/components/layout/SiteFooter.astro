@@ -5,10 +5,9 @@ import { profile } from '@/data/profile';
 
 interface Props {
   siteName?: string;
-  year?: number;
 }
 
-const { siteName = profile.name, year = new Date().getFullYear() } = Astro.props;
+const { siteName = profile.name } = Astro.props;
 
 const linkClass =
   'inline-block rounded-sm py-1 text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline';
@@ -17,8 +16,8 @@ const linkClass =
 <footer class="mt-20 border-t border-border bg-surface">
   <Container class="flex flex-col gap-8 py-12 lg:flex-row lg:items-start lg:justify-between">
     <div class="flex max-w-measure flex-col gap-3">
-      <p class="font-mono text-label uppercase tracking-widest text-primary">Joel Cantero</p>
-      <p class="text-title font-semibold text-foreground">{siteName} · {profile.role}</p>
+      <p class="font-mono text-label uppercase tracking-widest text-primary">{profile.role}</p>
+      <p class="text-title font-semibold text-foreground">{siteName}</p>
       <p class="text-sm text-muted-foreground">
         Software para problemas reales. Aplicaciones empresariales, plataformas SaaS y
         automatización documental.
@@ -43,11 +42,5 @@ const linkClass =
         }
       </ul>
     </nav>
-  </Container>
-
-  <Container class="border-t border-border py-6">
-    <p class="text-caption text-muted-foreground">
-      &copy; {year} {siteName}. Todos los derechos reservados.
-    </p>
   </Container>
 </footer>

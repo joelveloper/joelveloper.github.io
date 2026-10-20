@@ -15,12 +15,30 @@ const { title, description, nav = [], brandHref = '/' } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es" class="dark scroll-smooth">
+<html lang="es" data-appearance="system" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const key = 'appearance';
+        let preference = 'system';
+
+        try {
+          const stored = window.localStorage.getItem(key);
+          if (stored === 'light' || stored === 'dark' || stored === 'system') {
+            preference = stored;
+          }
+        } catch {
+        }
+
+        root.dataset.appearance = preference;
+        if (preference !== 'system') root.classList.add(preference);
+      })();
+    </script>
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
   </head>

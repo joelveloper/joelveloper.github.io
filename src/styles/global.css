@@ -76,27 +76,35 @@
 }
 
 /*
- * Tema único oscuro (dark-first). Los valores viven en una sola declaración
- * compartida por :root y .dark para no mantener dos paletas paralelas.
- * `<html class="dark">` se aplica en BaseLayout para habilitar la variante
- * `dark:` de Tailwind sin cambiar de tema en tiempo de ejecución.
+ * Tema claro, oscuro y automático.
+ *
+ * `color-scheme: light dark` permite que `light-dark()` resuelva cada token
+ * según la preferencia del sistema cuando no existe una elección manual.
+ * Las clases `.light` y `.dark` fuerzan una preferencia concreta; un script
+ * mínimo en el <head> las aplica antes del primer pintado.
  */
-:root,
-.dark {
-    color-scheme: dark;
+:root {
+    color-scheme: light dark;
     --radius: 0.625rem;
 
-    /* Fuente única de verdad cromática (valores objetivo de docs/02-DISENO-VISUAL.md) */
-    --background: oklch(0.1725 0.0205 261.91);        /* #0B1019 */
-    --surface: oklch(0.2164 0.0308 259.01);           /* #111A28 */
-    --surface-raised: oklch(0.2563 0.0411 261.83);    /* #182337 */
-    --foreground: oklch(0.9726 0.0086 264.52);        /* #F3F6FC */
-    --muted-foreground: oklch(0.8128 0.0322 257.25);  /* #B5C3D7 */
-    --border: oklch(0.3760 0.0406 258.33);            /* #344257 */
-    --brand: oklch(0.7817 0.1105 261.98);             /* #91B8FF */
-    --brand-foreground: oklch(0.1725 0.0205 261.91);  /* #0B1019 */
-    --positive: oklch(0.8247 0.1098 173.90);          /* #70DDC0 */
-    --positive-foreground: oklch(0.1725 0.0205 261.91);
+    /* Altura del header fijo: 2.75rem de control + 2rem de padding + 1px de borde. */
+    --site-header-height: calc(4.75rem + 1px);
+
+    /*
+     * Fuente única de verdad cromática por tema.
+     * Primero el valor claro; después el oscuro. Los valores oscuros
+     * conservan la identidad visual definida en docs/02-DISENO-VISUAL.md.
+     */
+    --background: light-dark(#f8fafc, oklch(0.1725 0.0205 261.91));
+    --surface: light-dark(#ffffff, oklch(0.2164 0.0308 259.01));
+    --surface-raised: light-dark(#f0f4fa, oklch(0.2563 0.0411 261.83));
+    --foreground: light-dark(#152238, oklch(0.9726 0.0086 264.52));
+    --muted-foreground: light-dark(#465670, oklch(0.8128 0.0322 257.25));
+    --border: light-dark(#cad4e2, oklch(0.3760 0.0406 258.33));
+    --brand: light-dark(#2557a7, oklch(0.7817 0.1105 261.98));
+    --brand-foreground: light-dark(#ffffff, oklch(0.1725 0.0205 261.91));
+    --positive: light-dark(#17674f, oklch(0.8247 0.1098 173.90));
+    --positive-foreground: light-dark(#ffffff, oklch(0.1725 0.0205 261.91));
 
     /* Tokens semánticos shadcn/ui derivados de la paleta */
     --card: var(--surface);
@@ -110,14 +118,14 @@
     --muted: var(--surface);
     --accent: var(--surface-raised);
     --accent-foreground: var(--foreground);
-    --destructive: oklch(0.704 0.191 22.216);
+    --destructive: light-dark(#b42318, oklch(0.704 0.191 22.216));
     --input: var(--border);
     --ring: var(--brand);
-    --chart-1: oklch(0.7817 0.1105 261.98);
-    --chart-2: oklch(0.8247 0.1098 173.90);
-    --chart-3: oklch(0.7000 0.0900 250.00);
-    --chart-4: oklch(0.6200 0.0800 240.00);
-    --chart-5: oklch(0.5200 0.0700 235.00);
+    --chart-1: var(--brand);
+    --chart-2: var(--positive);
+    --chart-3: light-dark(#6b7fa3, oklch(0.7000 0.0900 250.00));
+    --chart-4: light-dark(#8a9ab5, oklch(0.6200 0.0800 240.00));
+    --chart-5: light-dark(#a7b4c8, oklch(0.5200 0.0700 235.00));
     --sidebar: var(--surface);
     --sidebar-foreground: var(--foreground);
     --sidebar-primary: var(--brand);
@@ -128,16 +136,31 @@
     --sidebar-ring: var(--brand);
 }
 
+:root.light {
+    color-scheme: light;
+}
+
+:root.dark {
+    color-scheme: dark;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
     }
   html {
     @apply font-sans antialiased;
+    scroll-padding-top: calc(var(--site-header-height) + 1rem);
     }
   body {
     @apply bg-background text-foreground;
     min-height: 100dvh;
+    }
+  main {
+    padding-top: var(--site-header-height);
+    }
+  body:has([data-mobile-nav-dialog][open]) {
+    overflow: hidden;
     }
   :focus-visible {
     outline: 2px solid var(--ring);
@@ -150,6 +173,68 @@
 }
 
 @layer components {
+  /*
+   * Icono del selector de apariencia. Sin JavaScript, el atributo del <html>
+   * permanece en «system», de modo que el control muestra el monitor y el CSS
+   * sigue la preferencia del sistema operativo.
+   */
+  [data-theme-icon] {
+    display: none;
+  }
+
+  :root[data-appearance='system'] [data-theme-icon='system'],
+  :root[data-appearance='light'] [data-theme-icon='light'],
+  :root[data-appearance='dark'] [data-theme-icon='dark'] {
+    display: block;
+  }
+
+  /*
+   * Ilustraciones de proyecto: la variante clara solo sustituye a la oscura
+   * cuando existe una variante clara generada y el tema efectivo es claro.
+   * `display: none` retira la variante oculta del layout y del árbol de
+   * accesibilidad. Sin JavaScript, el tema Sistema sigue al SO mediante
+   * `prefers-color-scheme`.
+   */
+  .project-illustration-light {
+    display: none;
+  }
+
+  :root[data-appearance='light'] .project-illustration-light {
+    display: block;
+  }
+
+  :root[data-appearance='light'] .project-illustration-dark {
+    display: none;
+  }
+
+  :root[data-appearance='dark'] .project-illustration-light {
+    display: none;
+  }
+
+  :root[data-appearance='dark'] .project-illustration-dark {
+    display: block;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root[data-appearance='system'] .project-illustration-light {
+      display: block;
+    }
+
+    :root[data-appearance='system'] .project-illustration-dark {
+      display: none;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root[data-appearance='system'] .project-illustration-light {
+      display: none;
+    }
+
+    :root[data-appearance='system'] .project-illustration-dark {
+      display: block;
+    }
+  }
+
   .case-study-prose {
     max-width: 68ch;
     color: var(--muted-foreground);
@@ -245,6 +330,41 @@
   .case-study-prose hr {
     margin-block: 2rem;
     border-color: var(--border);
+  }
+}
+
+/*
+ * Interacción compartida de las tarjetas de Especialidades, Proyectos y
+ * Cómo trabajo. Las reglas viven fuera de las capas para que el color de borde
+ * pueda sustituir a la utilidad `border-border` sin usar `!important`.
+ * El desplazamiento solo se aplica en punteros con hover.
+ */
+.portfolio-card-hover {
+  transition:
+    transform 200ms ease-out,
+    border-color 200ms ease-out;
+}
+
+.portfolio-card-hover:focus-within {
+  border-color: color-mix(in oklab, var(--primary) 55%, var(--border));
+}
+
+@media (hover: hover) {
+  .portfolio-card-hover:hover,
+  .portfolio-card-hover:focus-within {
+    border-color: color-mix(in oklab, var(--primary) 55%, var(--border));
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-card-hover {
+    transition: none;
+  }
+
+  .portfolio-card-hover:hover,
+  .portfolio-card-hover:focus-within {
+    transform: none;
   }
 }
 

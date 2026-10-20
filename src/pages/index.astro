@@ -43,22 +43,22 @@ const processSteps = [
   {
     title: 'Comprender el problema',
     description:
-      'Escuchar el contexto, las restricciones y el resultado esperado antes de elegir una solución.',
+      'Escucho el contexto, las restricciones y el resultado esperado antes de elegir una solución.',
   },
   {
     title: 'Modelar la solución',
     description:
-      'Definir alcance, datos, reglas y límites; elegir una arquitectura que pueda evolucionar.',
+      'Defino alcance, datos, reglas y límites; elijo una arquitectura que pueda evolucionar.',
   },
   {
     title: 'Implementar',
     description:
-      'Construir de extremo a extremo, cuidando seguridad, mantenibilidad y experiencia de uso.',
+      'Construyo de extremo a extremo, cuidando seguridad, mantenibilidad y experiencia de uso.',
   },
   {
     title: 'Validar y mejorar',
     description:
-      'Probar con casos reales, revisar las decisiones y ajustar según lo aprendido.',
+      'Pruebo con casos reales, reviso las decisiones y ajusto según lo aprendido.',
   },
 ];
 
@@ -172,7 +172,7 @@ const contactChannels = socialLinks;
     </Container>
   </section>
 
-  <Container as="section" id="sobre-mi" class="scroll-mt-24 py-16 sm:py-20 lg:py-24">
+  <Container as="section" id="sobre-mi" class="py-16 sm:py-20 lg:py-24">
     <div class="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16">
       <div class="flex flex-col gap-8">
         <SectionHeading
@@ -184,15 +184,15 @@ const contactChannels = socialLinks;
         <div class="flex max-w-measure flex-col gap-5 text-muted-foreground">
           <p>
             Empecé desarrollando proyectos personales de aprendizaje. En 2020 desarrollé una
-            aplicación de escritorio que se comercializó para la gestión de archivos de auditoría;
-            ese trabajo fue el origen de SGAA.
+            aplicación de escritorio que comercialicé para la gestión de archivos de auditoría; ese
+            trabajo fue el origen de SGAA.
           </p>
           <p>
-            Desde entonces, SGAA evolucionó hacia una plataforma web de gestión de auditoría y
-            aseguramiento, comercializada desde agosto de 2025. Trabajé de extremo a extremo:
-            investigación, arquitectura, modelado, backend, frontend, infraestructura y despliegue,
-            con colaboración puntual de profesionales de auditoría para comprender las necesidades
-            funcionales.
+            Desde entonces he trabajado en su evolución hacia una plataforma web de gestión de
+            auditoría y aseguramiento, comercializada desde agosto de 2025. Me encargué del
+            proceso de extremo a extremo: investigación, arquitectura, modelado, backend,
+            frontend, infraestructura y despliegue. Colaboré con profesionales de auditoría para
+            comprender las necesidades funcionales.
           </p>
           <p>
             Me motiva crear software con identidad propia que resuelva problemas reales, cuidando
@@ -218,13 +218,13 @@ const contactChannels = socialLinks;
             <li class="grid gap-1 border-l border-border pl-4">
               <span class="font-mono text-label text-primary">Agosto 2025</span>
               <span class="text-sm text-foreground">
-                Comienza la comercialización de la plataforma web SGAA.
+                Comencé la comercialización de la plataforma web SGAA.
               </span>
             </li>
             <li class="grid gap-1 border-l border-border pl-4">
               <span class="font-mono text-label text-primary">Actualidad</span>
               <span class="text-sm text-foreground">
-                SGAA en producción, AuditaPy en desarrollo y nuevos proyectos en curso.
+                Mantengo SGAA en producción y desarrollo AuditaPy.
               </span>
             </li>
           </ol>
@@ -241,7 +241,7 @@ const contactChannels = socialLinks;
     </div>
   </Container>
 
-  <section id="especialidades" class="scroll-mt-24 border-y border-border bg-surface/40">
+  <section id="especialidades" class="border-y border-border bg-surface/40">
     <Container class="py-16 sm:py-20 lg:py-24">
       <div class="flex flex-col gap-10">
         <SectionHeading
@@ -254,7 +254,12 @@ const contactChannels = socialLinks;
         <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {
             specialties.map((specialty, index) => (
-              <Surface as="article" variant="default" padding="md" class="flex h-full flex-col gap-4">
+              <Surface
+                as="article"
+                variant="default"
+                padding="md"
+                class="portfolio-card-hover flex h-full flex-col gap-4"
+              >
                 <span class="font-mono text-label text-primary">
                   {String(index + 1).padStart(2, '0')}
                 </span>
@@ -279,7 +284,15 @@ const contactChannels = socialLinks;
           </p>
         </Surface>
 
-        <div class="grid gap-6 border-t border-border pt-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="flex items-center gap-3">
+          <span aria-hidden="true" class="hidden h-px w-8 shrink-0 bg-border sm:block"></span>
+          <p class="shrink-0 font-mono text-[0.6875rem] tracking-wide text-muted-foreground sm:text-label">
+            Tecnologías con las que he trabajado
+          </p>
+          <span aria-hidden="true" class="h-px min-w-0 flex-1 bg-border"></span>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {
             technologyGroups.map((group) => (
               <div class="flex flex-col gap-3">
@@ -297,21 +310,16 @@ const contactChannels = socialLinks;
             ))
           }
         </div>
-        <p class="text-caption text-muted-foreground">
-          Tecnologías con las que he trabajado. El nivel de profundidad varía según el proyecto y
-          el contexto.
-        </p>
       </div>
     </Container>
   </section>
 
-  <Container as="section" id="proyectos" class="scroll-mt-24 py-16 sm:py-20 lg:py-24">
+  <Container as="section" id="proyectos" class="py-16 sm:py-20 lg:py-24">
     <div class="flex flex-col gap-10">
       <SectionHeading
         number="03"
         label="Proyectos"
         title="Productos construidos sobre problemas concretos"
-        description="Cuatro proyectos con información aprobada para su presentación pública. Los casos de estudio completos están disponibles para su lectura."
       />
 
       <div class="grid gap-6 md:grid-cols-2">
@@ -329,15 +337,10 @@ const contactChannels = socialLinks;
           ))
         }
       </div>
-
-      <p class="text-caption text-muted-foreground">
-        Las tarjetas muestran nombres, categorías, estados y resúmenes aprobados. Solo se enlazan
-        casos de estudio con publicación autorizada.
-      </p>
     </div>
   </Container>
 
-  <section id="proceso" class="scroll-mt-24 border-y border-border bg-surface/40">
+  <section id="proceso" class="border-y border-border bg-surface/40">
     <Container class="py-16 sm:py-20 lg:py-24">
       <div class="flex flex-col gap-10">
         <SectionHeading
@@ -350,7 +353,12 @@ const contactChannels = socialLinks;
         <ol class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {
             processSteps.map((step, index) => (
-              <Surface as="li" variant="default" padding="md" class="flex h-full flex-col gap-4">
+              <Surface
+                as="li"
+                variant="default"
+                padding="md"
+                class="portfolio-card-hover flex h-full flex-col gap-4"
+              >
                 <div class="flex items-center justify-between gap-3">
                   <span class="font-mono text-label text-primary">
                     {String(index + 1).padStart(2, '0')}
@@ -379,13 +387,17 @@ const contactChannels = socialLinks;
         {profile.initiative.name} — {profile.initiative.note}
       </h2>
       <p class="max-w-measure text-sm text-muted-foreground">
-        Un espacio personal en definición. No es una empresa constituida ni representa la
-        titularidad de los proyectos presentados, que mantienen su propio contexto.
+        Estoy dando forma a Oñondive, una iniciativa con la que quiero desarrollar soluciones
+        tecnológicas para necesidades reales del mercado paraguayo.
+      </p>
+      <p class="max-w-measure text-sm text-muted-foreground">
+        Mi objetivo es construir software útil, pensado para evolucionar y crecer con quienes lo
+        utilizan.
       </p>
     </section>
   </Container>
 
-  <section id="contacto" class="scroll-mt-24 border-t border-border bg-surface">
+  <section id="contacto" class="border-t border-border bg-surface">
     <Container class="py-16 sm:py-20 lg:py-24">
       <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-16">
         <div class="flex flex-col gap-6">

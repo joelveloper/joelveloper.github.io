@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180">
+  <rect width="320" height="180" fill="#F8FAFC" />
+  <g fill="#FFFFFF" stroke="#CAD4E2" stroke-width="1.5">
+    <rect x="44" y="48" width="38" height="24" rx="5" />
+    <rect x="88" y="48" width="38" height="24" rx="5" />
+    <rect x="132" y="48" width="38" height="24" rx="5" />
+    <rect x="176" y="48" width="38" height="24" rx="5" />
+    <rect x="220" y="48" width="38" height="24" rx="5" />
+    <rect x="264" y="48" width="38" height="24" rx="5" />
+    <rect x="44" y="80" width="38" height="24" rx="5" />
+    <rect x="88" y="80" width="38" height="24" rx="5" />
+    <rect x="132" y="80" width="38" height="24" rx="5" />
+    <rect x="220" y="80" width="38" height="24" rx="5" />
+    <rect x="264" y="80" width="38" height="24" rx="5" />
+    <rect x="44" y="112" width="38" height="24" rx="5" />
+    <rect x="88" y="112" width="38" height="24" rx="5" />
+    <rect x="132" y="112" width="38" height="24" rx="5" />
+    <rect x="176" y="112" width="38" height="24" rx="5" />
+    <rect x="220" y="112" width="38" height="24" rx="5" />
+    <rect x="264" y="112" width="38" height="24" rx="5" />
+  </g>
+  <rect x="176" y="80" width="38" height="24" rx="5" fill="#F0F4FA" stroke="#17674F" stroke-width="2" />
+  <path d="M195 74v36" stroke="#17674F" stroke-width="1.5" stroke-dasharray="3 3" />
+</svg>

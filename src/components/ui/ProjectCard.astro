@@ -1,5 +1,6 @@
 ---
 import ButtonLink from '@/components/ui/ButtonLink.astro';
+import ProjectIllustration from '@/components/ui/ProjectIllustration.astro';
 import StatusBadge from '@/components/ui/StatusBadge.astro';
 import Surface from '@/components/ui/Surface.astro';
 import TechBadge from '@/components/ui/TechBadge.astro';
@@ -49,15 +50,13 @@ const remainingTechnologies = Math.max(technologies.length - visibleTechnologies
   as="article"
   variant="default"
   padding="md"
-  class:list={['flex h-full flex-col gap-5', className]}
+  class:list={['portfolio-card-hover flex h-full flex-col gap-5', className]}
 >
   {
     image && (
-      <img
-        src={image.src}
-        alt={image.alt}
+      <ProjectIllustration
+        image={image}
         loading="lazy"
-        decoding="async"
         class="aspect-[16/9] w-full rounded-lg border border-border object-cover"
       />
     )
