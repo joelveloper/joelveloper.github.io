@@ -1,9 +1,13 @@
 # PRD — Portafolio Profesional de Joel Cantero
 
-**Versión:** 1.1  
-**Fecha:** 2026-10-18 · **Revisión:** 2026-10-20 (reorientación a marca personal, ver [`adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md`](adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md))  
-**Producto:** portafolio personal  
-**Responsable de decisiones:** Joel Cantero  
+**Versión:** 1.2
+
+**Fecha:** 2026-10-18 · **Revisión:** 2026-10-20 (reorientación a marca personal y presentación personal aprobada para el Hero, ver [`adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md`](adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md))
+
+**Producto:** portafolio personal
+
+**Responsable de decisiones:** Joel Cantero
+
 **Repositorio propuesto:** `joelveloper.github.io`
 
 ## 1. Problema y oportunidad
@@ -20,7 +24,7 @@ Una web personal que presente a **Joel Cantero como persona**: Desarrollador Ful
 
 ### 2.2 Propuesta de valor
 
-Conocer a Joel y lo que sabe hacer, contado en primera persona y con hechos verificables:
+La propuesta de valor es **Joel Cantero**, no un producto: conocer a Joel y lo que sabe hacer, contado en primera persona y con hechos verificables. La presentación personal aprobada del Hero (§2.5) la resume.
 
 - **Trayectoria autodidacta:** aprendió a programar por su cuenta y llegó a construir software usado en producción.
 - **Experiencia real en C#/.NET:** sistemas de gestión y de auditoría, como SGAA (nacido como aplicación de escritorio en 2020 y hoy plataforma web en producción) y AuditaPy (su evolución, en desarrollo).
@@ -30,13 +34,25 @@ Conocer a Joel y lo que sabe hacer, contado en primera persona y con hechos veri
 ### 2.3 Tono y vocabulario
 
 - **Primera persona, natural y directa.** Explicar qué hace y cómo trabaja, sin adornos.
-- **Sin discurso comercial:** quedan retirados los eslóganes de producto SaaS o de *startup pitch*, por ejemplo «Software para problemas reales. Diseñado para evolucionar.» o «Software para procesos complejos. Diseñado con criterio».
+- **Precisión técnica y experiencia verificable:** interés por la calidad del software, sin exageraciones sobre experiencia, resultados o proyectos.
+- **Sin discurso comercial:** quedan retirados los eslóganes de producto SaaS o de *startup pitch*, el marketing corporativo y los eslóganes vacíos, por ejemplo «Software para problemas reales. Diseñado para evolucionar.» o «Software para procesos complejos. Diseñado con criterio».
 - **Vocabulario simple en contacto:** no usar «profesional» como adjetivo de relleno en etiquetas. «Correo profesional» pasa a «Correo»; «Contacto profesional» pasa a «Hablemos».
 - Se mantiene la regla general: no inventar métricas, clientes, testimonios, años de experiencia ni certificaciones.
 
 ### 2.4 Disponibilidad
 
 **Confirmada por el propietario el 2026-10-20:** Joel está abierto a **oportunidades profesionales y proyectos a tiempo parcial**. Puede mostrarse en el sitio con esa formulación, sin ampliarla (por ejemplo, no afirmar disponibilidad inmediata ni a tiempo completo).
+
+### 2.5 Presentación personal aprobada (Hero)
+
+**Aprobada por el propietario el 2026-10-20.** Es la versión oficial para la implementación del Hero (T11):
+
+- **Identificador profesional (secundario):** «Full Stack .NET Developer».
+- **Encabezado principal:** «Hola, soy Joel Cantero.»
+- **Texto introductorio:** «Construyo aplicaciones web y sistemas de gestión con C# y .NET. Me apasiona resolver problemas reales mediante código bien estructurado, desde la arquitectura hasta el despliegue.»
+- **CTA principal:** «Hablemos». **CTA secundario:** «Ver mis proyectos». Ambos reutilizan los destinos reales existentes.
+
+Este texto no se reescribe por iniciativa propia durante T09, T10, T11 ni T12, ni se sustituye por frases genéricas sobre aprendizaje, creatividad, innovación o pasión por la tecnología. Los problemas de longitud o de presentación responsive se resuelven con diseño (tipografía, anchura, distribución), no con cambios de contenido. Composición y reglas visuales: `02-DISENO-VISUAL.md §2 y §6`.
 
 ## 3. Usuarios objetivo y necesidades
 

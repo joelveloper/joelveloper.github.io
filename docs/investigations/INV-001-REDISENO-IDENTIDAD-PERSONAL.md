@@ -5,6 +5,7 @@
 - **Rama de análisis:** `feat/t08-github-pages-cicd`
 - **Commit de partida:** `89cd826` (árbol limpio; 1 commit por delante de `main`, T08 aún sin integrar).
 - **Estado:** propuesta pendiente de validación por el propietario. Ninguna decisión aquí descrita está aprobada.
+- **Nota de precedencia (añadida el 2026-10-20, sin alterar el análisis):** las decisiones aprobadas constan en [`../adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md`](../adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md), que **prevalece** sobre las alternativas aquí evaluadas. En particular, la identidad cromática aprobada es Cobre Mineral + Zinc (no el azul ni otro acento), el fondo es de puntos y el texto del Hero es el de `../01-PRD.md §2.5`. Los borradores de copy de §3.1 y los colores del ejemplo de §4.3 siguen siendo propuestas históricas, no decisiones.
 
 ## Fuentes consultadas
 

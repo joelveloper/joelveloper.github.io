@@ -1,8 +1,11 @@
 # Especificación de diseño visual — JC Portfolio
 
-**Versión:** 1.1 · 2026-10-18 · **Revisión:** 2026-10-20 (rediseño de identidad personal, ver [`adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md`](adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md))  
-**Inspiración:** https://fullstackhero.net/  
-**Regla:** inspiración visual y de comunicación, nunca clonación de FullStackHero.  
+**Versión:** 1.2 · 2026-10-18 · **Revisión:** 2026-10-20 (rediseño de identidad personal; consolidación de la identidad cromática Cobre Mineral + Zinc y del texto aprobado del Hero, ver [`adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md`](adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md))
+
+**Inspiración:** https://fullstackhero.net/
+
+**Regla:** inspiración visual y de comunicación, nunca clonación de FullStackHero.
+
 **Investigación de soporte:** [`investigations/INV-001-REDISENO-IDENTIDAD-PERSONAL.md`](investigations/INV-001-REDISENO-IDENTIDAD-PERSONAL.md)
 
 ## 1. Dirección creativa
@@ -20,40 +23,99 @@
 ### No tomar
 
 - Logotipo, marca, código CSS/React, iconografía exclusiva, ilustraciones, textos, banners, elementos distintivos o composición exacta de FSH.
-- Los valores cromáticos de acento de FSH: el acento cálido de este sitio se define con valores propios (§3).
+- Los valores cromáticos de acento de FSH: el acento de este sitio es el cobre propio definido en §3. La referencia a FSH se limita a contraste, composición, espaciado y sutileza.
 - Métricas falsas (estrellas, commits, clientes, años, evaluaciones) para rellenar.
 - Copias exactas de terminales de ejemplo o fotografías sin licencia.
 
 ## 2. Identidad de Joel Cantero
 
-**Nombre de display:** Joel Cantero.  
-**Kicker:** «DESARROLLADOR FULL STACK .NET · ASUNCIÓN, PARAGUAY».  
-**Titular (H1):** «Hola, soy Joel Cantero».  
-**Bajada (2 líneas):** en primera persona, sobre su trayectoria autodidacta y su trabajo con C#/.NET en sistemas de gestión y auditoría. Texto final a aprobar en T11/T12 según `01-PRD.md §2`.  
-**CTA principal:** «Hablemos».  
-**CTA secundario:** «Ver proyectos», más enlaces a redes (GitHub, YouTube, Instagram).  
+**Nombre de display:** Joel Cantero.
+
+**Identificador profesional:** «Full Stack .NET Developer». Visualmente secundario respecto de la presentación personal (tamaño, peso y color neutros; no compite con el H1).
+
+**Encabezado principal (H1):** «Hola, soy Joel Cantero.»
+
+**Texto introductorio:** «Construyo aplicaciones web y sistemas de gestión con C# y .NET. Me apasiona resolver problemas reales mediante código bien estructurado, desde la arquitectura hasta el despliegue.»
+
+**CTA principal:** «Hablemos».
+
+**CTA secundario:** «Ver mis proyectos», más enlaces a redes (GitHub, YouTube, Instagram).
+
 **Disponibilidad:** «Abierto a oportunidades profesionales y proyectos a tiempo parcial» (confirmada, `01-PRD.md §2.4`).
 
-**Retirado:** los titulares de tono comercial anteriores («Software para procesos complejos. Diseñado con criterio», «Software para problemas reales. Diseñado para evolucionar»).
+**Texto aprobado por el propietario (2026-10-20).** El encabezado y el texto introductorio anteriores son la versión oficial del Hero (`01-PRD.md §2.5`):
+
+- No se reescriben por iniciativa propia en T09, T10, T11 ni T12, ni se sustituyen por frases genéricas sobre aprendizaje, creatividad, innovación o pasión por la tecnología.
+- Si aparece un problema objetivo de longitud o de presentación responsive, se resuelve con tipografía, anchura de texto (`max-w-measure` o similar) o distribución, nunca alterando el contenido.
+- Los CTA reutilizan los destinos reales existentes: «Hablemos» → sección de contacto (`#contacto`); «Ver mis proyectos» → catálogo (`#proyectos`). Las redes salen de `src/data/profile.ts`. No se inventan teléfonos, contactos, redes ni enlaces.
+
+**Retirado:** los titulares de tono comercial anteriores («Software para procesos complejos. Diseñado con criterio», «Software para problemas reales. Diseñado para evolucionar») y las bajadas provisionales propuestas en INV-001 §3.1.
 
 Oñondive: una única referencia discreta en el pie o sección «Iniciativas», sin usarla como cabecera de marca ni atribuirle derechos de los proyectos.
 
-## 3. Sistema de color — base zinc neutra y acento cálido
+## 3. Sistema de color — Cobre Mineral + Zinc
 
-La paleta azul anterior (`#0B1019`, acento `#91B8FF`) queda **sustituida**. El sitio mantiene tema claro y oscuro con una única fuente de verdad por token (`light-dark()` en `src/styles/global.css`).
+**Identidad aprobada (2026-10-20): Cobre Mineral + Zinc.** La paleta azul anterior (`#0B1019`, acento `#91B8FF`) queda **sustituida** y se descartan tanto un acento azul corporativo como la propuesta genérica de acento ámbar. El sitio mantiene tema claro y oscuro con una única fuente de verdad por token (`light-dark()` en `src/styles/global.css`).
 
-| Token | Oscuro | Claro | Uso | Estado |
-|---|---|---|---|---|
-| `--background` | `#0d0e11` | Neutro muy claro de la escala zinc | Fondo principal | Oscuro **aprobado**; claro a fijar en T09 |
-| `--surface` / `--surface-raised` | Escalones zinc ligeramente más claros que el fondo | Blanco / zinc muy claro | Tarjetas, hover, bloques técnicos | A fijar en T09 |
-| `--foreground` / `--muted-foreground` | Zinc claro / zinc medio | Zinc muy oscuro / zinc medio-oscuro | Texto principal y secundario | A fijar en T09 |
-| `--border` | Zinc oscuro de bajo contraste | Zinc claro | Líneas y componentes | A fijar en T09 |
-| `--brand` (acento) | Ámbar/naranja neutro propio, luminoso | Ámbar/naranja más oscuro, apto para texto sobre blanco | Solo elementos interactivos principales | Tono **aprobado**; valores a fijar en T09 |
-| `--positive` | Se conserva | Se conserva | Estado «En producción» (moderado) | Sin cambios |
+La identidad debe transmitir sobriedad, madurez técnica, cercanía, elegancia, personalidad y equilibrio entre tecnología y dimensión humana: una base zinc casi neutra y un único acento cobre, contenido y de baja saturación.
 
-**Uso del acento (obligatorio):** solo CTA primario, anillo del retrato, anillo de foco, hover/estado activo de la navegación y enlaces destacados. No se usa en numeradores, fechas, etiquetas ni badges decorativos, que pasan a tonos neutros.
+### Valores de referencia aprobados
 
-**Contraste:** los valores finales deben cumplir WCAG 2.2 AA en ambos temas (4.5:1 texto normal, 3:1 texto grande y controles) y documentarse en el informe de T09. El ámbar suele fallar como texto sobre fondo claro: la variante clara debe oscurecerse lo necesario.
+**Tema oscuro**
+
+| Función | Color |
+|---|---|
+| Fondo principal | `#0D0E11` |
+| Superficie base | `#19191B` |
+| Superficie elevada / borde de referencia | `#343438` |
+| Acento cobre | `#E6A47B` |
+| Texto principal | `#F1EFEB` |
+
+**Tema claro (referencias iniciales)**
+
+| Función | Color |
+|---|---|
+| Fondo principal | `#FAF9F7` |
+| Texto principal | `#252526` |
+| Acento cobre profundo | `#98532A` |
+
+Estos siete valores **no** constituyen por sí solos una paleta accesible completa. Los bordes, el texto secundario, las superficies del tema claro, los estados (`--positive`, foco, hover, deshabilitado), el color del punto de `bg-dots` y el texto sobre los botones de acento se completan técnicamente en T09.
+
+### Correspondencia con los tokens
+
+| Token | Oscuro | Claro | Estado |
+|---|---|---|---|
+| `--background` | `#0D0E11` | `#FAF9F7` | **Aprobado** |
+| `--surface` | `#19191B` | Escalón próximo a `#FAF9F7` | Oscuro **aprobado**; claro a fijar en T09 |
+| `--surface-raised` | `#343438` (referencia) | Escalón zinc claro | Referencia; a fijar en T09 |
+| `--foreground` | `#F1EFEB` | `#252526` | **Aprobado** |
+| `--muted-foreground` | Zinc medio | Zinc medio-oscuro | A fijar en T09 |
+| `--border` | `#343438` (referencia) | Zinc claro | Referencia; a fijar en T09 |
+| `--brand` (acento cobre) | `#E6A47B` | `#98532A` | **Aprobado** |
+| `--brand-foreground` | Texto sobre cobre | Texto sobre cobre | A fijar en T09 |
+| `--positive` | Se conserva el tono | Se conserva el tono | Revalidar contraste sobre los nuevos fondos en T09 |
+
+### Uso restringido del cobre (obligatorio)
+
+- El cobre se reserva para CTA principal, enlaces destacados, indicador de foco, estados activos (navegación, toggle) y el anillo orbital del retrato.
+- No se usa en numeradores, fechas, etiquetas ni badges decorativos, que pasan a tonos neutros.
+- Se evitan grandes superficies cobre, brillos excesivos, resplandores y saturación innecesaria. Variantes translúcidas del acento solo como matiz puntual (hover, sombra del retrato), nunca como fondo de sección.
+
+### Contraste
+
+Los valores finales deben cumplir **WCAG 2.2 AA** en ambos temas (4.5:1 texto normal, 3:1 texto grande, 3:1 componentes de interfaz e indicador de foco) y documentarse **medidos** en el informe de T09. No se da por aprobado ningún contraste sin medición.
+
+Medición preliminar de los pares de referencia (fórmula de luminancia relativa WCAG 2.x, calculada el 2026-10-20 durante la consolidación documental). Orienta T09, pero no sustituye la validación de las combinaciones finales:
+
+| Par | Ratio |
+|---|---|
+| `#F1EFEB` sobre `#0D0E11` / `#19191B` / `#343438` | 16.81 / 15.29 / 10.79 : 1 |
+| `#E6A47B` sobre `#0D0E11` / `#19191B` / `#343438` | 9.15 / 8.33 / 5.88 : 1 |
+| `#252526` sobre `#FAF9F7` | 14.55 : 1 |
+| `#98532A` sobre `#FAF9F7` | 5.53 : 1 |
+| `#343438` sobre `#0D0E11` / `#19191B` (no textual) | 1.56 / 1.42 : 1 |
+
+`#343438` no alcanza 3:1 frente a los fondos oscuros: sirve como separador decorativo, pero no puede ser el único indicador visual del contorno de un control (WCAG 1.4.11). T09 y T10 deben resolverlo con otro token o con un indicador adicional, por ejemplo en el toggle de tema.
 
 Para shadcn/ui, los tokens semánticos (`primary`, `ring`, `accent`, `card`, etc.) siguen derivándose de esta paleta. Preferir OKLCH y no duplicar definiciones.
 
@@ -84,7 +146,7 @@ Ancho máximo de texto continuo: `66–72ch`. Usar `text-wrap: balance` en titul
 
 - Patrón de puntos (`bg-dots`) generado con CSS (`radial-gradient`), sin imágenes ni red.
 - Atenuado con **máscara radial** para que se desvanezca hacia los bordes y hacia abajo; nunca compite con el texto.
-- Color del punto definido con un token propio en `light-dark()`, de opacidad muy baja en ambos temas.
+- Color del punto definido con un token propio en `light-dark()`, derivado de la escala zinc neutra (no del cobre) y de **intensidad baja** en ambos temas.
 - Capa decorativa con `aria-hidden="true"` y `pointer-events: none`, detrás del contenido.
 
 ### Grid y espaciado
@@ -124,12 +186,15 @@ Ancho máximo de texto continuo: `66–72ch`. Usar `text-wrap: balance` en titul
 ### Hero
 
 - **Layout de 2 columnas** en desktop:
-  - **Izquierda:** fotografía de Joel Cantero con encuadre circular `1:1`, envuelta en un anillo con **gradiente orbital animado en CSS** (`portrait-ring`) y una sombra elegante.
-  - **Derecha:** kicker, titular «Hola, soy Joel Cantero», bajada de 2 líneas, CTA «Hablemos», CTA secundario y enlaces a redes.
+  - **Izquierda:** fotografía circular de Joel Cantero (`1:1`), envuelta en un anillo con **gradiente orbital cobre animado en CSS** (`portrait-ring`) y una sombra discreta.
+  - **Derecha, en este orden:** identificador «Full Stack .NET Developer» (secundario), encabezado «Hola, soy Joel Cantero.», texto introductorio aprobado (§2), CTA «Hablemos», CTA «Ver mis proyectos» y enlaces a redes reales.
+- **Centrado en la persona:** el Hero presenta a Joel Cantero, no un producto. No se recupera la tarjeta tipo dashboard «sistema / portafolio».
 - **Móvil:** columnas apiladas, retrato arriba y centrado.
-- **Anillo orbital:** gradiente cónico con el color de acento, rotado mediante `transform` (animación compuesta, sin repintado por fotograma), ritmo lento (≈12 s por vuelta). Con `prefers-reduced-motion` queda estático. Implementación propia; referencia técnica en INV-001 §4.3.
+- **Texto introductorio:** ancho de lectura limitado y tamaño `text-lead` o equivalente; cualquier ajuste por longitud se hace con tipografía, anchura o distribución, sin modificar el texto aprobado (§2).
+- **Anillo orbital:** gradiente cónico con el acento cobre, rotado mediante `transform` (animación compuesta, sin repintado por fotograma), movimiento suave y lento (≈12 s por vuelta). Con `prefers-reduced-motion` queda estático. Implementación propia; referencia técnica en INV-001 §4.3 (adaptando sus colores al cobre).
 - **Fotografía:** procesada con `astro:assets` (formatos AVIF/WebP, varios anchos), sin metadatos EXIF, con `alt` descriptivo y dimensiones explícitas para evitar desplazamientos de layout. Al ser candidata a LCP, carga prioritaria.
-- **Placeholder:** mientras no se entregue la foto definitiva, se usa un *placeholder* `1:1` comprimido con `astro:assets` (AVIF/WebP) y libre de EXIF. Debe ser original y **no simular una fotografía real de una persona** (por ejemplo, monograma o composición abstracta), con `alt` honesto. Publicar en producción con el placeholder requiere decisión expresa en T13.
+- **Placeholder:** la fotografía definitiva sigue pendiente de aportación y autorización. Mientras tanto se usa un *placeholder* original `1:1` optimizado con `astro:assets` (AVIF/WebP) y libre de EXIF. **No** se inventa ni se genera un retrato realista del propietario: el placeholder debe ser, por ejemplo, un monograma o una composición abstracta, con `alt` honesto. Publicar en producción con el placeholder requiere decisión expresa en T13.
+- Retrato, anillo y nuevo Hero se implementan en **T11**; no forman parte de T09 ni de T10.
 - Queda retirada la tarjeta decorativa tipo panel de sistema del hero anterior.
 
 ### Resto de secciones
@@ -198,7 +263,8 @@ Revisar 320px, 375px, 768px, 1024px, 1440px; sin scroll horizontal. Capturas de 
 
 - Coherencia de header, iconografía, espaciado y jerarquía.
 - Header de 56px, sin línea inferior, con exactamente 4 accesos.
-- El acento cálido aparece solo en elementos interactivos principales y en el anillo del retrato.
+- El acento cobre aparece solo en CTA, enlaces destacados, foco, estados activos y el anillo del retrato; ninguna superficie amplia es cobre.
+- El Hero muestra literalmente el encabezado y el texto introductorio aprobados (§2).
 - El fondo de puntos es perceptible pero no compite con el contenido en ningún tema.
 - Los cuatro proyectos no compiten de manera idéntica; SGAA y ControlLote pueden tener mayor profundidad editorial.
 - No hay falsas cifras de clientes/experiencia/resultados en el hero ni eslóganes comerciales.

@@ -1,6 +1,7 @@
 # Plan de implementación — tareas controladas para Codex
 
-**Versión:** 1.1 · 2026-10-18 · **Revisión:** 2026-10-20 (bloque de rediseño T09–T12 insertado antes de QA, ver [`adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md`](adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md))  
+**Versión:** 1.2 · 2026-10-18 · **Revisión:** 2026-10-20 (bloque de rediseño T09–T12 insertado antes de QA; identidad Cobre Mineral + Zinc y texto del Hero consolidados, ver [`adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md`](adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md))
+
 **Política:** una tarea por iteración, sin trabajo adelantado, con verificación y aprobación antes de commit/push.
 
 ## 1. Principios de ejecución
@@ -33,6 +34,10 @@ T00 Documentación y repositorio
 ```
 
 **Renumeración (2026-10-20):** la antigua T09 «Validación y lanzamiento MVP» pasa a **T13** y la antigua T10 «Enriquecimiento editorial» pasa a **T14**. Los informes históricos T01–T08 no se modifican.
+
+**FASE 1 documental (prerrequisito del rediseño):** la actualización de PRD, guía visual, backlog, ADR-002 e INV-001 no es una tarea `Txx`. T09 solo comienza cuando esa documentación esté integrada en `main`.
+
+**Reparto del contenido editorial:** T11 implementa literalmente el texto aprobado del Hero (`01-PRD.md §2.5`); T12 revisa el resto del contenido editorial y no reescribe el Hero.
 
 ## 3. Backlog
 
@@ -132,11 +137,11 @@ T00 Documentación y repositorio
 
 ### T09 — Rediseño: tokens y fondo de puntos
 
-**Depende de:** T08 integrada en `main` y ADR-002.
+**Depende de:** T08 integrada en `main`, ADR-002 y la documentación de FASE 1 integrada en `main`.
 
-**Trabajo:** sustituir la paleta azul por la base zinc neutra (`--background` oscuro `#0d0e11`) y fijar los valores claro/oscuro de superficies, texto y bordes; definir el acento cálido propio (ámbar/naranja neutro) en ambos temas; crear la utilidad `bg-dots` con máscara radial y token de color propio; aplicarla como capa decorativa en `BaseLayout`; restringir el acento a elementos interactivos principales; reducir las bandas `border-y` que rompen la continuidad del fondo. Referencia: `02-DISENO-VISUAL.md §3 y §5`.
+**Trabajo:** sustituir la paleta azul por la identidad **Cobre Mineral + Zinc** con los valores de referencia aprobados (oscuro: `#0D0E11`, `#19191B`, `#343438`, cobre `#E6A47B`, texto `#F1EFEB`; claro: `#FAF9F7`, texto `#252526`, cobre `#98532A`); completar técnicamente los tokens restantes (texto secundario, bordes, superficies claras, texto sobre cobre, estados, foco); crear la utilidad `bg-dots` con máscara radial, baja intensidad y token de color neutro propio; aplicarla como capa decorativa en `BaseLayout`; restringir el cobre a CTA, enlaces destacados, foco y estados activos, sin grandes superficies cobre; reducir las bandas `border-y` que rompen la continuidad del fondo. Referencia: `02-DISENO-VISUAL.md §3 y §5`.
 
-**Aceptación:** contraste WCAG 2.2 AA documentado para texto y controles en ambos temas; patrón decorativo con `aria-hidden`, sin JS ni recursos de red; ilustraciones de proyecto legibles en ambos temas; ningún valor cromático de acento copiado de FSH; `astro check` y `build` correctos.
+**Aceptación:** contraste WCAG 2.2 AA **medido** y documentado en el informe para texto, controles e indicador de foco en ambos temas (ningún par se da por aprobado sin medición); contornos de controles con ≥3:1 o indicador alternativo; patrón decorativo con `aria-hidden`, sin JS ni recursos de red; ilustraciones de proyecto legibles en ambos temas; ningún valor cromático de acento copiado de FSH; `astro check` y `build` correctos.
 
 **No incluye:** header, toggle, hero, copy.
 
@@ -154,21 +159,21 @@ T00 Documentación y repositorio
 
 **Depende de:** T10.
 
-**Trabajo:** hero de 2 columnas (retrato a la izquierda, presentación a la derecha; apilado en móvil); componente de retrato con `astro:assets` (AVIF/WebP, varios anchos, dimensiones explícitas, carga prioritaria) y anillo `portrait-ring` con gradiente orbital animado mediante `transform`; titular «Hola, soy Joel Cantero», bajada, CTA «Hablemos», CTA secundario y redes; *placeholder* `1:1` original, sin EXIF, hasta recibir la foto definitiva; retirar la tarjeta decorativa del hero anterior. Referencia: `02-DISENO-VISUAL.md §2 y §6`.
+**Trabajo:** hero de 2 columnas (retrato a la izquierda, presentación a la derecha; apilado en móvil); componente de retrato con `astro:assets` (AVIF/WebP, varios anchos, dimensiones explícitas, carga prioritaria) y anillo `portrait-ring` con gradiente orbital cobre animado mediante `transform` y sombra discreta; implementar literalmente el texto aprobado de `01-PRD.md §2.5`: identificador «Full Stack .NET Developer» (secundario), encabezado «Hola, soy Joel Cantero.», texto introductorio, CTA «Hablemos» y «Ver mis proyectos» con los destinos reales existentes, y redes reales; *placeholder* `1:1` original, sin EXIF, hasta recibir la foto definitiva; retirar la tarjeta decorativa «sistema / portafolio» del hero anterior. Referencia: `02-DISENO-VISUAL.md §2 y §6`.
 
-**Aceptación:** animación detenida con `prefers-reduced-motion`; sin desplazamiento de layout al cargar la imagen; `alt` correcto (y honesto si es placeholder); un único H1; contraste del texto sobre el fondo de puntos; legible a 320px.
+**Aceptación:** texto del Hero idéntico al aprobado (sin reescrituras; ajustes de longitud solo mediante tipografía, anchura o distribución); animación detenida con `prefers-reduced-motion`; sin desplazamiento de layout al cargar la imagen; `alt` correcto (y honesto si es placeholder); un único H1; contraste del texto sobre el fondo de puntos; legible a 320px.
 
-**No incluye:** reescritura del copy fuera del hero; uso de fotografías no autorizadas.
+**No incluye:** reescritura del copy fuera del hero; uso de fotografías no autorizadas ni retratos generados.
 
 ### T12 — Rediseño: refactorización de copywriting y marca personal
 
 **Depende de:** T11.
 
-**Trabajo:** reescribir en primera persona los textos de `profile.ts`, home, footer, metadatos y `aria-label` según `01-PRD.md §2` y la auditoría de INV-001 §3.1; retirar eslóganes comerciales; etiquetas «Correo» y «Hablemos»; incorporar la disponibilidad confirmada; revisar los resúmenes MDX de tono comercial solo con aprobación del propietario.
+**Trabajo:** reescribir en primera persona el resto de textos de `profile.ts`, home (fuera del Hero), footer, metadatos y `aria-label` según `01-PRD.md §2` y la auditoría de INV-001 §3.1; retirar eslóganes comerciales; etiquetas «Correo» y «Hablemos»; incorporar la disponibilidad confirmada; revisar los resúmenes MDX de tono comercial solo con aprobación del propietario. Si `profile.ts` alimenta el Hero, sus valores deben seguir coincidiendo con el texto aprobado.
 
-**Aceptación:** ningún eslogan de producto ni «profesional» de relleno en etiquetas; ningún hecho nuevo sin confirmación; textos aprobados por el propietario; títulos y descripciones SEO coherentes con el nuevo tono.
+**Aceptación:** ningún eslogan de producto ni «profesional» de relleno en etiquetas; ningún hecho nuevo sin confirmación; textos aprobados por el propietario; títulos y descripciones SEO coherentes con el nuevo tono; el texto del Hero aprobado permanece intacto.
 
-**No incluye:** cambios de estado, cifras o alcance de los proyectos.
+**No incluye:** cambios de estado, cifras o alcance de los proyectos; reescritura del texto aprobado del Hero (`01-PRD.md §2.5`).
 
 ### T13 — QA, accesibilidad y lanzamiento final
 
