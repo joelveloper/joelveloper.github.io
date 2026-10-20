@@ -22,8 +22,8 @@ export const profile = {
     status: 'En curso',
   },
   initiative: {
-    name: 'Oñondive Software Solutions',
-    note: 'Iniciativa en construcción.',
+    name: 'Oñondive',
+    note: 'Una iniciativa que estoy construyendo',
   },
 } as const;
 

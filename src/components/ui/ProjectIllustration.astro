@@ -1,0 +1,68 @@
+---
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+
+interface Props {
+  image: {
+    src: string;
+    alt: string;
+  };
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  width?: number;
+  height?: number;
+}
+
+const {
+  image,
+  class: className,
+  loading = 'lazy',
+  width,
+  height,
+} = Astro.props;
+
+const lightSrc = image.src.toLowerCase().endsWith('.svg')
+  ? image.src.replace(/\.svg$/i, '-light.svg')
+  : null;
+const hasLight =
+  lightSrc !== null &&
+  lightSrc !== image.src &&
+  existsSync(join(process.cwd(), 'public', lightSrc));
+---
+
+{
+  hasLight ? (
+    <span class="block" role="img" aria-label={image.alt}>
+      <img
+        src={image.src}
+        alt=""
+        aria-hidden="true"
+        loading={loading}
+        decoding="async"
+        width={width}
+        height={height}
+        class:list={[className, 'project-illustration', 'project-illustration-dark']}
+      />
+      <img
+        src={lightSrc}
+        alt=""
+        aria-hidden="true"
+        loading={loading}
+        decoding="async"
+        width={width}
+        height={height}
+        class:list={[className, 'project-illustration', 'project-illustration-light']}
+      />
+    </span>
+  ) : (
+    <img
+      src={image.src}
+      alt={image.alt}
+      loading={loading}
+      decoding="async"
+      width={width}
+      height={height}
+      class={className}
+    />
+  )
+}

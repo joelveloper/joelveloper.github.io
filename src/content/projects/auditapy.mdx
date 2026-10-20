@@ -1,7 +1,7 @@
 ---
 title: 'AuditaPy: evolución tecnológica de una plataforma de gestión de auditorías'
 cardTitle: 'AuditaPy'
-summary: 'Producto SaaS independiente en desarrollo, concebido como evolución técnica de SGAA. Monolito modular con Vertical Slices, Minimal APIs y frontend React con administración y cliente separados.'
+summary: 'Producto SaaS independiente que estoy desarrollando como evolución técnica de SGAA. Monolito modular con Vertical Slices, Minimal APIs y un frontend React con administración y cliente separados.'
 category: saas
 status: development
 featuredOrder: 3
@@ -26,111 +26,18 @@ lastReviewed: '2026-10-19'
 
 ## Contexto
 
-AuditaPy es un producto SaaS independiente en desarrollo funcional. Se plantea como una
-evolución técnica inspirada por la experiencia y las limitaciones de evolución de SGAA, no como
-una actualización ya desplegada de esa plataforma.
+AuditaPy nació de mi experiencia desarrollando SGAA y de la necesidad de construir una nueva generación de herramientas para la gestión de auditorías.
 
-Cuenta con su propia arquitectura y se concibe con infraestructura, configuración, base de datos
-y dominio independientes. No se afirma que comparta dominio, infraestructura, base de datos o
-despliegue con SGAA, ni que exista una migración automática de datos o usuarios entre ambos
-productos. La relación es de aprendizaje y evolución técnica.
+Estoy desarrollando una plataforma independiente, con una arquitectura modular orientada a la evolución del producto.
 
-## Problema
+## Mi trabajo
 
-La gestión de auditorías necesita una arquitectura que pueda crecer sin mezclar
-responsabilidades. AuditaPy parte de las limitaciones observadas en la generación anterior para
-replantear la organización del backend, la separación por módulos y las interfaces de
-administración y cliente.
+Estoy a cargo de la investigación, relevamiento de necesidades, planificación, arquitectura, diseño del dominio, desarrollo y pruebas funcionales.
 
-El caso describe esa dirección técnica. No presenta como entregadas las capacidades que todavía
-forman parte del desarrollo.
-
-## Participación
-
-El autor dirige y ejecuta el proceso técnico y funcional. Sus responsabilidades incluyen:
-
-- Investigación.
-- Relevamiento de necesidades.
-- Recopilación de feedback de usuarios de SGAA.
-- Documentación de requisitos.
-- Planificación.
-- Administración del proyecto.
-- Arquitectura.
-- Diseño del dominio.
-- Desarrollo.
-- Integración.
-- Pruebas unitarias.
-- Pruebas funcionales.
-- Validación en entornos controlados.
-- Revisión y evolución de interfaces.
-
-No se atribuye la coordinación de un equipo de desarrollo específico porque sus integrantes no
-están confirmados.
+Para definir las prioridades también incorporo observaciones y necesidades identificadas durante el uso de SGAA por profesionales de auditoría.
 
 ## Solución en desarrollo
 
-AuditaPy utiliza un monolito modular con Vertical Slices. El backend se apoya en .NET 10 y C# 14,
-con Minimal APIs y EF Core 10. El frontend utiliza React, Vite y TypeScript.
+Estoy construyendo AuditaPy como un monolito modular organizado mediante Vertical Slices, con interfaces separadas para administración y clientes.
 
-La interfaz de administración y la interfaz de cliente están separadas. La solución contempla 12
-módulos y 24 proyectos de bibliotecas de clases asociados a esos módulos, además de
-infraestructura y proyectos transversales. La cantidad de proyectos no se presenta como un
-indicador de calidad, productividad ni avance.
-
-### Fase actual: formalización del encargo de auditoría
-
-La Fase 1 se centra en la formalización del encargo de auditoría. Los módulos principales
-informados son:
-
-- **AuditEngagement.** En desarrollo. Permite iniciar procesos de auditoría, consultarlos y
-  cancelarlos. La ejecución integral de procedimientos y el seguimiento completo del progreso
-  todavía están pendientes.
-- **ClientManagement.** Base funcional implementada. Incluye gestión de contribuyentes,
-  ejercicios fiscales, encargos de auditoría y asignaciones de equipos. Sigue recibiendo mejoras
-  funcionales.
-- **Identity.** Base funcional implementada. Incluye autenticación, usuarios, roles, permisos,
-  sesiones y controles de acceso. No se presenta como sometida a una auditoría de seguridad
-  externa.
-- **Multitenancy.** Base funcional implementada. Incluye administración de empresas, separación
-  de datos y accesos, configuración, activación y gestión de vigencia.
-- **Operator.** Funcionalidades principales implementadas. Incluye catálogos administrativos,
-  como tipos de sociedades y tipos de encargos.
-
-Módulos como Chat, Webhooks, Notifications o Files no se presentan como funcionalidades
-completamente terminadas. Pueden describirse como áreas de la arquitectura.
-
-## Arquitectura y decisiones confirmadas
-
-- Monolito modular como unidad de despliegue.
-- Vertical Slices para organizar casos de uso.
-- Separación de responsabilidades por módulos.
-- 12 módulos y 24 proyectos de bibliotecas de clases asociados, además de infraestructura y
-  proyectos transversales.
-- Backend con .NET 10, C# 14, Minimal APIs y EF Core 10.
-- Frontend con React, Vite y TypeScript.
-- Interfaces de administración y cliente separadas.
-
-La organización modular separa responsabilidades por módulos y organiza los casos de uso en
-Vertical Slices. El detalle interno de cada módulo y su estado de implementación no se publican.
-
-## Estado actual
-
-AuditaPy está en desarrollo funcional. No está desplegada ni disponible para uso público. No se
-anuncia una fecha de lanzamiento. La Fase 1 se centra en la formalización del encargo de
-auditoría; las funcionalidades descritas no implican que el producto completo esté terminado.
-
-## Limitaciones y evidencia
-
-No se publican capturas de versiones en desarrollo, métricas de avance, fechas de lanzamiento ni
-resultados de uso. Tampoco se presenta la lista de módulos como un inventario de funcionalidades
-terminadas.
-
-La base funcional de Identity, Multitenancy y ClientManagement no implica una auditoría de
-seguridad externa ni cobertura completa de todos los casos. AuditEngagement todavía tiene
-pendientes la ejecución integral de procedimientos y el seguimiento completo del progreso.
-
-## Evolución
-
-AuditaPy recoge decisiones y aprendizajes de SGAA para replantear la arquitectura y la gestión
-del producto. Su evolución se documentará cuando existan hitos verificables y material autorizado
-para publicación.
+El proyecto sigue en desarrollo y mi objetivo es poner una primera versión a disposición en los próximos meses.

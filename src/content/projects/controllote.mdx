@@ -1,7 +1,7 @@
 ---
 title: 'ControlLote: conciliación de comisiones inmobiliarias mediante reglas contractuales y procesamiento PDF'
 cardTitle: 'ControlLote'
-summary: 'Plataforma SaaS en desarrollo con validación piloto en entorno real desde agosto de 2026. Importa informes PDF, aplica reglas contractuales, concilia comisiones y detecta diferencias; procesa más de 18 meses de histórico por empresa.'
+summary: 'Plataforma SaaS en desarrollo. Inició su utilización piloto en agosto de 2026 y prepara su disponibilidad comercial. Concilia comisiones inmobiliarias a partir de informes PDF y reglas contractuales.'
 category: saas
 status: development
 featuredOrder: 2
@@ -25,147 +25,33 @@ lastReviewed: '2026-10-19'
 facts:
   - label: 'Contratos registrados'
     value: '475'
-    evidenceNote: 'Dato agregado autorizado. Corte: agosto de 2026. No se publican identificadores de contratos.'
-  - label: 'Registros de cuotas procesados'
-    value: '5.314'
-    evidenceNote: 'Dato agregado autorizado. Corte: agosto de 2026. No se publican montos financieros ni datos de clientes.'
-  - label: 'Lotes con diferencias detectadas'
-    value: '110'
-    evidenceNote: 'Corte: agosto de 2026. Diferencias detectadas; no equivalen a incumplimientos contractuales demostrados ni atribuyen fraude o responsabilidad jurídica a la loteadora.'
-  - label: 'Históricos de reportes procesados'
-    value: '18 meses'
-    evidenceNote: 'Corte: agosto de 2026, procesado en septiembre de 2026. Corresponde al conjunto de datos procesado hasta ese corte; no representa 18 meses de operación continua ni antigüedad del servicio.'
+    evidenceNote: 'Indicador agregado.'
   - label: 'Lotes vendidos'
     value: '377'
-    evidenceNote: 'Dato agregado autorizado. Corte: agosto de 2026. No se publican identificadores de lotes.'
-  - label: 'Registros con errores tratados o procesados'
-    value: '1.252'
-    evidenceNote: 'Corte: agosto de 2026, procesado en septiembre de 2026. Incluyen incidencias corregidas o gestionadas; no implica que los 1.252 registros estén definitivamente resueltos. No confundir con las 62 excepciones pendientes de corrección.'
-  - label: 'Excepciones pendientes de corrección'
-    value: '62'
-    evidenceNote: 'Corte: agosto de 2026, procesado en septiembre de 2026. Pendientes de corrección al corte; no confundir con los 1.252 registros con errores tratados o procesados.'
+    evidenceNote: 'Indicador agregado.'
+  - label: 'Cuotas procesadas'
+    value: '5.314'
+    evidenceNote: 'Indicador agregado.'
 ---
 
 ## Contexto
 
-ControlLote es una plataforma SaaS orientada a la conciliación de contratos y comisiones
-inmobiliarias. Trabaja con las condiciones contractuales de cuotas, comisiones e intereses, y
-con los listados oficiales de precios y los informes PDF de cuotas cobradas.
+ControlLote surgió de una necesidad de una empresa del sector inmobiliario: verificar que las cuotas cobradas y las comisiones liquidadas por una loteadora coincidieran con las condiciones contractuales y los listados oficiales de precios.
 
-El producto inició su utilización piloto en agosto de 2026, superó la etapa de pruebas indicada
-por el propietario y se encuentra preparando la adquisición o activación de un dominio. La
-comercialización general todavía no comenzó. Procesa históricos superiores a 18 meses de
-información por empresa.
+El desafío consiste en conciliar información, aplicar reglas de negocio y detectar diferencias que requieran revisión.
 
-## Problema
+## Mi trabajo
 
-Los reportes de la loteadora siguen una convención estable que puede incluir manzana, lote,
-contrato, cliente, cuota, plazo, monto de la cuota, IVA, comisión, interés y monto correspondiente
-al propietario. El desafío es contractual y de control: verificar que los importes reportados
-cumplan las cláusulas contractuales y los listados oficiales de precios.
+Me encargué de investigar el problema, relevar los procesos, analizar riesgos, diseñar la solución y desarrollar el sistema hasta su validación en un entorno real.
 
-La conciliación exige comparar lo cobrado con lo estipulado en cada contrato, detectar
-inconsistencias y duplicaciones, clasificar las observaciones y distinguir los casos que pueden
-corregirse de los que requieren intervención externa. También es necesario conservar el
-documento original, dejar rastro de las reglas aplicadas y solicitar aclaraciones a la
-administración de la loteadora cuando corresponda.
-
-El resultado debe poder auditarse y no solo consultarse. Las diferencias detectadas no se
-presentan como incumplimientos confirmados ni como fraude.
-
-## Participación
-
-El autor tuvo a cargo todo el proceso: investigación, relevamiento de datos, análisis de riesgos,
-documentación, comprensión del problema, planificación, diseño de la solución, codificación,
-pruebas y despliegue controlado.
-
-El proyecto surgió de una necesidad específica de una empresa. Posteriormente, el autor
-identificó la oportunidad de convertir la solución en un SaaS orientado a otras empresas del
-sector. Esa decisión no implica que la comercialización a escala ya haya comenzado.
+El proyecto comenzó como una solución para una empresa específica y posteriormente identifiqué la oportunidad de convertirlo en un SaaS para otras empresas del sector.
 
 ## Solución
 
-ControlLote permite:
+Desarrollé una plataforma que procesa reportes de cuotas, aplica reglas contractuales, concilia importes y comisiones, detecta diferencias y permite gestionar correcciones y excepciones.
 
-- Cargar condiciones contractuales sobre cuotas, comisiones e intereses.
-- Importar listados oficiales de precios.
-- Procesar informes PDF de cuotas cobradas, conservando el documento original.
-- Aplicar las reglas contractuales esperadas.
-- Conciliar cuotas, comisiones, intereses y montos.
-- Detectar inconsistencias y duplicaciones.
-- Clasificar observaciones.
-- Permitir correcciones manuales justificadas.
-- Mantener pendientes los casos que requieren intervención externa.
-- Permitir solicitar aclaraciones a la administración de la loteadora.
-- Conservar históricos útiles para el seguimiento de cambios de titularidad.
-- Generar información de seguimiento y reportes detallados por período para gerencia.
-
-El flujo separa la importación documental, la extracción de datos, la aplicación de reglas
-contractuales, la conciliación, la gestión de excepciones y la generación de reportes.
-
-## Arquitectura y stack
-
-El stack declarado para esta etapa es .NET 10, React 19, Vite 7, TypeScript, PostgreSQL 16,
-Tailwind CSS v4 y Docker.
-
-La solución se apoya en reglas contractuales y en el procesamiento de documentos PDF. El
-documento original se conserva como referencia para la auditoría y la revisión de excepciones.
-
-## Decisiones técnicas confirmadas
-
-- Conservar el documento original como respaldo de la conciliación.
-- Aplicar reglas porcentuales según la modalidad de cobro.
-- Validar diferencias de importes, comisiones, intereses y posibles duplicaciones.
-- Clasificar observaciones y gestionar correcciones manuales justificadas.
-- Mantener pendientes los casos que requieren intervención externa.
-- Permitir solicitar aclaraciones a la administración de la loteadora.
-- Mantener históricos por empresa para el seguimiento de cambios de titularidad.
-- Separar el procesamiento documental, la conciliación y la salida ejecutiva.
-
-El detalle de implementación de las reglas, los formatos documentales y los datos operativos no
-se publica.
-
-## Estado actual
-
-ControlLote inició su utilización piloto en agosto de 2026 y superó la etapa de pruebas indicada
-por el propietario. Se encuentra preparando la adquisición o activación de un dominio. La
-comercialización general todavía no comenzó. No es un SaaS público disponible y no se anuncia una
-fecha de lanzamiento.
-
-El histórico superior a 18 meses por empresa corresponde al volumen de información procesada.
-No significa 18 meses de operación continua, disponibilidad del servicio ni cantidad de
-clientes.
-
-## Resultados y evidencias
-
-Los indicadores aprobados se presentan en el bloque de datos agregados de este caso.
-Corresponden al conjunto de datos procesado hasta el corte de agosto de 2026, último período
-mensual cerrado, cuyo procesamiento se realizó en septiembre de 2026. Fueron proporcionados y
-autorizados por el propietario; no constituyen una auditoría externa.
-
-El horizonte de información procesada corresponde al volumen de datos histórico, no a la
-antigüedad del servicio. Los registros con errores tratados o procesados incluyen incidencias corregidas o
-gestionadas; no implica que estén definitivamente resueltos. Los lotes con diferencias detectadas
-no equivalen a incumplimientos contractuales demostrados ni atribuyen fraude o responsabilidad
-jurídica a la loteadora. Las excepciones pendientes de corrección no deben confundirse con los
-registros tratados.
-
-No se calculan porcentajes, tasas de error ni indicadores derivados porque los denominadores y el
-significado de cada categoría requieren una validación adicional.
-
-## Limitaciones y evidencia
-
-No se publican nombres de empresas ni de la loteadora, identificadores de contratos, importes
-reales, PDFs de terceros, cláusulas contractuales específicas ni información de titularidad
-identificable. Las métricas publicadas son agregadas y autorizadas.
-
-Tampoco se publican tasas de exactitud, métricas de ahorro ni resultados financieros. Los 110
-lotes con diferencias detectadas no equivalen a incumplimientos demostrados, y las 62
-excepciones pendientes requieren corrección o intervención externa.
+También incorpora información histórica de contratos y lotes, facilitando el seguimiento y la generación de reportes.
 
 ## Evolución
 
-El proyecto profundiza en la conciliación de reglas contractuales y en la gestión de excepciones,
-donde la trazabilidad del dato es tan importante como el resultado. La evolución pública del
-producto se documentará cuando existan hitos verificables y la comercialización general haya
-comenzado.
+Actualmente estoy preparando ControlLote para su comercialización como plataforma SaaS, aprovechando lo aprendido durante su implementación y validación en un entorno real.
