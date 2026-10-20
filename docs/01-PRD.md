@@ -1,7 +1,7 @@
 # PRD — Portafolio Profesional de Joel Cantero
 
-**Versión:** 1.0 (propuesta para revisión)  
-**Fecha:** 2026-10-18  
+**Versión:** 1.1  
+**Fecha:** 2026-10-18 · **Revisión:** 2026-10-20 (reorientación a marca personal, ver [`adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md`](adr/ADR-002-REDISENO-IDENTIDAD-PERSONAL.md))  
 **Producto:** portafolio personal  
 **Responsable de decisiones:** Joel Cantero  
 **Repositorio propuesto:** `joelveloper.github.io`
@@ -12,11 +12,31 @@ El perfil de GitHub ya presenta conocimientos y proyectos, pero sus repositorios
 
 El sitio debe complementar, no reemplazar, el GitHub personal. También debe mantener separadas la identidad profesional de Joel y la eventual marca comercial Oñondive.
 
-## 2. Visión de producto
+## 2. Visión, propuesta de valor y tono
 
-Una web personal de alto nivel editorial y técnico que comunique con claridad la experiencia de Joel Cantero desarrollando aplicaciones empresariales, SaaS y software exclusivo para clientes; con cuatro proyectos reales y casos de estudio que puedan enriquecerse sin reescribir el sitio.
+### 2.1 Visión
 
-**Propuesta de valor inicial:** «Desarrollo software para automatizar procesos, mejorar la gestión y resolver problemas reales».
+Una web personal que presente a **Joel Cantero como persona**: Desarrollador Full Stack .NET radicado en Asunción, Paraguay. El sitio cuenta su trayectoria, sus conocimientos, su formación, sus proyectos y sus iniciativas propias. No es la landing page de un producto ni de una empresa de software. Los cuatro proyectos reales y sus casos de estudio son la evidencia de esa trayectoria y pueden enriquecerse sin reescribir el sitio.
+
+### 2.2 Propuesta de valor
+
+Conocer a Joel y lo que sabe hacer, contado en primera persona y con hechos verificables:
+
+- **Trayectoria autodidacta:** aprendió a programar por su cuenta y llegó a construir software usado en producción.
+- **Experiencia real en C#/.NET:** sistemas de gestión y de auditoría, como SGAA (nacido como aplicación de escritorio en 2020 y hoy plataforma web en producción) y AuditaPy (su evolución, en desarrollo).
+- **Formación técnica continua:** Diplomado en Ingeniería de Software Aplicada (en curso).
+- **Iniciativas propias:** Oñondive, una iniciativa en definición, no una empresa constituida.
+
+### 2.3 Tono y vocabulario
+
+- **Primera persona, natural y directa.** Explicar qué hace y cómo trabaja, sin adornos.
+- **Sin discurso comercial:** quedan retirados los eslóganes de producto SaaS o de *startup pitch*, por ejemplo «Software para problemas reales. Diseñado para evolucionar.» o «Software para procesos complejos. Diseñado con criterio».
+- **Vocabulario simple en contacto:** no usar «profesional» como adjetivo de relleno en etiquetas. «Correo profesional» pasa a «Correo»; «Contacto profesional» pasa a «Hablemos».
+- Se mantiene la regla general: no inventar métricas, clientes, testimonios, años de experiencia ni certificaciones.
+
+### 2.4 Disponibilidad
+
+**Confirmada por el propietario el 2026-10-20:** Joel está abierto a **oportunidades profesionales y proyectos a tiempo parcial**. Puede mostrarse en el sitio con esa formulación, sin ampliarla (por ejemplo, no afirmar disponibilidad inmediata ni a tiempo completo).
 
 ## 3. Usuarios objetivo y necesidades
 
@@ -42,7 +62,7 @@ No se promete una cantidad de visitas, solicitudes de empleo ni leads: pueden me
 
 **Páginas públicas:**
 
-1. `/`: header, hero, presentación, competencias, proyectos destacados, enfoque de trabajo, mención discreta de Oñondive y contacto.
+1. `/`: header, hero con retrato personal, presentación, competencias, proyectos destacados, enfoque de trabajo, mención discreta de Oñondive y contacto.
 2. `/proyectos/sgaa/`.
 3. `/proyectos/auditapy/`.
 4. `/proyectos/controllote/`.
@@ -57,12 +77,12 @@ No se promete una cantidad de visitas, solicitudes de empleo ni leads: pueden me
 
 | ID | Requisito | Criterio de aceptación |
 |---|---|---|
-| FR-01 | Hero con identidad, especialización, propuesta de valor y CTA | Se entiende el perfil sin desplazamiento excesivo en desktop; móvil mantiene legibilidad |
+| FR-01 | Hero con retrato, identidad personal, especialización y CTA | Se entiende quién es Joel sin desplazamiento excesivo en desktop; móvil mantiene legibilidad; sin eslóganes comerciales |
 | FR-02 | Navegación a secciones y proyectos | Enlaces válidos, foco visible, menú móvil operable sin ratón |
 | FR-03 | Catálogo de cuatro proyectos | Cada ficha refleja tipo, estado, resumen, stack y CTA de detalle |
 | FR-04 | Página individual de cada proyecto | Contexto, problema, solución, rol, ingeniería, estado, evidencia, resultados y límites |
 | FR-05 | Publicación desde contenido tipado | Cambiar estado/título/resumen no requiere modificar componentes de UI |
-| FR-06 | Canales profesionales | GitHub, correo `mailto:` y redes enlazan al destino correcto |
+| FR-06 | Canales de contacto | GitHub, correo `mailto:` y redes enlazan al destino correcto; etiquetas simples («Correo», «Hablemos») |
 | FR-07 | Estados con semántica correcta | Prelanzamiento ≠ producción; histórico procesado ≠ meses activo |
 | FR-08 | Referencia a Oñondive | Iniciativa en desarrollo, secundaria a la identidad personal |
 | FR-09 | Enlaces y recursos bajo aprobación | No se publica evidencia no autorizada; falta de captura no rompe el layout |
@@ -127,4 +147,5 @@ No se promete una cantidad de visitas, solicitudes de empleo ni leads: pueden me
 - Detalle verificable del rol y resultados de SGAA.
 - Empresas, documentos, cuotas y anomalías agregadas de ControlLote (sin identificadores personales).
 - URL de producción y fecha efectiva de lanzamiento de BoozHome.
-- Si debe mostrarse disponibilidad profesional o invitación a contrataciones; **no** afirmar que está disponible sin confirmación.
+- Disponibilidad profesional: **resuelta el 2026-10-20** (ver §2.4).
+- Fotografía personal definitiva para el hero; hasta recibirla se usa un *placeholder* según `02-DISENO-VISUAL.md §6`.
