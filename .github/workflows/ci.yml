@@ -1,0 +1,77 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate static build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6.1.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Sync Astro content
+        run: pnpm exec astro sync
+
+      - name: Check Astro project
+        run: pnpm exec astro check
+
+      - name: Build static site
+        run: pnpm run build
+
+      - name: Verify required static artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_files=(
+            "dist/index.html"
+            "dist/proyectos/sgaa/index.html"
+            "dist/proyectos/controllote/index.html"
+            "dist/proyectos/auditapy/index.html"
+            "dist/proyectos/boozhome/index.html"
+            "dist/404.html"
+            "dist/robots.txt"
+            "dist/sitemap-index.xml"
+            "dist/sitemap-0.xml"
+            "dist/favicon.svg"
+            "dist/favicon.ico"
+            "dist/images/social/og-image.jpg"
+          )
+
+          missing=0
+
+          for file in "${required_files[@]}"; do
+            if [ ! -s "$file" ]; then
+              echo "::error file=$file::Falta el artefacto estático obligatorio."
+              missing=1
+            fi
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+          echo "Artefactos estáticos verificados: ${#required_files[@]}"
