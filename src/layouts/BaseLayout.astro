@@ -3,15 +3,45 @@ import '@/styles/global.css';
 import SiteHeader from '@/components/layout/SiteHeader.astro';
 import SiteFooter from '@/components/layout/SiteFooter.astro';
 import type { NavItem } from '@/components/layout/SiteHeader.astro';
+import { profile } from '@/data/profile';
 
 export interface Props {
   title: string;
   description?: string;
   nav?: NavItem[];
   brandHref?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  canonical?: string;
 }
 
-const { title, description, nav = [], brandHref = '/' } = Astro.props;
+const {
+  title,
+  description,
+  nav = [],
+  brandHref = '/',
+  type = 'website',
+  noindex = false,
+  canonical: canonicalOverride,
+} = Astro.props;
+
+const site = Astro.site;
+if (!site) {
+  throw new Error('astro.config.mjs debe definir `site` para generar URLs canónicas.');
+}
+
+const rawPath = Astro.url.pathname;
+const canonicalPath = rawPath.endsWith('/index.html')
+  ? rawPath.slice(0, -'index.html'.length)
+  : rawPath.endsWith('.html')
+    ? rawPath
+    : rawPath.endsWith('/')
+      ? rawPath
+      : `${rawPath}/`;
+const canonical = new URL(canonicalOverride ?? canonicalPath, site);
+const ogImage = new URL('/images/social/og-image.jpg', site);
+const ogImageAlt =
+  'Monograma JC sobre fondo azul con el nombre Joel Cantero y la especialidad Full Stack .NET Developer.';
 ---
 
 <!doctype html>
@@ -21,6 +51,27 @@ const { title, description, nav = [], brandHref = '/' } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="color-scheme" content="light dark" />
+    <meta name="author" content={profile.name} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImage.href} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <script is:inline>
       (() => {
         const root = document.documentElement;

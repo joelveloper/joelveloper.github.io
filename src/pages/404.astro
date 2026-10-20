@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/layout/Container.astro';
+import ButtonLink from '@/components/ui/ButtonLink.astro';
+import { detailNavigation } from '@/data/navigation';
+import { profile } from '@/data/profile';
+---
+
+<BaseLayout
+  title={`404 — Página no encontrada · ${profile.name}`}
+  description="La página que buscas no está disponible."
+  nav={detailNavigation}
+  noindex
+  canonical="/404.html"
+>
+  <section aria-labelledby="error-titulo" class="border-b border-border">
+    <Container class="py-20 sm:py-28 lg:py-32">
+      <div class="flex max-w-[48rem] flex-col gap-6">
+        <h1
+          id="error-titulo"
+          class="text-balance text-display font-semibold text-foreground"
+        >
+          404 — Página no encontrada
+        </h1>
+        <p class="max-w-measure text-lead text-muted-foreground">
+          La página que buscas no está disponible.
+        </p>
+        <div class="pt-2">
+          <ButtonLink href="/" variant="primary" size="lg">Volver al inicio</ButtonLink>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
