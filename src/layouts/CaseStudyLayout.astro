@@ -28,6 +28,7 @@ const image = data.image?.usageApproved === true ? data.image : undefined;
   title={`${data.title} · ${profile.name}`}
   description={data.summary}
   nav={detailNavigation}
+  type="article"
 >
   <article>
     <header class="border-b border-border bg-surface/40">
@@ -37,7 +38,7 @@ const image = data.image?.usageApproved === true ? data.image : undefined;
             <li>
               <a
                 href="/#proyectos"
-                class="rounded-sm underline-offset-4 hover:text-foreground hover:underline"
+                class="inline-flex min-h-6 items-center rounded-sm underline-offset-4 hover:text-foreground hover:underline"
               >
                 Proyectos
               </a>
