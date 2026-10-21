@@ -58,7 +58,7 @@ jobs:
             "dist/sitemap-0.xml"
             "dist/favicon.svg"
             "dist/favicon.ico"
-            "dist/images/social/og-image.jpg"
+            "dist/images/social/joel-cantero-og-2026.jpg"
           )
 
           missing=0
