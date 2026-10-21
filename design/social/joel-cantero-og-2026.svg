@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Imagen Open Graph del portafolio (T13). Fuente editable de
+  public/images/social/joel-cantero-og-2026.jpg (1200×630).
+
+  Identidad Cobre Mineral + Zinc (docs/02-DISENO-VISUAL.md §3):
+  fondo #0D0E11, texto #F1EFEB, texto secundario #A6A5AC, cobre #E6A47B.
+  El monograma reutiliza los trazos de public/favicon.svg (sin fuentes).
+  El texto usa Geist (OFL-1.1, @fontsource-variable/geist) cargada desde
+  node_modules; la exportación está documentada en
+  docs/implementations/T13-IMPLEMENTACION.md.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <style>
+    @font-face {
+      font-family: 'Geist OG';
+      font-style: normal;
+      font-weight: 100 900;
+      src: url('../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2') format('woff2');
+    }
+    text {
+      font-family: 'Geist OG', 'Geist Variable', Geist, ui-sans-serif, system-ui, sans-serif;
+      text-anchor: middle;
+    }
+    .name { font-size: 104px; font-weight: 600; letter-spacing: -3.6px; fill: #f1efeb; }
+    .role { font-size: 40px; font-weight: 500; letter-spacing: -0.4px; fill: #f1efeb; fill-opacity: 0.86; }
+    .stack { font-size: 26px; font-weight: 400; letter-spacing: 0.4px; fill: #a6a5ac; }
+    .sep { fill: #e6a47b; }
+  </style>
+
+  <defs>
+    <!-- Puntos de 28px, como `.bg-dots` del sitio. -->
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse" x="12" y="7">
+      <circle cx="14" cy="14" r="1.1" fill="#f1efeb" fill-opacity="0.13" />
+    </pattern>
+    <!-- Atenúa los puntos detrás del texto y hacia los bordes. -->
+    <radialGradient id="dots-fade" cx="600" cy="330" r="640" gradientUnits="userSpaceOnUse"
+      gradientTransform="matrix(1 0 0 0.62 0 125)">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.25" />
+      <stop offset="0.55" stop-color="#fff" stop-opacity="1" />
+      <stop offset="1" stop-color="#fff" stop-opacity="0.55" />
+    </radialGradient>
+    <mask id="dots-mask">
+      <rect width="1200" height="630" fill="url(#dots-fade)" />
+    </mask>
+    <!-- Anillo cobre que se desvanece hacia una pista neutra, como el retrato. -->
+    <linearGradient id="ring" x1="538" y1="116" x2="662" y2="240" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e6a47b" stop-opacity="0.18" />
+      <stop offset="1" stop-color="#e6a47b" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0d0e11" />
+  <rect width="1200" height="630" fill="url(#dots)" mask="url(#dots-mask)" />
+
+  <!-- Monograma JC -->
+  <g>
+    <circle cx="600" cy="178" r="62" fill="#0d0e11" stroke="url(#ring)" stroke-width="3" />
+    <circle cx="600" cy="178" r="49.6" fill="none" stroke="#f1efeb" stroke-opacity="0.1" stroke-width="1" />
+    <g transform="translate(600 178) scale(1.05) translate(-32 -32)"
+      fill="none" stroke="#f1efeb" stroke-width="7" stroke-linecap="round">
+      <path d="M22.81 18.56V36.69a8.75 8.75 0 0 1-17.5 0" />
+      <path d="M58.64 21.71a13.44 13.44 0 1 0 0 20.58" />
+    </g>
+  </g>
+
+  <text class="name" x="600" y="374">Joel Cantero</text>
+  <text class="role" x="600" y="454">Full Stack .NET Developer</text>
+  <text class="stack" x="600" y="516">C# <tspan class="sep">·</tspan> .NET <tspan class="sep">·</tspan> Desarrollo web</text>
+</svg>

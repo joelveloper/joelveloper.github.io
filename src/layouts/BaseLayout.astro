@@ -42,9 +42,10 @@ const canonicalPath = rawPath.endsWith('/index.html')
       ? rawPath
       : `${rawPath}/`;
 const canonical = new URL(canonicalOverride ?? canonicalPath, site);
-const ogImage = new URL('/images/social/og-image.jpg', site);
+// Ruta nueva (no un parámetro de versión) para que las cachés sociales la traten como otro recurso.
+const ogImage = new URL('/images/social/joel-cantero-og-2026.jpg', site);
 const ogImageAlt =
-  'Monograma JC sobre fondo azul con el nombre Joel Cantero y la especialidad Full Stack .NET Developer.';
+  'Monograma JC dentro de un anillo, el nombre Joel Cantero, el rol Full Stack .NET Developer y el texto C#, .NET y Desarrollo web.';
 ---
 
 <!doctype html>
