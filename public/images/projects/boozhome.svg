@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180">
-  <rect width="320" height="180" fill="#0B1019" />
-  <g stroke="#344257" stroke-width="1" opacity="0.6">
+  <rect width="320" height="180" fill="#0D0E11" />
+  <g stroke="#343438" stroke-width="1" opacity="0.6">
     <path d="M0 45h320M0 90h320M0 135h320M80 0v180M160 0v180M240 0v180" />
   </g>
-  <path d="M92 96 L160 50 L228 96" fill="none" stroke="#91B8FF" stroke-width="2" stroke-linejoin="round" />
-  <rect x="108" y="96" width="104" height="46" rx="6" fill="#182337" stroke="#344257" stroke-width="1.5" />
-  <rect x="124" y="110" width="20" height="20" rx="3" fill="#0B1019" stroke="#70DDC0" stroke-width="1.5" />
-  <rect x="176" y="110" width="20" height="20" rx="3" fill="#0B1019" stroke="#344257" stroke-width="1.5" />
+  <path d="M92 96 L160 50 L228 96" fill="none" stroke="#A6A5AC" stroke-width="2" stroke-linejoin="round" />
+  <rect x="108" y="96" width="104" height="46" rx="6" fill="#232327" stroke="#343438" stroke-width="1.5" />
+  <rect x="124" y="110" width="20" height="20" rx="3" fill="#0D0E11" stroke="#70DDC0" stroke-width="1.5" />
+  <rect x="176" y="110" width="20" height="20" rx="3" fill="#0D0E11" stroke="#343438" stroke-width="1.5" />
   <circle cx="160" cy="72" r="3" fill="#70DDC0" />
 </svg>

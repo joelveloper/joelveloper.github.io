@@ -1,0 +1,52 @@
+---
+import { Picture } from 'astro:assets';
+import type { ProfilePortrait } from '@/data/profile';
+
+interface Props {
+  photo?: ProfilePortrait;
+  monogram: string;
+  name: string;
+  class?: string;
+}
+
+const { photo, monogram, name, class: className } = Astro.props;
+
+// Retrato circular con anillo orbital cobre (`.portrait-ring` en global.css).
+// Con fotografía: `astro:assets` genera AVIF/WebP en varios anchos, con
+// dimensiones explícitas y carga prioritaria (candidata a LCP).
+// Sin fotografía: monograma provisional dibujado con HTML/CSS, que no simula
+// un rostro ni una fotografía real. Dos capas: debajo, los círculos
+// decorativos con geometría fija; encima, «JC», que puede cruzarlos sin
+// desplazarlos.
+---
+
+<div class:list={['portrait-ring', className]}>
+  {
+    photo ? (
+      <Picture
+        src={photo.src}
+        alt={photo.alt}
+        formats={['avif', 'webp']}
+        widths={[176, 288, 352, 576]}
+        sizes="(min-width: 1024px) 18rem, 13rem"
+        width={576}
+        height={576}
+        loading="eager"
+        fetchpriority="high"
+        pictureAttributes={{ class: 'block size-full' }}
+        class="portrait-ring__media object-cover"
+      />
+    ) : (
+      <div
+        role="img"
+        aria-label={`Monograma ${monogram} de ${name}. Imagen provisional, la fotografía aún no está disponible.`}
+        class="portrait-ring__media portrait-placeholder"
+      >
+        <span aria-hidden="true" class="portrait-placeholder__circle" />
+        <span aria-hidden="true" class="portrait-placeholder__monogram">
+          {monogram}
+        </span>
+      </div>
+    )
+  }
+</div>

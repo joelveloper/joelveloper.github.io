@@ -4,38 +4,49 @@ import Container from '@/components/layout/Container.astro';
 import ProjectCard from '@/components/ui/ProjectCard.astro';
 import SectionHeading from '@/components/ui/SectionHeading.astro';
 import ButtonLink from '@/components/ui/ButtonLink.astro';
+import ExperienceCard from '@/components/ui/ExperienceCard.astro';
 import Surface from '@/components/ui/Surface.astro';
 import TechBadge from '@/components/ui/TechBadge.astro';
+import ProfilePortrait from '@/components/ui/ProfilePortrait.astro';
 import { mainNavigation } from '@/data/navigation';
-import { emailHref, profile, socialLinks } from '@/data/profile';
+import { emailHref, portrait, profile, socialLinks } from '@/data/profile';
 import { getApprovedProjectCards } from '@/lib/projects';
 
 const projectCards = await getApprovedProjectCards();
 
+// Cinco bloques asimétricos: 1 + 2 columnas y 1 + 1 + 1 en escritorio; dos
+// columnas en tablet (el último ocupa la fila completa) y una en móvil.
+// Las tecnologías se agrupan una sola vez, en la lista inferior.
 const specialties = [
   {
-    title: 'Aplicaciones empresariales',
+    title: 'Aplicaciones web y sistemas de gestión',
     description:
-      'Software para procesos de gestión, operación y control, con reglas de negocio claras y trazabilidad.',
-    technologies: '.NET · ASP.NET Core · Blazor',
+      'He desarrollado aplicaciones para procesos de gestión y control, como la organización y supervisión de auditorías, modelando sus reglas de negocio y manteniendo la trazabilidad de la información.',
+    layout: '',
   },
   {
-    title: 'Plataformas SaaS',
+    title: 'Arquitectura y backend .NET',
     description:
-      'Productos con administración, identidad y operación por empresa, pensados para crecer sin perder orden.',
-    technologies: 'Multitenencia · Identity · APIs',
+      'Me gusta pensar la estructura antes de escribir código: módulos con límites claros y responsabilidades separadas, para que el sistema sea más fácil de mantener y ampliar. También he trabajado con multitenencia, en plataformas donde cada empresa opera de forma independiente, con su propia administración, usuarios e identidad.',
+    layout: 'lg:col-span-2',
   },
   {
-    title: 'Arquitectura de software',
+    title: 'Frontend e interfaces',
     description:
-      'Diseño de soluciones modulares y límites explícitos, priorizando mantenibilidad, seguridad y evolución.',
-    technologies: 'CQRS · Vertical Slices · Monolito modular',
+      'He desarrollado las interfaces de mis proyectos, tanto con Blazor como con React, buscando que sean claras y cómodas de usar.',
+    layout: '',
   },
   {
-    title: 'Automatización documental',
+    title: 'Datos y automatización documental',
     description:
-      'Importación de documentos, extracción de datos, reglas contractuales y conciliación de información.',
-    technologies: 'PDF · Reglas · Conciliación',
+      'He trabajado con importación de informes PDF, extracción de datos y aplicación de reglas contractuales para conciliar información y detectar diferencias.',
+    layout: '',
+  },
+  {
+    title: 'Infraestructura y despliegue',
+    description:
+      'Además del código, me encargo de la puesta en marcha: servidores Linux/Ubuntu, Nginx como proxy inverso y contenedores Docker.',
+    layout: 'md:col-span-2 lg:col-span-1',
   },
 ];
 
@@ -43,22 +54,22 @@ const processSteps = [
   {
     title: 'Comprender el problema',
     description:
-      'Escucho el contexto, las restricciones y el resultado esperado antes de elegir una solución.',
+      'Antes de escribir código intento entender bien el contexto: quién va a usar el sistema, qué restricciones hay y qué resultado se espera.',
   },
   {
     title: 'Modelar la solución',
     description:
-      'Defino alcance, datos, reglas y límites; elijo una arquitectura que pueda evolucionar.',
+      'Defino el alcance, los datos y las reglas, y elijo una estructura sencilla que se pueda ampliar más adelante.',
   },
   {
     title: 'Implementar',
     description:
-      'Construyo de extremo a extremo, cuidando seguridad, mantenibilidad y experiencia de uso.',
+      'Desarrollo por partes, del backend a la interfaz, prestando atención a la seguridad, a la claridad del código y a que la aplicación sea cómoda de usar.',
   },
   {
     title: 'Validar y mejorar',
     description:
-      'Pruebo con casos reales, reviso las decisiones y ajusto según lo aprendido.',
+      'Pruebo con casos reales, reviso lo que funcionó y lo que no, y ajusto a partir de lo aprendido.',
   },
 ];
 
@@ -85,103 +96,67 @@ const contactChannels = socialLinks;
 ---
 
 <BaseLayout
-  title="Joel Cantero — Full Stack .NET Developer"
-  description="Portafolio de Joel Cantero, Full Stack .NET Developer en Asunción, Paraguay. Aplicaciones empresariales, plataformas SaaS, arquitectura de software y automatización documental."
+  title="Joel Cantero | Full Stack .NET Developer"
+  description="Portafolio de Joel Cantero, desarrollador Full Stack .NET en Asunción, Paraguay. Conoce mi trayectoria, tecnologías y proyectos de software."
   nav={mainNavigation}
 >
   <section
     id="inicio"
-    class="overflow-hidden border-b border-border"
+    class="hero-screen flex flex-col justify-center overflow-hidden"
     aria-labelledby="inicio-titulo"
   >
-    <Container class="grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-16 lg:py-28">
-      <div class="flex flex-col gap-6">
-        <p class="font-mono text-label uppercase tracking-widest text-primary">
-          Full Stack .NET Developer · Paraguay
+    <Container class="grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-20 lg:py-16">
+      <div class="flex justify-center lg:justify-start">
+        <ProfilePortrait photo={portrait} monogram={profile.monogram} name={profile.name} />
+      </div>
+
+      <div class="flex flex-col items-center gap-6 text-center lg:items-start lg:text-left">
+        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+          {profile.role}
         </p>
         <h1
           id="inicio-titulo"
-          class="max-w-[16ch] text-balance text-hero font-semibold text-foreground"
+          class="text-balance text-[clamp(2.5rem,5.5vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-foreground"
         >
-          {profile.headline}
+          {profile.greeting}
         </h1>
-        <p class="max-w-measure text-lead text-muted-foreground">
-          {profile.description}
+        <p class="max-w-[58ch] text-pretty text-lead text-muted-foreground">
+          {profile.intro}
         </p>
-        <div class="flex flex-wrap items-center gap-3">
-          <ButtonLink href="#proyectos" variant="primary" size="lg">Explorar proyectos</ButtonLink>
-          <ButtonLink href="#contacto" variant="secondary" size="lg">Contactar</ButtonLink>
-          <ButtonLink href={profile.github} variant="ghost" size="lg" external>
-            GitHub <span aria-hidden="true">↗</span>
-          </ButtonLink>
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-1 lg:justify-start">
+          <ButtonLink href="#contacto" variant="primary" size="lg">Hablemos</ButtonLink>
+          <ButtonLink href="#proyectos" variant="secondary" size="lg">Ver mis proyectos</ButtonLink>
         </div>
-        <p class="font-mono text-caption text-muted-foreground">
-          {profile.location} · Trabajo de extremo a extremo
-        </p>
-      </div>
-
-      <div class="relative mx-auto w-full max-w-md lg:max-w-none" aria-hidden="true">
-        <div class="absolute -inset-8 rounded-full bg-primary/5 blur-3xl"></div>
-        <div class="relative overflow-hidden rounded-2xl border border-border bg-surface">
-          <div class="flex items-center justify-between border-b border-border px-5 py-3">
-            <span class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-              sistema / portafolio
-            </span>
-            <span class="font-mono text-label font-medium tracking-normal text-primary">JC</span>
-          </div>
-
-          <div class="flex flex-col gap-3 p-5">
-            <div class="rounded-lg border border-primary/40 bg-primary/10 p-4">
-              <p class="font-mono text-label uppercase tracking-widest text-primary">Interfaz</p>
-              <p class="mt-1 text-sm text-foreground">Blazor · React · Astro</p>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <div class="rounded-lg border border-border bg-surface-raised p-4">
-                <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-                  Aplicación
-                </p>
-                <p class="mt-1 text-sm text-foreground">.NET · ASP.NET Core</p>
-              </div>
-              <div class="rounded-lg border border-border bg-surface-raised p-4">
-                <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-                  Arquitectura
-                </p>
-                <p class="mt-1 text-sm text-foreground">CQRS · Vertical Slices</p>
-              </div>
-            </div>
-
-            <div class="rounded-lg border border-border bg-background/70 p-4">
-              <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-                Datos e infraestructura
-              </p>
-              <p class="mt-1 text-sm text-foreground">
-                SQL Server · PostgreSQL · Linux · Nginx · Docker
-              </p>
-            </div>
-
-            <div class="flex items-center gap-2 pt-1">
-              <span class="size-1.5 rounded-full bg-positive"></span>
-              <span class="font-mono text-caption text-muted-foreground">
-                Del problema al despliegue
-              </span>
-            </div>
-          </div>
-        </div>
+        <ul
+          aria-label="Redes sociales"
+          class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 pt-1 text-sm lg:justify-start"
+        >
+          {
+            socialLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="inline-flex min-h-10 items-center gap-1 rounded-sm text-muted-foreground transition-colors hover:text-foreground"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.label}
+                  <span aria-hidden="true" class="font-mono text-caption">↗</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </Container>
   </section>
 
-  <Container as="section" id="sobre-mi" class="py-16 sm:py-20 lg:py-24">
-    <div class="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16">
-      <div class="flex flex-col gap-8">
-        <SectionHeading
-          number="01"
-          label="Sobre mí"
-          title="Del problema al software que evoluciona"
-        />
+  <section id="sobre-mi" class="section-alt">
+    <Container class="flex flex-col gap-10 py-16 sm:py-20 lg:py-24">
+      <SectionHeading number="01" label="Sobre mí" title="Cómo llegué hasta aquí" rule />
 
-        <div class="flex max-w-measure flex-col gap-5 text-muted-foreground">
+      <div class="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16">
+        <div class="flex max-w-measure flex-col gap-6 text-base leading-relaxed text-muted-foreground sm:text-[1.0625rem]">
           <p>
             Empecé desarrollando proyectos personales de aprendizaje. En 2020 desarrollé una
             aplicación de escritorio que comercialicé para la gestión de archivos de auditoría; ese
@@ -189,100 +164,87 @@ const contactChannels = socialLinks;
           </p>
           <p>
             Desde entonces he trabajado en su evolución hacia una plataforma web de gestión de
-            auditoría y aseguramiento, comercializada desde agosto de 2025. Me encargué del
-            proceso de extremo a extremo: investigación, arquitectura, modelado, backend,
-            frontend, infraestructura y despliegue. Colaboré con profesionales de auditoría para
-            comprender las necesidades funcionales.
+            auditoría y aseguramiento, comercializada desde agosto de 2025. Me encargué del proceso
+            de extremo a extremo: investigación, arquitectura, modelado, backend, frontend,
+            infraestructura y despliegue. Colaboré con profesionales de auditoría para comprender las
+            necesidades funcionales.
           </p>
           <p>
-            Me motiva crear software con identidad propia que resuelva problemas reales, cuidando
-            la arquitectura, la calidad, la seguridad y la evolución del producto. Actualmente
-            amplío esa base con formación continua en ingeniería de software.
+            Me motiva crear software con identidad propia que resuelva problemas reales, cuidando la
+            arquitectura, la calidad, la seguridad y la evolución del producto. Actualmente amplío
+            esa base con formación continua en ingeniería de software.
           </p>
         </div>
+
+        <div class="flex flex-col gap-4">
+          <Surface variant="default" class="flex flex-col gap-5">
+            <h3 class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+              Trayectoria
+            </h3>
+            <ol class="flex flex-col gap-5">
+              <li class="grid gap-1 border-l border-border pl-4">
+                <span class="font-mono text-label text-muted-foreground">Inicios</span>
+                <span class="text-sm text-foreground">
+                  Aprendizaje autodidacta con proyectos personales.
+                </span>
+              </li>
+              <li class="grid gap-1 border-l border-border pl-4">
+                <span class="font-mono text-label text-muted-foreground">2020</span>
+                <span class="text-sm text-foreground">
+                  Aplicación de escritorio para la gestión de archivos de auditoría, que llegué a
+                  comercializar.
+                </span>
+              </li>
+              <li class="grid gap-1 border-l border-border pl-4">
+                <span class="font-mono text-label text-muted-foreground">Agosto 2025</span>
+                <span class="text-sm text-foreground">
+                  Empecé a comercializar SGAA, ya como plataforma web.
+                </span>
+              </li>
+              <li class="grid gap-1 border-l border-border pl-4">
+                <span class="font-mono text-label text-muted-foreground">Actualidad</span>
+                <span class="text-sm text-foreground">
+                  Mantengo SGAA en producción y desarrollo AuditaPy y ControlLote.
+                </span>
+              </li>
+            </ol>
+          </Surface>
+
+          <Surface variant="raised" class="flex flex-col gap-2">
+            <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+              Formación
+            </p>
+            <p class="text-base font-medium text-foreground">{profile.continuingEducation.title}</p>
+            <p class="font-mono text-caption text-positive">{profile.continuingEducation.status}</p>
+          </Surface>
+        </div>
       </div>
+    </Container>
+  </section>
 
-      <div class="flex flex-col gap-4">
-        <Surface variant="default" class="flex flex-col gap-5">
-          <h3 class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-            Trayectoria
-          </h3>
-          <ol class="flex flex-col gap-5">
-            <li class="grid gap-1 border-l border-border pl-4">
-              <span class="font-mono text-label text-primary">2020</span>
-              <span class="text-sm text-foreground">
-                Primera aplicación de escritorio comercializada para gestión de archivos de
-                auditoría.
-              </span>
-            </li>
-            <li class="grid gap-1 border-l border-border pl-4">
-              <span class="font-mono text-label text-primary">Agosto 2025</span>
-              <span class="text-sm text-foreground">
-                Comencé la comercialización de la plataforma web SGAA.
-              </span>
-            </li>
-            <li class="grid gap-1 border-l border-border pl-4">
-              <span class="font-mono text-label text-primary">Actualidad</span>
-              <span class="text-sm text-foreground">
-                Mantengo SGAA en producción y desarrollo AuditaPy.
-              </span>
-            </li>
-          </ol>
-        </Surface>
-
-        <Surface variant="raised" class="flex flex-col gap-2">
-          <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-            Formación continua
-          </p>
-          <p class="text-base font-medium text-foreground">{profile.continuingEducation.title}</p>
-          <p class="font-mono text-caption text-positive">{profile.continuingEducation.status}</p>
-        </Surface>
-      </div>
-    </div>
-  </Container>
-
-  <section id="especialidades" class="border-y border-border bg-surface/40">
+  <section id="especialidades">
     <Container class="py-16 sm:py-20 lg:py-24">
       <div class="flex flex-col gap-10">
         <SectionHeading
           number="02"
           label="Especialidades"
-          title="Cuatro áreas, una mirada de extremo a extremo"
-          description="Trabajo en la intersección entre producto, arquitectura e implementación. La profundidad técnica se adapta a cada problema, no al revés."
+          title="En qué trabajo"
+          description="Estas son las áreas en las que he adquirido experiencia desarrollando mis proyectos."
+          rule
         />
 
-        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {
             specialties.map((specialty, index) => (
-              <Surface
-                as="article"
-                variant="default"
-                padding="md"
-                class="portfolio-card-hover flex h-full flex-col gap-4"
-              >
-                <span class="font-mono text-label text-primary">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <h3 class="text-title font-semibold text-foreground">{specialty.title}</h3>
-                <p class="text-sm text-muted-foreground">{specialty.description}</p>
-                <p class="mt-auto border-t border-border pt-4 font-mono text-caption text-muted-foreground">
-                  {specialty.technologies}
-                </p>
-              </Surface>
+              <ExperienceCard
+                number={String(index + 1).padStart(2, '0')}
+                title={specialty.title}
+                description={specialty.description}
+                class={specialty.layout}
+              />
             ))
           }
         </div>
-
-        <Surface variant="raised" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div class="flex flex-col gap-1">
-            <p class="font-mono text-label uppercase tracking-widest text-primary">Full Stack</p>
-            <p class="text-base font-medium text-foreground">Del análisis al despliegue</p>
-          </div>
-          <p class="max-w-measure text-sm text-muted-foreground">
-            También cubro la infraestructura y la puesta en marcha: servidores Linux/Ubuntu, proxy
-            inverso con Nginx y contenedores Docker.
-          </p>
-        </Surface>
 
         <div class="flex items-center gap-3">
           <span aria-hidden="true" class="hidden h-px w-8 shrink-0 bg-border sm:block"></span>
@@ -314,40 +276,45 @@ const contactChannels = socialLinks;
     </Container>
   </section>
 
-  <Container as="section" id="proyectos" class="py-16 sm:py-20 lg:py-24">
-    <div class="flex flex-col gap-10">
-      <SectionHeading
-        number="03"
-        label="Proyectos"
-        title="Productos construidos sobre problemas concretos"
-      />
+  <section id="proyectos" class="section-alt">
+    <Container class="py-16 sm:py-20 lg:py-24">
+      <div class="flex flex-col gap-10">
+        <SectionHeading
+          number="03"
+          label="Proyectos"
+          title="Proyectos en los que he trabajado"
+          description="Cada proyecto representa una parte de mi recorrido como desarrollador. Aquí comparto los problemas que me tocó resolver y lo que fui construyendo a partir de ellos."
+          rule
+        />
 
-      <div class="grid gap-6 md:grid-cols-2">
-        {
-          projectCards.map((project) => (
-            <ProjectCard
-              title={project.title}
-              description={project.summary}
-              category={project.category}
-              status={project.status}
-              technologies={project.technologies}
-              href={project.href}
-              image={project.image}
-            />
-          ))
-        }
+        <div class="grid gap-6 md:grid-cols-2">
+          {
+            projectCards.map((project) => (
+              <ProjectCard
+                title={project.title}
+                description={project.summary}
+                category={project.category}
+                status={project.status}
+                technologies={project.technologies}
+                href={project.href}
+                image={project.image}
+              />
+            ))
+          }
+        </div>
       </div>
-    </div>
-  </Container>
+    </Container>
+  </section>
 
-  <section id="proceso" class="border-y border-border bg-surface/40">
+  <section id="proceso">
     <Container class="py-16 sm:py-20 lg:py-24">
       <div class="flex flex-col gap-10">
         <SectionHeading
           number="04"
-          label="Cómo trabajo"
-          title="Un proceso, no una plantilla"
-          description="Un enfoque personal para reducir incertidumbre y mantener el software comprensible a medida que crece."
+          label="Proceso"
+          title="Cómo trabajo"
+          description="Así suelo organizar mis proyectos, desde entender el problema hasta probar y mejorar lo que construyo."
+          rule
         />
 
         <ol class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -357,10 +324,10 @@ const contactChannels = socialLinks;
                 as="li"
                 variant="default"
                 padding="md"
-                class="portfolio-card-hover flex h-full flex-col gap-4"
+                class="card-glow portfolio-card-hover flex h-full flex-col gap-4"
               >
                 <div class="flex items-center justify-between gap-3">
-                  <span class="font-mono text-label text-primary">
+                  <span class="font-mono text-label text-muted-foreground">
                     {String(index + 1).padStart(2, '0')}
                   </span>
                   <span aria-hidden="true" class="h-px flex-1 bg-border"></span>
@@ -375,41 +342,39 @@ const contactChannels = socialLinks;
     </Container>
   </section>
 
-  <Container class="py-14 sm:py-16">
-    <section
-      aria-labelledby="onondive-titulo"
-      class="flex flex-col gap-3 border-l-2 border-primary/40 pl-5 sm:pl-6"
-    >
-      <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-        Iniciativa
-      </p>
-      <h2 id="onondive-titulo" class="text-title font-semibold text-foreground">
-        {profile.initiative.name} — {profile.initiative.note}
-      </h2>
-      <p class="max-w-measure text-sm text-muted-foreground">
-        Estoy dando forma a Oñondive, una iniciativa con la que quiero desarrollar soluciones
-        tecnológicas para necesidades reales del mercado paraguayo.
-      </p>
-      <p class="max-w-measure text-sm text-muted-foreground">
-        Mi objetivo es construir software útil, pensado para evolucionar y crecer con quienes lo
-        utilizan.
-      </p>
-    </section>
-  </Container>
+  <section aria-labelledby="onondive-titulo" class="section-alt">
+    <Container class="py-14 sm:py-16">
+      <div class="flex flex-col gap-3 border-l-2 border-border pl-5 sm:pl-6">
+        <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
+          {profile.initiative.note}
+        </p>
+        <h2 id="onondive-titulo" class="text-title font-semibold text-foreground">
+          {profile.initiative.name}
+        </h2>
+        <p class="max-w-measure text-sm text-muted-foreground">
+          {profile.initiative.description}
+        </p>
+        <p class="max-w-measure text-sm text-muted-foreground">
+          Todavía está en definición: por ahora es un proyecto propio que iré construyendo poco a
+          poco.
+        </p>
+      </div>
+    </Container>
+  </section>
 
-  <section id="contacto" class="border-t border-border bg-surface">
+  <section id="contacto">
     <Container class="py-16 sm:py-20 lg:py-24">
       <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-16">
         <div class="flex flex-col gap-6">
           <SectionHeading
             number="05"
             label="Contacto"
-            title="Contacto profesional"
-            description={profile.availability}
+            title="Hablemos"
+            description="Si quieres conversar sobre un proyecto, una oportunidad o una colaboración, puedes escribirme por correo o encontrarme en mis redes."
           />
-          <p class="max-w-measure text-sm text-muted-foreground">
-            Para conversar sobre un proyecto, una colaboración o una oportunidad profesional, el
-            correo es el canal más directo. También puedes encontrarme en las redes profesionales.
+          <p class="flex items-start gap-2 text-sm text-foreground">
+            <span aria-hidden="true" class="mt-[0.4375rem] size-1.5 shrink-0 rounded-full bg-positive"></span>
+            {profile.availability}
           </p>
           <div class="flex flex-wrap gap-3">
             <ButtonLink href={emailHref} variant="primary" size="lg">
@@ -424,17 +389,17 @@ const contactChannels = socialLinks;
         <div class="flex flex-col gap-6">
           <Surface variant="raised" class="flex flex-col gap-2">
             <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">
-              Correo profesional
+              Correo
             </p>
             <a
               href={emailHref}
-              class="break-all rounded-sm text-base font-medium text-foreground underline-offset-4 hover:underline"
+              class="break-all rounded-sm text-base font-medium text-foreground transition-colors hover:text-primary"
             >
               {profile.email}
             </a>
           </Surface>
 
-          <nav aria-label="Redes profesionales">
+          <nav aria-label="Redes">
             <ul class="flex flex-col divide-y divide-border border-y border-border">
               {
                 contactChannels.map((link) => (

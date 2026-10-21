@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Container from '@/components/layout/Container.astro';
 import ButtonLink from '@/components/ui/ButtonLink.astro';
+import Icon from '@/components/ui/Icon.astro';
 import ProjectIllustration from '@/components/ui/ProjectIllustration.astro';
 import StatusBadge from '@/components/ui/StatusBadge.astro';
 import TechBadge from '@/components/ui/TechBadge.astro';
@@ -28,6 +29,7 @@ const image = data.image?.usageApproved === true ? data.image : undefined;
   title={`${data.title} · ${profile.name}`}
   description={data.summary}
   nav={detailNavigation}
+  currentNav="/#proyectos"
   type="article"
 >
   <article>
@@ -38,8 +40,9 @@ const image = data.image?.usageApproved === true ? data.image : undefined;
             <li>
               <a
                 href="/#proyectos"
-                class="inline-flex min-h-6 items-center rounded-sm underline-offset-4 hover:text-foreground hover:underline"
+                class="inline-flex min-h-6 items-center gap-1 rounded-sm font-medium transition-colors hover:text-foreground"
               >
+                <span aria-hidden="true" class="font-mono">←</span>
                 Proyectos
               </a>
             </li>
@@ -56,7 +59,7 @@ const image = data.image?.usageApproved === true ? data.image : undefined;
         >
           <div class="flex flex-col gap-5">
             <div class="flex flex-wrap items-center gap-3">
-              <span class="font-mono text-label uppercase tracking-widest text-primary">
+              <span class="font-mono text-label uppercase tracking-widest text-muted-foreground">
                 {categoryLabels[data.category]}
               </span>
               <StatusBadge status={data.status} />
@@ -70,6 +73,22 @@ const image = data.image?.usageApproved === true ? data.image : undefined;
             </h1>
 
             <p class="max-w-measure text-lead text-muted-foreground">{data.summary}</p>
+
+            {
+              data.externalUrl && (
+                <div class="pt-1">
+                  <ButtonLink
+                    href={data.externalUrl}
+                    variant="secondary"
+                    external
+                    ariaLabel={`Visitar sitio web de ${data.cardTitle} (se abre en una pestaña nueva)`}
+                  >
+                    Visitar sitio web
+                    <Icon name="external" class="size-4" />
+                  </ButtonLink>
+                </div>
+              )
+            }
           </div>
 
           {
