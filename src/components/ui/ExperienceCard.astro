@@ -1,0 +1,30 @@
+---
+import Surface from '@/components/ui/Surface.astro';
+
+interface Props {
+  number: string;
+  title: string;
+  description: string;
+  class?: string;
+}
+
+const { number, title, description, class: className } = Astro.props;
+
+// Bloque informativo de la sección 02: no es enlace ni botón y no recibe foco.
+// Halo, barras y movimiento son decorativos (`.card-glow` y `.experience-card`
+// en global.css).
+---
+
+<Surface
+  as="article"
+  variant="default"
+  padding="none"
+  class:list={['card-glow experience-card flex h-full flex-col gap-4 p-6 lg:p-7', className]}
+>
+  <span class="font-mono text-label text-muted-foreground">{number}</span>
+  <h3 class="text-title font-semibold text-foreground">{title}</h3>
+  <p class="max-w-[60ch] text-sm leading-relaxed text-muted-foreground">{description}</p>
+  <div aria-hidden="true" class="experience-card__bars mt-auto">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+</Surface>

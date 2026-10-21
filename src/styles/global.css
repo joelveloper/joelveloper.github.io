@@ -62,6 +62,7 @@
     --color-card: var(--card);
     --color-foreground: var(--foreground);
     --color-background: var(--background);
+    --color-background-alt: var(--background-alt);
     --color-surface: var(--surface);
     --color-surface-raised: var(--surface-raised);
     --color-positive: var(--positive);
@@ -87,24 +88,41 @@
     color-scheme: light dark;
     --radius: 0.625rem;
 
-    /* Altura del header fijo: 2.75rem de control + 2rem de padding + 1px de borde. */
-    --site-header-height: calc(4.75rem + 1px);
+    /* Altura del header fijo: 56px, sin borde inferior (ADR-002). */
+    --site-header-height: 3.5rem;
 
     /*
-     * Fuente única de verdad cromática por tema.
-     * Primero el valor claro; después el oscuro. Los valores oscuros
-     * conservan la identidad visual definida en docs/02-DISENO-VISUAL.md.
+     * Fuente única de verdad cromática por tema: Cobre Mineral + Zinc
+     * (docs/adr/ADR-002, docs/02-DISENO-VISUAL.md §3).
+     * Primero el valor claro; después el oscuro. Los contrastes medidos de
+     * cada par están en docs/implementations/T09-IMPLEMENTACION.md.
+     *
+     * `--border` es un separador decorativo (en oscuro no alcanza 3:1);
+     * el contorno de los controles usa `--input`, que sí lo alcanza.
      */
-    --background: light-dark(#f8fafc, oklch(0.1725 0.0205 261.91));
-    --surface: light-dark(#ffffff, oklch(0.2164 0.0308 259.01));
-    --surface-raised: light-dark(#f0f4fa, oklch(0.2563 0.0411 261.83));
-    --foreground: light-dark(#152238, oklch(0.9726 0.0086 264.52));
-    --muted-foreground: light-dark(#465670, oklch(0.8128 0.0322 257.25));
-    --border: light-dark(#cad4e2, oklch(0.3760 0.0406 258.33));
-    --brand: light-dark(#2557a7, oklch(0.7817 0.1105 261.98));
-    --brand-foreground: light-dark(#ffffff, oklch(0.1725 0.0205 261.91));
+    --background: light-dark(#faf9f7, #0d0e11);
+    /*
+     * Fondo alterno de secciones del Home (`.section-alt`): reutiliza valores
+     * de la paleta, la superficie base en oscuro y el zinc cálido en claro.
+     */
+    --background-alt: light-dark(#f1f0ed, #19191b);
+    --surface: light-dark(#ffffff, #19191b);
+    --surface-raised: light-dark(#f1f0ed, #343438);
+    --foreground: light-dark(#252526, #f1efeb);
+    --muted-foreground: light-dark(#5f5f66, #a6a5ac);
+    --border: light-dark(#e3e2de, #343438);
+    --brand: light-dark(#98532a, #e6a47b);
+    --brand-foreground: light-dark(#ffffff, #0d0e11);
     --positive: light-dark(#17674f, oklch(0.8247 0.1098 173.90));
-    --positive-foreground: light-dark(#ffffff, oklch(0.1725 0.0205 261.91));
+    --positive-foreground: light-dark(#ffffff, #0d0e11);
+
+    /*
+     * Textura de puntos (`.bg-dots`): color neutro derivado del texto
+     * principal con alfa bajo, nunca del cobre.
+     */
+    --dots-color: light-dark(rgb(37 37 38 / 0.12), rgb(241 239 235 / 0.13));
+    --dots-size: 1px;
+    --dots-gap: 28px;
 
     /* Tokens semánticos shadcn/ui derivados de la paleta */
     --card: var(--surface);
@@ -119,13 +137,13 @@
     --accent: var(--surface-raised);
     --accent-foreground: var(--foreground);
     --destructive: light-dark(#b42318, oklch(0.704 0.191 22.216));
-    --input: var(--border);
+    --input: light-dark(#86858a, #6b6b72);
     --ring: var(--brand);
     --chart-1: var(--brand);
     --chart-2: var(--positive);
-    --chart-3: light-dark(#6b7fa3, oklch(0.7000 0.0900 250.00));
-    --chart-4: light-dark(#8a9ab5, oklch(0.6200 0.0800 240.00));
-    --chart-5: light-dark(#a7b4c8, oklch(0.5200 0.0700 235.00));
+    --chart-3: var(--muted-foreground);
+    --chart-4: var(--input);
+    --chart-5: light-dark(#b9b8bd, #4c4c52);
     --sidebar: var(--surface);
     --sidebar-foreground: var(--foreground);
     --sidebar-primary: var(--brand);
@@ -156,6 +174,16 @@
     @apply bg-background text-foreground;
     min-height: 100dvh;
     }
+  /*
+   * Los enlaces no se subrayan en ningún estado. Dentro del texto corrido se
+   * distinguen por peso y, si son externos, por un indicador (`.case-study-prose`).
+   */
+  a,
+  a:hover,
+  a:focus,
+  a:visited {
+    text-decoration-line: none;
+    }
   main {
     padding-top: var(--site-header-height);
     }
@@ -174,18 +202,29 @@
 
 @layer components {
   /*
-   * Icono del selector de apariencia. Sin JavaScript, el atributo del <html>
-   * permanece en «system», de modo que el control muestra el monitor y el CSS
-   * sigue la preferencia del sistema operativo.
+   * Icono del toggle de tema: muestra el tema al que se cambiará (luna en
+   * claro, sol en oscuro). Se resuelve con CSS desde el primer pintado; en
+   * «system» sigue a `prefers-color-scheme`.
    */
   [data-theme-icon] {
     display: none;
   }
 
-  :root[data-appearance='system'] [data-theme-icon='system'],
-  :root[data-appearance='light'] [data-theme-icon='light'],
-  :root[data-appearance='dark'] [data-theme-icon='dark'] {
+  :root[data-appearance='light'] [data-theme-icon='moon'],
+  :root[data-appearance='dark'] [data-theme-icon='sun'] {
     display: block;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root[data-appearance='system'] [data-theme-icon='moon'] {
+      display: block;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root[data-appearance='system'] [data-theme-icon='sun'] {
+      display: block;
+    }
   }
 
   /*
@@ -282,13 +321,20 @@
   }
 
   .case-study-prose a {
+    border-radius: 0.125rem;
     color: var(--primary);
-    text-decoration-line: underline;
-    text-underline-offset: 0.2em;
+    font-weight: 600;
   }
 
   .case-study-prose a:hover {
     color: var(--foreground);
+  }
+
+  .case-study-prose a[href^='http']::after {
+    content: '\2009\2197';
+    content: '\2009\2197' / '';
+    font-family: var(--font-mono);
+    font-size: 0.8em;
   }
 
   .case-study-prose ul,
@@ -330,6 +376,492 @@
   .case-study-prose hr {
     margin-block: 2rem;
     border-color: var(--border);
+  }
+}
+
+/*
+ * Textura decorativa de puntos. Un único `radial-gradient` repetido dibuja
+ * el punto; la máscara radial lo desvanece hacia los laterales y hacia abajo
+ * para que nunca compita con el contenido. Sin imágenes, red ni animación.
+ * El color, el tamaño y la separación salen de los tokens `--dots-*`.
+ */
+@utility bg-dots {
+  background-image: radial-gradient(
+    circle at center,
+    var(--dots-color) var(--dots-size),
+    transparent calc(var(--dots-size) + 0.5px)
+  );
+  background-size: var(--dots-gap) var(--dots-gap);
+  background-position: center top;
+  -webkit-mask-image: radial-gradient(ellipse 90% 75% at 50% 25%, #000 20%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 75% at 50% 25%, #000 20%, transparent 100%);
+
+  @media (forced-colors: active) {
+    display: none;
+  }
+}
+
+/*
+ * Hero de primera pantalla: como mínimo, el alto visible menos el header.
+ * `svh` no cambia al ocultarse la barra del navegador móvil (sin saltos de
+ * layout); `vh` es el respaldo sin unidades de viewport pequeño. Es una altura
+ * mínima: si el contenido no cabe, el Hero crece y nunca se recorta.
+ */
+.hero-screen {
+  min-height: calc(100vh - var(--site-header-height));
+  min-height: calc(100svh - var(--site-header-height));
+}
+
+/*
+ * Retrato del Hero con anillo orbital (ADR-002, docs/02-DISENO-VISUAL.md §6).
+ * Un anillo orbital exterior y, solo en el placeholder, un círculo interior
+ * fino (decisión del propietario). Un pseudo-elemento
+ * con `conic-gradient` cobre gira mediante `transform` (animación compuesta,
+ * sin repintado por fotograma), 45 s por vuelta. Una máscara radial recorta
+ * el gradiente y la pista neutra (`::after`) a un anillo de 3px, así que el
+ * interior del retrato es transparente y deja ver el fondo. La máscara es
+ * radial y centrada, por lo que el giro no la altera. Con
+ * `prefers-reduced-motion` el anillo queda estático.
+ */
+.portrait-ring {
+  --portrait-size: clamp(11rem, 48vw, 14rem);
+  --portrait-shadow: light-dark(rgb(37 37 38 / 0.18), rgb(0 0 0 / 0.55));
+  --portrait-ring-width: 3px;
+
+  position: relative;
+  isolation: isolate;
+  flex-shrink: 0;
+  inline-size: var(--portrait-size);
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  padding: var(--portrait-ring-width);
+  overflow: hidden;
+  box-shadow: 0 32px 64px -32px var(--portrait-shadow);
+}
+
+@media (min-width: 48rem) {
+  .portrait-ring {
+    --portrait-size: 15rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .portrait-ring {
+    --portrait-size: 18rem;
+  }
+}
+
+@media (min-width: 80rem) and (min-height: 56rem) {
+  .portrait-ring {
+    --portrait-size: 20rem;
+  }
+}
+
+.portrait-ring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: inherit;
+  background: var(--border);
+  mask: radial-gradient(
+    closest-side,
+    transparent calc(100% - var(--portrait-ring-width) - 0.5px),
+    #000 calc(100% - var(--portrait-ring-width))
+  );
+}
+
+.portrait-ring::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  z-index: -1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    color-mix(in oklab, var(--brand) 90%, transparent) 70deg,
+    transparent 140deg,
+    transparent 190deg,
+    color-mix(in oklab, var(--brand) 35%, transparent) 250deg,
+    transparent 310deg
+  );
+  /* Este pseudo-elemento mide el doble que el retrato: su borde exterior
+     queda al 50 % del radio de la máscara. */
+  mask: radial-gradient(
+    closest-side,
+    transparent calc(50% - var(--portrait-ring-width) - 0.5px),
+    #000 calc(50% - var(--portrait-ring-width))
+  );
+  will-change: transform;
+  animation: portrait-orbit 45s linear infinite;
+}
+
+.portrait-ring__media {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 5px solid transparent;
+  border-radius: 9999px;
+  background-color: var(--surface);
+  background-clip: padding-box;
+}
+
+/*
+ * Placeholder original en dos capas, sin fondo: el interior del retrato es
+ * transparente. Capa inferior (decoración): un círculo de 1px (`__circle`)
+ * con el 80 % del diámetro exterior del retrato. Su geometría deriva de
+ * `--portrait-size` y no depende del tamaño de «JC». Capa superior
+ * (`__monogram`): solo las letras, que pueden cruzar el trazo sin
+ * desplazarlo. No simula un rostro ni una fotografía.
+ */
+.portrait-placeholder {
+  position: relative;
+  isolation: isolate;
+  background-color: transparent;
+}
+
+.portrait-placeholder__circle {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  inline-size: calc(var(--portrait-size) * 0.8);
+  block-size: calc(var(--portrait-size) * 0.8);
+  border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+/*
+ * Capa del monograma: ocupa todo el retrato (`inset: 0`) sin fondo ni borde,
+ * por encima de la decoración (`z-index: 1`). El tamaño se deriva del
+ * retrato, no de los círculos, y no cambia ninguna dimensión. Contenedor de
+ * bloque (no grid) para que `text-box` recorte la línea a la altura de
+ * mayúsculas y `align-content` centre la tinta, no la caja de la fuente.
+ * `text-indent` compensa el interletrado que se añade tras la «C».
+ */
+.portrait-placeholder__monogram {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  align-content: center;
+  text-align: center;
+  text-indent: -0.06em;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: calc(var(--portrait-size) * 0.62);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  white-space: nowrap;
+  text-box: trim-both cap alphabetic;
+  pointer-events: none;
+}
+
+@keyframes portrait-orbit {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-ring::before {
+    animation: none;
+    transform: rotate(-40deg);
+  }
+}
+
+@media (forced-colors: active) {
+  .portrait-placeholder__circle {
+    border-color: CanvasText;
+  }
+}
+
+/*
+ * Alternancia de fondos entre secciones del Home. Dentro de una sección
+ * alterna, las tarjetas cambian de escalón para no fundirse con el fondo:
+ * `--card` pasa al fondo principal en oscuro (blanco en claro) y
+ * `--surface-raised` se aclara en claro. Las utilidades `bg-card` y
+ * `bg-surface-raised` leen estas variables en el propio elemento.
+ */
+.section-alt {
+  --card: light-dark(#ffffff, #0d0e11);
+  --surface-raised: light-dark(#faf9f7, #343438);
+
+  background-color: var(--background-alt);
+}
+
+/*
+ * Halo de esquina compartido por las tarjetas de las secciones 02 y 04
+ * (docs/02-DISENO-VISUAL.md §7). Un círculo de 12rem centrado en la esquina
+ * superior derecha, del que solo se ve un cuarto: cobre al 10 % que se
+ * desvanece de forma gradual antes del borde del círculo. Aparece con hover
+ * por `opacity` y `transform`; sin hover (táctil) no se muestra.
+ */
+.card-glow {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.card-glow::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset-block-start: -6rem;
+  inset-inline-end: -6rem;
+  inline-size: 12rem;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in oklab, var(--brand) 10%, transparent) 0%,
+    color-mix(in oklab, var(--brand) 6%, transparent) 25%,
+    color-mix(in oklab, var(--brand) 2%, transparent) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 400ms ease-out,
+    transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .card-glow:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/*
+ * Enlaces de la navegación principal (header y menú móvil). El acceso de la
+ * sección actual (`aria-current`) pasa a cobre y muestra un punto cobre a su
+ * izquierda, que aporta un indicador de forma además del color. Sin
+ * subrayado. El punto reserva su espacio para que las etiquetas no se muevan.
+ */
+.nav-link::before {
+  content: '';
+  flex-shrink: 0;
+  inline-size: 0.3125rem;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background-color: var(--brand);
+  opacity: 0;
+  transform: scale(0);
+  transition:
+    opacity 250ms ease-out,
+    transform 250ms ease-out;
+}
+
+.nav-link[aria-current] {
+  color: var(--brand);
+}
+
+.nav-link[aria-current]::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (forced-colors: active) {
+  .nav-link::before {
+    background-color: LinkText;
+  }
+}
+
+/*
+ * Borde animado de las tarjetas de proyecto (sección 03). Una capa de 1px
+ * (`.project-card__border`) se superpone al borde base, que sigue visible:
+ * la máscara deja ver solo el anillo del borde y, dentro, un cuadrado del
+ * tamaño de la diagonal de la tarjeta con un `conic-gradient` cobre y zinc
+ * gira por `transform` (16 s por vuelta, sin repintado por fotograma).
+ * Intensidad baja en reposo y algo mayor con hover o foco dentro de la
+ * tarjeta; el giro no depende del hover. Con movimiento reducido queda un
+ * arco estático. Decorativo: `aria-hidden` y sin eventos de puntero.
+ */
+.project-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.project-card__border {
+  position: absolute;
+  inset: -1px;
+  container-type: size;
+  overflow: hidden;
+  border-radius: inherit;
+  padding: 1px;
+  opacity: 0.8;
+  pointer-events: none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  transition: opacity 400ms ease-out;
+}
+
+.project-card__border::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  inline-size: 250%;
+  inline-size: hypot(100cqw, 100cqh);
+  aspect-ratio: 1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    var(--brand) 55deg,
+    transparent 115deg,
+    transparent 180deg,
+    color-mix(in oklab, var(--input) 60%, transparent) 235deg,
+    transparent 295deg
+  );
+  transform: translate(-50%, -50%) rotate(0deg);
+  will-change: transform;
+  animation: project-border-spin 16s linear infinite;
+}
+
+@keyframes project-border-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(1turn);
+  }
+}
+
+.project-card:hover .project-card__border,
+.project-card:focus-within .project-card__border {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card__border {
+    transition: none;
+  }
+
+  .project-card__border::before {
+    animation: none;
+    transform: translate(-50%, -50%) rotate(-30deg);
+  }
+}
+
+@media (forced-colors: active) {
+  .project-card__border {
+    display: none;
+  }
+}
+
+/*
+ * Tarjetas de experiencia (sección 02). Interpretación propia del principio
+ * observado en la referencia (docs/02-DISENO-VISUAL.md §7): con el puntero
+ * encima, el bloque se eleva, aparece el halo de esquina (`.card-glow`) y
+ * las barras decorativas inferiores oscilan.
+ * Solo se animan `transform` y `opacity`, y solo en la tarjeta con hover:
+ * en reposo no hay animaciones continuas. Sin hover (táctil) la tarjeta se
+ * muestra estable y completa; nada se revela únicamente con hover.
+ */
+.experience-card {
+  transition:
+    transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 300ms ease-out;
+}
+
+.experience-card__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  block-size: 1.5rem;
+}
+
+.experience-card__bars > span {
+  --bar-rest: 0.5;
+  --bar-peak: 1;
+
+  position: relative;
+  inline-size: 3px;
+  block-size: 100%;
+  border-radius: 9999px;
+  background-color: var(--input);
+  opacity: 0.55;
+  transform: scaleY(var(--bar-rest));
+  transform-origin: bottom;
+  transition:
+    transform 400ms ease-out,
+    opacity 400ms ease-out;
+}
+
+/* Capa cobre de cada barra: aparece por opacidad, sin animar colores. */
+.experience-card__bars > span::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-color: var(--brand);
+  opacity: 0;
+  transition: opacity 400ms ease-out;
+}
+
+.experience-card__bars > span:nth-child(1) { --i: 0; --bar-rest: 0.35; --bar-peak: 0.7; }
+.experience-card__bars > span:nth-child(2) { --i: 1; --bar-rest: 0.6; --bar-peak: 0.95; }
+.experience-card__bars > span:nth-child(3) { --i: 2; --bar-rest: 0.85; --bar-peak: 0.45; }
+.experience-card__bars > span:nth-child(4) { --i: 3; --bar-rest: 0.5; --bar-peak: 1; }
+.experience-card__bars > span:nth-child(5) { --i: 4; --bar-rest: 0.7; --bar-peak: 0.4; }
+.experience-card__bars > span:nth-child(6) { --i: 5; --bar-rest: 0.4; --bar-peak: 0.8; }
+
+@keyframes experience-bars {
+  0%,
+  100% {
+    transform: scaleY(var(--bar-rest));
+  }
+
+  50% {
+    transform: scaleY(var(--bar-peak));
+  }
+}
+
+@media (hover: hover) {
+  .experience-card:hover {
+    border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+    transform: translateY(-4px);
+  }
+
+  .experience-card:hover .experience-card__bars > span {
+    opacity: 1;
+    animation: experience-bars 1.6s ease-in-out infinite;
+    animation-delay: calc(var(--i) * -0.2s);
+  }
+
+  .experience-card:hover .experience-card__bars > span::after {
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-card,
+  .card-glow::before {
+    transition: none;
+  }
+
+  .experience-card:hover,
+  .card-glow:hover::before {
+    transform: none;
+  }
+
+  .experience-card:hover .experience-card__bars > span {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .card-glow::before {
+    display: none;
+  }
+
+  .experience-card__bars > span {
+    background-color: CanvasText;
   }
 }
 

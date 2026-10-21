@@ -9,6 +9,8 @@ export interface Props {
   title: string;
   description?: string;
   nav?: NavItem[];
+  /** `href` del acceso de navegación que contiene esta página. */
+  currentNav?: string;
   brandHref?: string;
   type?: 'website' | 'article';
   noindex?: boolean;
@@ -19,6 +21,7 @@ const {
   title,
   description,
   nav = [],
+  currentNav,
   brandHref = '/',
   type = 'website',
   noindex = false,
@@ -78,9 +81,11 @@ const ogImageAlt =
         const key = 'appearance';
         let preference = 'system';
 
+        // Solo «light» y «dark» son elecciones explícitas; cualquier otro valor
+        // (incluido el antiguo «system») deja que el tema siga al sistema.
         try {
           const stored = window.localStorage.getItem(key);
-          if (stored === 'light' || stored === 'dark' || stored === 'system') {
+          if (stored === 'light' || stored === 'dark') {
             preference = stored;
           }
         } catch {
@@ -93,7 +98,9 @@ const ogImageAlt =
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
   </head>
-  <body class="flex min-h-dvh flex-col">
+  <body class="isolate flex min-h-dvh flex-col">
+    <div aria-hidden="true" class="bg-dots pointer-events-none fixed inset-0 -z-10"></div>
+
     <a
       href="#contenido"
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground"
@@ -101,7 +108,7 @@ const ogImageAlt =
       Saltar al contenido
     </a>
 
-    <SiteHeader nav={nav} brandHref={brandHref} />
+    <SiteHeader nav={nav} current={currentNav} brandHref={brandHref} />
 
     <main id="contenido" tabindex="-1" class="flex-1">
       <slot />

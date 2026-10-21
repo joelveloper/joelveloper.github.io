@@ -7,12 +7,13 @@ interface Props {
   siteName: string;
   monogram: string;
   brandHref: string;
+  current?: string;
 }
 
-const { nav, siteName, monogram, brandHref } = Astro.props;
+const { nav, siteName, monogram, brandHref, current } = Astro.props;
 
 const dialogLinkClass =
-  'flex min-h-12 items-center py-3 text-base font-medium text-foreground underline-offset-4 hover:underline';
+  'nav-link flex min-h-12 items-center gap-2 py-3 text-base font-semibold text-foreground transition-colors hover:text-primary';
 ---
 
 {
@@ -25,7 +26,7 @@ const dialogLinkClass =
         aria-controls="mobile-navigation"
         aria-expanded="false"
         aria-haspopup="dialog"
-        class="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-3 text-sm font-medium text-foreground transition-colors hover:border-primary/60 hover:bg-surface-raised md:hidden"
+        class="relative inline-flex size-8 items-center justify-center rounded-full border border-border bg-transparent text-muted-foreground transition-colors before:absolute before:-inset-[5px] before:rounded-full hover:border-input hover:text-foreground focus-visible:text-foreground active:text-primary md:hidden"
       >
         <svg
           aria-hidden="true"
@@ -34,11 +35,10 @@ const dialogLinkClass =
           stroke="currentColor"
           stroke-width="1.75"
           stroke-linecap="round"
-          class="size-5"
+          class="size-4"
         >
           <path d="M4 7h16M4 12h16M4 17h16" />
         </svg>
-        <span class="hidden sm:inline">Menú</span>
       </button>
 
       <dialog
@@ -51,13 +51,13 @@ const dialogLinkClass =
           Navegación del sitio
         </h2>
 
-        <Container class="pb-6 pt-3">
-          <div class="flex items-center justify-between gap-4 border-b border-border pb-3">
+        <Container size="wide" class="pb-6">
+          <div class="flex min-h-14 items-center justify-between gap-4 border-b border-border">
             <button
               type="button"
               data-menu-close
               aria-label="Cerrar menú de navegación"
-              class="inline-flex size-11 items-center justify-center rounded-lg border border-border text-foreground transition-colors hover:border-primary/60 hover:bg-surface-raised"
+              class="relative inline-flex size-8 items-center justify-center rounded-full border border-border bg-transparent text-muted-foreground transition-colors before:absolute before:-inset-[5px] before:rounded-full hover:border-input hover:text-foreground focus-visible:text-foreground active:text-primary"
             >
               <svg
                 aria-hidden="true"
@@ -66,7 +66,7 @@ const dialogLinkClass =
                 stroke="currentColor"
                 stroke-width="1.75"
                 stroke-linecap="round"
-                class="size-5"
+                class="size-4"
               >
                 <path d="M6 6l12 12M18 6L6 18" />
               </svg>
@@ -74,14 +74,14 @@ const dialogLinkClass =
 
             <a
               href={brandHref}
-              class="order-first inline-flex items-center gap-3 rounded-sm md:order-none"
+              class="order-first inline-flex items-center gap-2.5 rounded-full md:order-none"
             >
               <span
                 aria-hidden="true"
-                class="inline-flex size-9 items-center justify-center rounded-md border border-border bg-surface font-mono text-label font-medium tracking-normal text-primary"
+                class="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-border bg-transparent font-mono text-[0.875rem] leading-none font-semibold tracking-[-0.04em] text-foreground"
                 >{monogram}</span
               >
-              <span class="text-base font-semibold tracking-tight text-foreground">{siteName}</span>
+              <span class="text-sm font-semibold tracking-tight text-foreground sm:text-base">{siteName}</span>
             </a>
           </div>
 
@@ -89,7 +89,12 @@ const dialogLinkClass =
             <ul class="flex flex-col divide-y divide-border">
               {nav.map((item) => (
                 <li>
-                  <a href={item.href} class={dialogLinkClass}>
+                  <a
+                    href={item.href}
+                    class={dialogLinkClass}
+                    data-nav-link
+                    aria-current={item.href === current ? 'true' : undefined}
+                  >
                     {item.label}
                   </a>
                 </li>
@@ -98,24 +103,6 @@ const dialogLinkClass =
           </nav>
         </Container>
       </dialog>
-
-      <noscript>
-        <nav aria-label="Navegación principal" class="w-full pt-2 md:hidden">
-          <ul class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
-            {nav.map((item) => (
-              <li>
-                <a
-                  href={item.href}
-                  class="inline-block rounded-sm py-1 text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <style is:inline>[data-menu-trigger] { display: none !important; }</style>
-      </noscript>
     </>
   )
 }

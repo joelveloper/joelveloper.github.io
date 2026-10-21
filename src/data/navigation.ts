@@ -1,12 +1,15 @@
 import type { NavItem } from '@/components/layout/SiteHeader.astro';
 import { emailHref, socialLinks, type ProfileLink } from '@/data/profile';
 
+/*
+ * Navegación principal limitada a cuatro accesos (ADR-002). Las secciones
+ * «Especialidades» (#especialidades) y «Cómo trabajo» (#proceso) siguen en la
+ * página con sus anclas, pero no aparecen en el header ni en el menú móvil.
+ */
 export const mainNavigation: NavItem[] = [
   { label: 'Inicio', href: '#inicio' },
   { label: 'Sobre mí', href: '#sobre-mi' },
-  { label: 'Especialidades', href: '#especialidades' },
   { label: 'Proyectos', href: '#proyectos' },
-  { label: 'Cómo trabajo', href: '#proceso' },
   { label: 'Contacto', href: '#contacto' },
 ];
 
@@ -16,6 +19,6 @@ export const detailNavigation: NavItem[] = mainNavigation.map((item) => ({
 }));
 
 export const contactLinks: ProfileLink[] = [
-  { label: 'Correo', href: emailHref, external: false },
+  { label: 'Correo', href: emailHref, external: false, icon: 'mail' },
   ...socialLinks,
 ];

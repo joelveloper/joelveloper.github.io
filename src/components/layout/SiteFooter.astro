@@ -1,5 +1,6 @@
 ---
 import Container from '@/components/layout/Container.astro';
+import Icon from '@/components/ui/Icon.astro';
 import { contactLinks } from '@/data/navigation';
 import { profile } from '@/data/profile';
 
@@ -10,21 +11,18 @@ interface Props {
 const { siteName = profile.name } = Astro.props;
 
 const linkClass =
-  'inline-block rounded-sm py-1 text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline';
+  'inline-flex items-center gap-2.5 rounded-sm py-1 text-muted-foreground transition-colors hover:text-foreground';
 ---
 
-<footer class="mt-20 border-t border-border bg-surface">
+<footer class="mt-20 border-t border-border bg-background-alt">
   <Container class="flex flex-col gap-8 py-12 lg:flex-row lg:items-start lg:justify-between">
     <div class="flex max-w-measure flex-col gap-3">
-      <p class="font-mono text-label uppercase tracking-widest text-primary">{profile.role}</p>
+      <p class="font-mono text-label uppercase tracking-widest text-muted-foreground">{profile.role}</p>
       <p class="text-title font-semibold text-foreground">{siteName}</p>
-      <p class="text-sm text-muted-foreground">
-        Software para problemas reales. Aplicaciones empresariales, plataformas SaaS y
-        automatización documental.
-      </p>
+      <p class="text-sm text-muted-foreground">{profile.summary}</p>
     </div>
 
-    <nav aria-label="Enlaces profesionales" class="flex flex-col gap-3">
+    <nav aria-label="Contacto y redes" class="flex flex-col gap-3">
       <ul class="flex flex-col gap-2 text-sm">
         {
           contactLinks.map((link) => (
@@ -35,6 +33,7 @@ const linkClass =
                 target={link.external ? '_blank' : undefined}
                 rel={link.external ? 'noopener noreferrer' : undefined}
               >
+                {link.icon && <Icon name={link.icon} class="size-4" />}
                 {link.label}
               </a>
             </li>

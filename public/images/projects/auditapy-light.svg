@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180">
-  <rect width="320" height="180" fill="#F8FAFC" />
-  <g stroke="#CAD4E2" stroke-width="1" opacity="0.6">
+  <rect width="320" height="180" fill="#FAF9F7" />
+  <g stroke="#D6D5D1" stroke-width="1" opacity="0.6">
     <path d="M0 45h320M0 90h320M0 135h320M80 0v180M160 0v180M240 0v180" />
   </g>
-  <g fill="#F0F4FA" stroke="#CAD4E2" stroke-width="1.5">
+  <g fill="#F1F0ED" stroke="#D6D5D1" stroke-width="1.5">
     <rect x="64" y="112" width="40" height="34" rx="6" />
     <rect x="112" y="92" width="40" height="54" rx="6" />
     <rect x="160" y="70" width="40" height="76" rx="6" />
   </g>
-  <rect x="208" y="46" width="40" height="100" rx="6" fill="#F0F4FA" stroke="#2557A7" stroke-width="2" />
+  <rect x="208" y="46" width="40" height="100" rx="6" fill="#F1F0ED" stroke="#5F5F66" stroke-width="2" />
   <path d="M84 104 L132 84 L180 62 L228 38" fill="none" stroke="#17674F" stroke-width="2" stroke-dasharray="4 4" />
   <circle cx="228" cy="38" r="4" fill="#17674F" />
 </svg>

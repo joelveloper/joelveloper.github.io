@@ -1,4 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="JC">
-  <rect width="64" height="64" rx="14" fill="#2557a7"/>
-  <text x="32" y="42" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="29" font-weight="700" letter-spacing="0.5" fill="#ffffff">JC</text>
+  <style>
+    g { stroke: #98532a; }
+    @media (prefers-color-scheme: dark) {
+      g { stroke: #e6a47b; }
+    }
+  </style>
+  <g fill="none" stroke="#b36f46" stroke-width="8" stroke-linecap="round">
+    <path d="M22.81 18.56V36.69a8.75 8.75 0 0 1-17.5 0"/>
+    <path d="M58.64 21.71a13.44 13.44 0 1 0 0 20.58"/>
+  </g>
 </svg>

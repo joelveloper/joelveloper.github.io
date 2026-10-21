@@ -50,8 +50,9 @@ const remainingTechnologies = Math.max(technologies.length - visibleTechnologies
   as="article"
   variant="default"
   padding="md"
-  class:list={['portfolio-card-hover flex h-full flex-col gap-5', className]}
+  class:list={['project-card portfolio-card-hover flex h-full flex-col gap-5', className]}
 >
+  <span aria-hidden="true" class="project-card__border"></span>
   {
     image && (
       <ProjectIllustration
@@ -73,7 +74,7 @@ const remainingTechnologies = Math.max(technologies.length - visibleTechnologies
     <h3 class="text-title font-semibold text-foreground">
       {
         href ? (
-          <a href={href} class="rounded-sm underline-offset-4 hover:underline">
+          <a href={href} class="rounded-sm transition-colors hover:text-primary">
             {title}
           </a>
         ) : (
@@ -104,8 +105,8 @@ const remainingTechnologies = Math.max(technologies.length - visibleTechnologies
   <div class="mt-auto pt-1">
     {
       href ? (
-        <ButtonLink href={href} variant="secondary" ariaLabel={`Ver caso de estudio: ${title}`}>
-          Ver caso de estudio
+        <ButtonLink href={href} variant="secondary" ariaLabel={`Ver proyecto: ${title}`}>
+          Ver proyecto
         </ButtonLink>
       ) : (
         <p class="inline-flex items-center gap-2 text-caption text-muted-foreground">

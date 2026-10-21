@@ -14,6 +14,8 @@ interface Props {
   monogram?: string;
   brandHref?: string;
   nav?: NavItem[];
+  /** `href` del acceso que contiene la página actual (páginas de detalle). */
+  current?: string;
 }
 
 const {
@@ -21,30 +23,42 @@ const {
   monogram = profile.monogram,
   brandHref = '/',
   nav = [],
+  current,
 } = Astro.props;
 
 const linkClass =
-  'inline-block rounded-sm py-1 text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline';
+  'nav-link inline-flex min-h-10 items-center gap-1.5 rounded-sm px-1 font-semibold text-muted-foreground transition-colors hover:text-foreground';
+
+// Header de 56px (min-h-14), ancho máximo 1280px y sin línea inferior (ADR-002).
+// El fondo translúcido con desenfoque ligero separa el header del contenido;
+// sin soporte de `backdrop-filter` el fondo pasa a ser opaco.
 ---
 
-<header class="fixed inset-x-0 top-0 z-40 border-b border-border bg-background">
-  <Container class="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 py-4 lg:gap-x-6">
-    <a href={brandHref} class="group inline-flex items-center gap-3 rounded-sm">
+<header
+  class="fixed inset-x-0 top-0 z-40 bg-background/90 backdrop-blur-md not-supports-[backdrop-filter:blur(0)]:bg-background"
+>
+  <Container size="wide" class="flex min-h-14 flex-wrap items-center justify-between gap-x-4">
+    <a href={brandHref} class="inline-flex items-center gap-2.5 rounded-full">
       <span
         aria-hidden="true"
-        class="inline-flex size-9 items-center justify-center rounded-md border border-border bg-surface font-mono text-label font-medium tracking-normal text-primary"
+        class="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-border bg-transparent font-mono text-[0.875rem] leading-none font-semibold tracking-[-0.04em] text-foreground"
         >{monogram}</span
       >
-      <span class="text-base font-semibold tracking-tight text-foreground">{siteName}</span>
+      <span class="text-sm font-semibold tracking-tight text-foreground sm:text-base">{siteName}</span>
     </a>
 
     {
       nav.length > 0 && (
         <nav aria-label="Navegación principal" class="hidden md:block">
-          <ul class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm lg:gap-x-5">
+          <ul class="flex items-center gap-x-5 text-sm lg:gap-x-7">
             {nav.map((item) => (
               <li>
-                <a href={item.href} class={linkClass}>
+                <a
+                  href={item.href}
+                  class={linkClass}
+                  data-nav-link
+                  aria-current={item.href === current ? 'true' : undefined}
+                >
                   {item.label}
                 </a>
               </li>
@@ -56,7 +70,115 @@ const linkClass =
 
     <div class="flex items-center gap-2">
       <ThemeSwitcher />
-      <MobileNavigation nav={nav} siteName={siteName} monogram={monogram} brandHref={brandHref} />
+      <MobileNavigation
+        nav={nav}
+        siteName={siteName}
+        monogram={monogram}
+        brandHref={brandHref}
+        current={current}
+      />
     </div>
+
+    {
+      nav.length > 0 && (
+        <noscript>
+          <nav aria-label="Navegación principal" class="w-full pb-3 md:hidden">
+            <ul class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+              {nav.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="nav-link inline-flex items-center gap-1.5 rounded-sm py-1 font-semibold text-muted-foreground transition-colors hover:text-foreground"
+                    aria-current={item.href === current ? 'true' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <style is:inline>
+            [data-menu-trigger] { display: none !important; }
+            @media (max-width: 47.99rem) { :root { --site-header-height: 6.25rem; } }
+          </style>
+        </noscript>
+      )
+    }
   </Container>
 </header>
+
+<script>
+  // Sección activa de la navegación (header y menú móvil). Un único
+  // IntersectionObserver vigila una franja horizontal fina al 40 % del alto
+  // del viewport, por debajo del header fijo; sin escuchar el scroll.
+  // Las secciones intermedias que no están en la navegación («Especialidades»,
+  // «Cómo trabajo», «Oñondive») heredan el acceso de la sección navegable
+  // anterior. Al final de la página, con el pie visible completo, se marca el
+  // último acceso. Sin JavaScript no se marca ningún enlace en la portada; en
+  // las páginas de detalle el acceso actual llega ya marcado desde el servidor.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('a[data-nav-link]')];
+  const linksById = new Map<string, HTMLAnchorElement[]>();
+
+  for (const link of links) {
+    const url = new URL(link.href);
+    const id = decodeURIComponent(url.hash.slice(1));
+    if (url.pathname !== window.location.pathname || !id || !document.getElementById(id)) continue;
+    linksById.set(id, [...(linksById.get(id) ?? []), link]);
+  }
+
+  const sections = [...document.querySelectorAll<HTMLElement>('main > section')];
+  const ownerBySection = new Map<Element, string>();
+  let owner: string | undefined;
+
+  for (const section of sections) {
+    if (linksById.has(section.id)) owner = section.id;
+    if (owner) ownerBySection.set(section, owner);
+  }
+
+  if (ownerBySection.size > 0) {
+    const ids = [...linksById.keys()];
+    const footer = document.querySelector('body > footer');
+    const visible = new Set<Element>();
+    let footerInView = false;
+
+    const setActive = (activeId: string) => {
+      for (const [id, group] of linksById) {
+        for (const link of group) {
+          if (id === activeId) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        }
+      }
+    };
+
+    const refresh = () => {
+      if (footerInView) return setActive(ids[ids.length - 1]);
+      const current = sections.find((section) => visible.has(section));
+      const id = current && ownerBySection.get(current);
+      if (id) setActive(id);
+    };
+
+    setActive(ids[0]);
+
+    const bandObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target);
+          else visible.delete(entry.target);
+        }
+        refresh();
+      },
+      { rootMargin: '-40% 0px -59% 0px' },
+    );
+    sections.forEach((section) => bandObserver.observe(section));
+
+    if (footer) {
+      new IntersectionObserver(
+        ([entry]) => {
+          footerInView = entry.isIntersecting && entry.intersectionRatio >= 0.98;
+          refresh();
+        },
+        { threshold: [0, 0.98] },
+      ).observe(footer);
+    }
+  }
+</script>
